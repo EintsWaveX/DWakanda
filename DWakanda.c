@@ -4474,7 +4474,7 @@ void HomeMenu(void) {
         CheckInvalidInput = false;
 
         switch (AUCOption) {
-            case 1:  { AdminMainMenu();                      } break;
+            case 1:  { AdminLobbyMenu();                     } break;
             case 2:  { UserLobbyMenu();                      } break;
             case 3:  { ClientLobbyMenu();                    } break;
             case 9:  { AboutDWakandaPage();                  } break;
