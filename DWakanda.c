@@ -429,7 +429,7 @@ bool CheckInvalidInput = false, CheckSuccessInput = false, SuccessfullyLoggedIn 
 #define AcceptInputOption(Message, Variable) fflush(stdin); printf((Message)); scanf("%d", &(Variable)); fflush(stdin);
 #define AcceptCharInput(Message, Variable) fflush(stdin); printf((Message)); scanf("%c", &(Variable)); fflush(stdin);
 #define AcceptInputText(Message, Variable) fflush(stdin); printf((Message)); fgets((Variable), sizeof((Variable)), stdin); fflush(stdin);
-#define AcceptULL(Message, Variable) fflush(stdin); printf((Message)); scanf("%zu", &(Variable)); fflush(stdin);
+#define AcceptLL(Message, Variable) fflush(stdin); printf((Message)); scanf("%lld", &(Variable)); fflush(stdin);
 #define AcceptF(Message, Variable) fflush(stdin); printf((Message)); scanf("%f", &(Variable)); fflush(stdin);
 
 Kemenkeu AdminSignIn = { 0 };
@@ -1004,7 +1004,7 @@ void AMMFeature04(void) {
     FILE *AccessAdmin;
     KepalaDaerah KDList = { 0 };
 
-    size_t GivenNomina = 0ULL;
+    long long int GivenNomina = 0LL;
     char KDFileName[BUFSIZE07] = { 0 }, GetKDSavings[BUFSIZE07] = { 0 };
     char UpdateStatus, WriteString01_A[BUFSIZE07] = { 0 }, WriteString02_U[BUFSIZE07] = { 0 }, WriteString03_U[BUFSIZE07] = { 0 };
     char GetKDFullName[BUFSIZE07] = { 0 }, GetKDJobTitle[BUFSIZE07] = { 0 }, GetKDHeadRegion[BUFSIZE07] = { 0 };
@@ -1110,7 +1110,7 @@ void AMMFeature04(void) {
 
                 printf(ANSI_COLOR_LIGHTWHITE"[%03d] Nama Lengkap: %s\n"ANSI_COLOR_RESET, (KD + 1), KDList.FullName);
                 printf(ANSI_COLOR_LIGHTWHITE"... Jabatan/Daerah: %s %s\n"ANSI_COLOR_RESET, KDList.JobTitle, KDList.HeadRegion);
-                printf(ANSI_COLOR_LIGHTWHITE"... Total Dana Daerah (saat ini): Rp%'lld.00\n"ANSI_COLOR_RESET, atoll(ReadLine("TempKD.txt", 1)));
+                printf(ANSI_COLOR_LIGHTWHITE">>> Total Dana Daerah (saat ini): Rp%'lld.00\n"ANSI_COLOR_RESET, atoll(ReadLine("TempKD.txt", 1)));
                 EncryptTextFile("TempKD.txt", KDFileName, ENCRYPTCODE, false); system("del TempKD.txt");
 
                 RecentStatus = atoi(ReadLine("Temp_"User_KepalaDaerah, ((10 + 1) * KD) + 10));
@@ -1160,107 +1160,108 @@ void AMMFeature04(void) {
             AcceptCharInput("> Pilihan Anda: ", UpdateStatus);
 
             if (UpdateStatus == 'Y' || UpdateStatus == 'y') {
-                ClearScreen();
-        
-                puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
-                puts(ANSI_COLOR_BLUE"Anda tengah masuk sebagai: " BRIGHTGREEN156 ANSI_STYLE_BOLD"Admin :: Kementerian Keuangan."ANSI_COLOR_RESET);
-                puts(BRIGHTGREEN156"\nMenu: [4] Pendistribusian Bantuan Dana"ANSI_COLOR_RESET);
+                while (true) {
+                    ClearScreen();
+            
+                    puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
+                    puts(ANSI_COLOR_BLUE"Anda tengah masuk sebagai: " BRIGHTGREEN156 ANSI_STYLE_BOLD"Admin :: Kementerian Keuangan."ANSI_COLOR_RESET);
+                    puts(BRIGHTGREEN156"\nMenu: [4] Pendistribusian Bantuan Dana"ANSI_COLOR_RESET);
 
-                EncryptTextFile(User_KepalaDaerah, "Temp_"User_KepalaDaerah, -ENCRYPTCODE, true);
-                AvailableKDs = atoi(ReadLine("Temp_"User_KepalaDaerah, 1));
-                
-                OverWriteStringAtLine("Temp_"User_KepalaDaerah, "2", 0, ((10 + 1) * (PeekKD - 1)) + 10);
-
-                puts("");
-                puts("Berikut adalah data permintaan distribusi dana dari Kepala Daerah...");
-
-                puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
-                for (int KD = 0; KD < AvailableKDs; KD++) {
-                    strcpy(KDList.FullName, ReadLine("Temp_"User_KepalaDaerah, ((10 + 1) * KD) + 3));
-                    strcpy(KDList.JobTitle, ReadLine("Temp_"User_KepalaDaerah, ((10 + 1) * KD) + 8));
-                    strcpy(KDList.HeadRegion, ReadLine("Temp_"User_KepalaDaerah, ((10 + 1) * KD) + 9));
-                    KDList.FullName[strlen(KDList.FullName) - 1] = '\0'; KDList.JobTitle[strlen(KDList.JobTitle) - 1] = '\0'; KDList.HeadRegion[strlen(KDList.HeadRegion) - 1] = '\0';
-
-                    if (KD == (PeekKD - 1)) {
-                        strcpy(GetKDFullName, KDList.FullName); strcpy(GetKDJobTitle, KDList.JobTitle); strcpy(GetKDHeadRegion, KDList.HeadRegion);
-                        strcpy(KDFileName, "KD - "); strcat(KDFileName, KDList.FullName); strcat(KDFileName, ".txt");
-                        EncryptTextFile(KDFileName, "TempKD.txt", -ENCRYPTCODE, false);
-
-                        printf(ANSI_COLOR_LIGHTWHITE"[%03d] Nama Lengkap: %s\n"ANSI_COLOR_RESET, (KD + 1), KDList.FullName);
-                        printf(ANSI_COLOR_LIGHTWHITE"... Jabatan/Daerah: %s %s\n"ANSI_COLOR_RESET, KDList.JobTitle, KDList.HeadRegion);
-                        printf(ANSI_COLOR_LIGHTWHITE"... Total Dana Daerah (saat ini): Rp%'lld.00\n"ANSI_COLOR_RESET, atoll(ReadLine("TempKD.txt", 1)));
-                        EncryptTextFile("TempKD.txt", KDFileName, ENCRYPTCODE, false); system("del TempKD.txt");
-                        
-                        RecentStatus = atoi(ReadLine("Temp_"User_KepalaDaerah, ((10 + 1) * KD) + 10));
-                        if      (RecentStatus == 0)  { puts(ANSI_COLOR_LIGHTWHITE"... Status Permintaan: -"ANSI_COLOR_RESET); }
-                        else if (RecentStatus == 1)  { puts(ANSI_COLOR_LIGHTWHITE"... Status Permintaan: " ANSI_COLOR_LIGHTYELLOW"SEDANG DIPROSES"ANSI_COLOR_RESET); }
-                        else if (RecentStatus == 2)  { puts(ANSI_COLOR_LIGHTWHITE"... Status Permintaan: " ANSI_COLOR_LIGHTGREEN"PENGAJUAN DITERIMA"ANSI_COLOR_RESET); }
-                        else if (RecentStatus == -1) { puts(ANSI_COLOR_LIGHTWHITE"... Status Permintaan: " ANSI_COLOR_LIGHTRED"PENGAJUAN DITOLAK"ANSI_COLOR_RESET); }
-                    
-                    } else {
-                        printf("[%03d] Nama Lengkap: %s\n", (KD + 1), KDList.FullName);
-                        printf("... Jabatan/Daerah: %s %s\n", KDList.JobTitle, KDList.HeadRegion);
-
-                        RecentStatus = atoi(ReadLine("Temp_"User_KepalaDaerah, ((10 + 1) * KD) + 10));
-                        if      (RecentStatus == 0)  { puts("... Status Permintaan: -"); }
-                        else if (RecentStatus == 1)  { puts("... Status Permintaan: " ANSI_COLOR_YELLOW"SEDANG DIPROSES"ANSI_COLOR_RESET); }
-                        else if (RecentStatus == 2)  { puts("... Status Permintaan: " ANSI_COLOR_GREEN"PENGAJUAN DITERIMA"ANSI_COLOR_RESET); }
-                        else if (RecentStatus == -1) { puts("... Status Permintaan: " ANSI_COLOR_RED"PENGAJUAN DITOLAK"ANSI_COLOR_RESET); }
-                    }
-
-                    StatusList[KD] = RecentStatus;
-                    if ((KD + 1) != AvailableKDs) { puts(""); }
-                } puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
-
-                EncryptTextFile("Temp_"User_KepalaDaerah, User_KepalaDaerah, ENCRYPTCODE, true);
-
-                puts("");
-                puts("Perhatikan arahan di bawah ini, yaitu nominal pemberian harus paling sedikit Rp1.000,00!");
-                AcceptULL(BRIGHTBLUE159"[>= 1000] Berapakah nominal yang Anda kehendaki: ", GivenNomina);
-                
-                if (GivenNomina >= 1000) {
-                    EncryptTextFile(Admin_Kemenkeu, "Temp_"Admin_Kemenkeu, -ENCRYPTCODE, true);
-                    strcpy(WriteString01_A, ReadLine("Temp_"Admin_Kemenkeu, 4));
-                    WriteString01_A[strlen(WriteString01_A) - 1] = '\0';
-                    snprintf(WriteString02_U, sizeof(WriteString02_U), "%lld", (atoll(WriteString01_A) - GivenNomina));
-                    OverWriteStringAtLine("Temp_"Admin_Kemenkeu, WriteString02_U, 0, 4);
-
-                    EncryptTextFile(KDFileName, "TempKD.txt", -ENCRYPTCODE, false);
-                    FILE *TempKD = fopen("TempKD.txt", "a");
-                    fprintf(TempKD, "[+] Rp%'lld.00: Bantuan Dana Kemenkeu\n", (long long int)GivenNomina); fclose(TempKD);
-                    fclose(TempKD);
-                    snprintf(WriteString03_U, sizeof(WriteString03_U), "%lld", atoll(ReadLine("TempKD.txt", 1)) + GivenNomina);
-                    OverWriteStringAtLine("TempKD.txt", WriteString03_U, 0, 1);
-
-                    EncryptTextFile("TempKD.txt", KDFileName, ENCRYPTCODE, false);
-                    system("del TempKD.txt");
-
-                    strcpy(WriteString01_A, ReadLine("Temp_"Admin_Kemenkeu, 4));
-                    WriteString01_A[strlen(WriteString01_A) - 1] = '\0';
-
-                    AccessAdmin = fopen("Temp_"Admin_Kemenkeu, "a");
-                    fprintf(AccessAdmin, "[-] Rp%'lld.00: Bantuan Dana kepada Yth. %s, %s %s\n", (long long int)GivenNomina, GetKDFullName, GetKDJobTitle, GetKDHeadRegion);
-                    fclose(AccessAdmin);
-                    EncryptTextFile("Temp_"Admin_Kemenkeu, Admin_Kemenkeu, ENCRYPTCODE, true);
-
-                    puts("");
-                    printf(ANSI_STYLE_BOLD BRIGHTPINK219"... Tabungan Negara saat ini: Rp%'lld.00\n", atoll(WriteString01_A));
-                    if (atoll(WriteString01_A) < 1000000000) { puts(ANSI_COLOR_LIGHTRED"... Mohon perhatikan tabungan negara berikut dikarenakan agar tidak berhutang!"); }
-                    else                                     { puts(ANSI_COLOR_GREEN"... Saat ini tabungan negara masih aman, tingkatkan terus kinerja Anda!"); }
-                    puts(ANSI_COLOR_LIGHTGREEN"Pemberian sumbangan dana tambahan bagi Kepala Daerah yang bersangkutan telah berhasil!"ANSI_COLOR_RESET);
-                    system("pause"); AMMFeature04();
-               
-                } else {
                     EncryptTextFile(User_KepalaDaerah, "Temp_"User_KepalaDaerah, -ENCRYPTCODE, true);
-                    OverWriteStringAtLine("Temp_"User_KepalaDaerah, "1", 0, ((10 + 1) * (PeekKD - 1)) + 10);
-                    EncryptTextFile("Temp_"User_KepalaDaerah, User_KepalaDaerah, ENCRYPTCODE, true);
+                    AvailableKDs = atoi(ReadLine("Temp_"User_KepalaDaerah, 1));
                     
-                    puts("");
-                    puts(ANSI_COLOR_ORANGE"WARNING: Kesalahan input nomina ditemukan! Nominal yang diberikan tidaklah memenuhi syarat...");
-                    puts("... Demi keamanan data, mohon dilakukan penyetelan ulang dari awal pilihan!"ANSI_COLOR_RESET);
-                    system("pause"); AMMFeature04();
-                }
+                    OverWriteStringAtLine("Temp_"User_KepalaDaerah, "2", 0, ((10 + 1) * (PeekKD - 1)) + 10);
 
+                    puts("");
+                    puts("Berikut adalah data permintaan distribusi dana dari Kepala Daerah...");
+
+                    puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
+                    for (int KD = 0; KD < AvailableKDs; KD++) {
+                        strcpy(KDList.FullName, ReadLine("Temp_"User_KepalaDaerah, ((10 + 1) * KD) + 3));
+                        strcpy(KDList.JobTitle, ReadLine("Temp_"User_KepalaDaerah, ((10 + 1) * KD) + 8));
+                        strcpy(KDList.HeadRegion, ReadLine("Temp_"User_KepalaDaerah, ((10 + 1) * KD) + 9));
+                        KDList.FullName[strlen(KDList.FullName) - 1] = '\0'; KDList.JobTitle[strlen(KDList.JobTitle) - 1] = '\0'; KDList.HeadRegion[strlen(KDList.HeadRegion) - 1] = '\0';
+
+                        if (KD == (PeekKD - 1)) {
+                            strcpy(GetKDFullName, KDList.FullName); strcpy(GetKDJobTitle, KDList.JobTitle); strcpy(GetKDHeadRegion, KDList.HeadRegion);
+                            strcpy(KDFileName, "KD - "); strcat(KDFileName, KDList.FullName); strcat(KDFileName, ".txt");
+                            EncryptTextFile(KDFileName, "TempKD.txt", -ENCRYPTCODE, false);
+
+                            printf(ANSI_COLOR_LIGHTWHITE"[%03d] Nama Lengkap: %s\n"ANSI_COLOR_RESET, (KD + 1), KDList.FullName);
+                            printf(ANSI_COLOR_LIGHTWHITE"... Jabatan/Daerah: %s %s\n"ANSI_COLOR_RESET, KDList.JobTitle, KDList.HeadRegion);
+                            printf(ANSI_COLOR_LIGHTWHITE"... Total Dana Daerah (saat ini): Rp%'lld.00\n"ANSI_COLOR_RESET, atoll(ReadLine("TempKD.txt", 1)));
+                            EncryptTextFile("TempKD.txt", KDFileName, ENCRYPTCODE, false); system("del TempKD.txt");
+                            
+                            RecentStatus = atoi(ReadLine("Temp_"User_KepalaDaerah, ((10 + 1) * KD) + 10));
+                            if      (RecentStatus == 0)  { puts(ANSI_COLOR_LIGHTWHITE"... Status Permintaan: -"ANSI_COLOR_RESET); }
+                            else if (RecentStatus == 1)  { puts(ANSI_COLOR_LIGHTWHITE"... Status Permintaan: " ANSI_COLOR_LIGHTYELLOW"SEDANG DIPROSES"ANSI_COLOR_RESET); }
+                            else if (RecentStatus == 2)  { puts(ANSI_COLOR_LIGHTWHITE"... Status Permintaan: " ANSI_COLOR_LIGHTGREEN"PENGAJUAN DITERIMA"ANSI_COLOR_RESET); }
+                            else if (RecentStatus == -1) { puts(ANSI_COLOR_LIGHTWHITE"... Status Permintaan: " ANSI_COLOR_LIGHTRED"PENGAJUAN DITOLAK"ANSI_COLOR_RESET); }
+                        
+                        } else {
+                            printf("[%03d] Nama Lengkap: %s\n", (KD + 1), KDList.FullName);
+                            printf("... Jabatan/Daerah: %s %s\n", KDList.JobTitle, KDList.HeadRegion);
+
+                            RecentStatus = atoi(ReadLine("Temp_"User_KepalaDaerah, ((10 + 1) * KD) + 10));
+                            if      (RecentStatus == 0)  { puts("... Status Permintaan: -"); }
+                            else if (RecentStatus == 1)  { puts("... Status Permintaan: " ANSI_COLOR_YELLOW"SEDANG DIPROSES"ANSI_COLOR_RESET); }
+                            else if (RecentStatus == 2)  { puts("... Status Permintaan: " ANSI_COLOR_GREEN"PENGAJUAN DITERIMA"ANSI_COLOR_RESET); }
+                            else if (RecentStatus == -1) { puts("... Status Permintaan: " ANSI_COLOR_RED"PENGAJUAN DITOLAK"ANSI_COLOR_RESET); }
+                        }
+
+                        StatusList[KD] = RecentStatus;
+                        if ((KD + 1) != AvailableKDs) { puts(""); }
+                    } puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
+
+                    EncryptTextFile("Temp_"User_KepalaDaerah, User_KepalaDaerah, ENCRYPTCODE, true);
+
+                    puts("");
+                    puts("Perhatikan arahan di bawah ini, yaitu nominal pemberian harus paling sedikit Rp1,000.00!");
+                    AcceptLL(BRIGHTBLUE159"[>= 1000] Berapakah nominal yang Anda kehendaki: ", GivenNomina);
+                    
+                    if (GivenNomina >= 1000LL) {
+                        EncryptTextFile(Admin_Kemenkeu, "Temp_"Admin_Kemenkeu, -ENCRYPTCODE, true);
+                        strcpy(WriteString01_A, ReadLine("Temp_"Admin_Kemenkeu, 4));
+                        WriteString01_A[strlen(WriteString01_A) - 1] = '\0';
+                        snprintf(WriteString02_U, sizeof(WriteString02_U), "%lld", (atoll(WriteString01_A) - GivenNomina));
+                        OverWriteStringAtLine("Temp_"Admin_Kemenkeu, WriteString02_U, 0, 4);
+
+                        EncryptTextFile(KDFileName, "TempKD.txt", -ENCRYPTCODE, false);
+                        FILE *TempKD = fopen("TempKD.txt", "a");
+                        fprintf(TempKD, "[+] Rp%'lld.00: Bantuan Dana dari Kemenkeu\n", (long long int)GivenNomina); fclose(TempKD);
+                        fclose(TempKD);
+                        snprintf(WriteString03_U, sizeof(WriteString03_U), "%lld", atoll(ReadLine("TempKD.txt", 1)) + GivenNomina);
+                        OverWriteStringAtLine("TempKD.txt", WriteString03_U, 0, 1);
+
+                        EncryptTextFile("TempKD.txt", KDFileName, ENCRYPTCODE, false);
+                        system("del TempKD.txt");
+
+                        strcpy(WriteString01_A, ReadLine("Temp_"Admin_Kemenkeu, 4));
+                        WriteString01_A[strlen(WriteString01_A) - 1] = '\0';
+
+                        AccessAdmin = fopen("Temp_"Admin_Kemenkeu, "a");
+                        fprintf(AccessAdmin, "[-] Rp%'lld.00: Bantuan Dana kepada Yth. %s, %s %s\n", (long long int)GivenNomina, GetKDFullName, GetKDJobTitle, GetKDHeadRegion);
+                        fclose(AccessAdmin);
+                        EncryptTextFile("Temp_"Admin_Kemenkeu, Admin_Kemenkeu, ENCRYPTCODE, true);
+
+                        puts("");
+                        printf(ANSI_STYLE_BOLD BRIGHTPINK219"... Tabungan Negara saat ini: Rp%'lld.00\n", atoll(WriteString01_A));
+                        if (atoll(WriteString01_A) < 1000000000) { puts(ANSI_COLOR_LIGHTRED"... Mohon perhatikan tabungan negara berikut dikarenakan agar tidak berhutang!"); }
+                        else                                     { puts(ANSI_COLOR_GREEN"... Saat ini tabungan negara masih aman, tingkatkan terus kinerja Anda!"); }
+                        puts(ANSI_COLOR_LIGHTGREEN"Pemberian sumbangan dana tambahan bagi Kepala Daerah yang bersangkutan telah berhasil!"ANSI_COLOR_RESET);
+                        system("pause"); AMMFeature04();
+                
+                    } else {
+                        EncryptTextFile(User_KepalaDaerah, "Temp_"User_KepalaDaerah, -ENCRYPTCODE, true);
+                        OverWriteStringAtLine("Temp_"User_KepalaDaerah, "1", 0, ((10 + 1) * (PeekKD - 1)) + 10);
+                        EncryptTextFile("Temp_"User_KepalaDaerah, User_KepalaDaerah, ENCRYPTCODE, true);
+                        
+                        puts("");
+                        puts(ANSI_COLOR_ORANGE"WARNING: Kesalahan input nominal ditemukan! Nominal yang diberikan tidaklah memenuhi syarat...");
+                        puts("... Demi keamanan data, mohon dilakukan penyetelan ulang dari awal pilihan!"ANSI_COLOR_RESET);
+                        system("pause");
+                    }
+                }
             } else if (UpdateStatus == 'N' || UpdateStatus == 'n') {
                 ClearScreen();
         
@@ -2628,7 +2629,7 @@ void UMMFeature04(void) {
     puts(ANSI_COLOR_RED ANSI_STYLE_ITALIC"(jika tidak, ketik angka 0 untuk kembali ke menu utama Kepala Daerah)"ANSI_COLOR_RESET);
     AcceptInputOption("> Lihat data Sektor Industri: ", PeekSI);
 
-    if (PeekSI > 0 && PeekSI <= (MaxSI + 1)) {
+    if (PeekSI > 0 && PeekSI < (MaxSI + 1)) {
         while (true) {
             EncryptTextFile(Client_SektorIndustri, "Temp_"Client_SektorIndustri, -ENCRYPTCODE, true);
             RecentStatus = atoi(ReadLine("Temp_"Client_SektorIndustri, ((10 + 1) * (PeekSI - 1)) + 7));
@@ -2804,7 +2805,7 @@ void UMMFeature04(void) {
                         printf(BRIGHTGREEN156"[1 <= ??? <= %s]: (sudah jelas)\n"ANSI_COLOR_RESET, DisplayProductStock);
                         
                         puts("");
-                        AcceptInputText(BRIGHTPURPLE218"> Stok produk yang ingin dipesan: ", NewProductStock);
+                        AcceptInputText(BRIGHTPURPLE218"> Banyak stok produk yang ingin dipesan: ", NewProductStock);
                         NewProductStock[strlen(NewProductStock) - 1] = '\0';
 
                         if (strlen(NewProductStock) == 0 || atoll(NewProductStock) > atoll(DisplayProductStock)) { strcpy(NewProductStock, DisplayProductStock); }                
@@ -2880,7 +2881,7 @@ void UMMFeature04(void) {
                             puts("");
                             puts(ANSI_COLOR_YELLOW"Apakah Anda sudah yakin dengan banyak stok yang telah Anda pesan?");
                             printf(BRIGHTGREEN156"... Stok produk saat ini dan setelahnya:\n... ... %lld >> %lld\n", atoll(DisplayProductStock), atoll(DisplayProductStock) - atoll(NewProductStock));
-                            printf(BRIGHTGREEN156"... Saldo perekonomian Anda saat ini dan setelahnya:\n... ... Rp%'lld.00 >> Rp%'lld.00\n"ANSI_COLOR_RESET, atoll(BeforeSavings), atoll(AfterSavings));
+                            printf(BRIGHTGREEN156"... Saldo perekonomian Anda saat ini dan setelahnya:\n... ... Rp%'lld.00 >> " BRIGHTBLUE159"Rp%'lld.00 " ANSI_COLOR_RED"(-Rp%'lld.00)\n"ANSI_COLOR_RESET, atoll(BeforeSavings), atoll(AfterSavings), atoll(BeforeSavings) - atoll(AfterSavings));
                             
                             puts("");
                             puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(ketik Y atau y apabila sudah yakin, dan N atau n jika ingin dipastikan kembali)"ANSI_COLOR_RESET);
@@ -4487,7 +4488,7 @@ int main(void) {
     /* NOTE: Always do this at the starting point... */
     fflush(stdout); fflush(stdin);
     setlocale(LC_NUMERIC, "");               //// NOTE: Formatting thousands with comma!
-    
+
     WritePrivateKemenkeu(false);
     WritePrivateKeranjang(true, 1, false);   //// NOTE: Do this only ONCE if the file are not EXIST yet!
     WritePrivateKeranjang(false, 1, false);  //// NOTE: Do this only ONCE if the file are not EXIST yet!
