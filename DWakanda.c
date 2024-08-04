@@ -150,10 +150,10 @@ void ClearScreen(void) {
 }
 
 void EncryptTextFile(const char*, const char*, int, bool);
-void DecryptTextFile(const char*, bool, int, char*);
+void DecryptTextFile(const char*, bool, int, const char*);
 void OverWriteStringAtLine(const char*, const char*, const int, intmax_t);
 int  FindOccurences(const char*, char);
-int  CountBufferEOF(const char*);
+int  CountFDBuffer(const char*);
 char *TrimWhiteSpaces(char*);
 char *StringUppercase(char*);
 char *StringLowercase(char*);
@@ -161,6 +161,8 @@ char *StringCapitalize(char*);
 char *ReadLine(const char*, intmax_t);
 
 void HomeMenu(void);
+void FAQPage(void);
+void AboutDWakandaPage(void);
 void AdminLobbyMenu(void);
 void UserLobbyMenu(void);
 void ClientLobbyMenu(void);
@@ -288,6 +290,18 @@ char *StringCapitalize(char* SourceString) {
     } return SourceString;
 }
 
+char *StringCapitalizeAll(char* SourceString) {
+    bool CheckCap = false;
+
+    for (int i = 0; SourceString[i] != '\0'; i++) {
+        if (SourceString[i] == ' ') CheckCap = false;
+        if (SourceString[0] >= 'A' && SourceString[0] <= 'Z') NULL;
+        if (SourceString[0] >= 'a' && SourceString[0] <= 'z') { SourceString[0] -= 32; CheckCap = true; }
+        if (i != 0 && !CheckCap && (SourceString[i] >= 'A' && SourceString[i] <= 'Z')) { SourceString[i] += 32; CheckCap = true; }
+        if (i != 0 && !CheckCap && (SourceString[i] >= 'a' && SourceString[i] <= 'z')) { SourceString[i] -= 32; CheckCap = true; }
+    } return SourceString;
+}
+
 int FindOccurences(const char* SourceString, char SearchedOccurence) {
     int CountOccurences;
     for (int i = 0; (long long unsigned int)i < strlen(SourceString) - 1; i++) {
@@ -295,7 +309,7 @@ int FindOccurences(const char* SourceString, char SearchedOccurence) {
     } return CountOccurences;
 }
 
-int CountBufferEOF(const char* SourceString) {
+int CountFDBuffer(const char* SourceString) {
     FILE *FSource = fopen(SourceString, "r");
     int Lines = 0;
     
@@ -303,6 +317,17 @@ int CountBufferEOF(const char* SourceString) {
     Lines++; fclose(FSource); return Lines;
 }
 
+/* Abbreviation of "Encrypt Text File" is one of the CORE FEATURES here in this application,
+and the return type function is `void()`, and requires the program to accept:
+`>>>` FOUR (4) arguments, accordingly as explained below.
+
+`> const char *SourceTextFile`: A source text file that needs to be the source before being encrypted.
+`> const char *DestinationTextFile`: A destination text file that needs to be the place of the after-encrypted.
+`> int EncryptionKey`: A MUST required encryption key in order the text file to be encrypted. The code is spesific, and MUST be set in the program code before runtime, or included in the `**argv` parameter at command line before runtime. The encryption key HAS TO BE THE SAME for the decryption key, because one different in a single number will resulted in a non-correct encryption/decryption method.
+`> bool SourceTextFileDeletion`: Mode for deleting the source text file right after the encryption, so the copy of the data will not get leaked if the source that's not get encrypted is stil intact on the folder.
+
+`[Format: 4th argument] <TRUE> || <FALSE>`
+*/
 void EncryptTextFile(const char* SourceTextFile, const char* DestinationTextFile, int EncryptionKey, bool SourceTextFileDeletion) {
     FILE *FSource, *FDestination;
     int BufLen;
@@ -324,7 +349,27 @@ void EncryptTextFile(const char* SourceTextFile, const char* DestinationTextFile
     }
 }
 
-void DecryptTextFile(const char* DestinationTextFile, bool ReadDecryptedFile, int DecryptionKey, char* ReadByFileNameAndKeys) {
+/* Abbreviation of "Decrypt Text File" is one of the CORE FEATURES here in this application,
+and the return type function is `void()`, and requires the program to accept:
+`>>>` FOUR (4) arguments, accordingly as explained below.
+
+`> const char *DestinationTextFile`: A destination text file that needs to be decrypted.
+`> bool ReadDecryptedFile`: Mode for reading the whole contents of the decrypted file.
+`> int DecryptionKey`: A MUST required decryption key in order the text file to be decrypted. The code is spesific, and MUST be set in the program code before runtime, or included in the `**argv` parameter at command line before runtime. The encryption key HAS TO BE THE SAME for the decryption key, because one different in a single number will resulted in a non-correct encryption/decryption method.
+`> const char* ReadByFileNameAndKeys`: Use to search and find a certain key of strings in the decrypted text file, and this argumen have a spesific format and delimiters, and this argument can be used to find more than one key strings, but in the same time can be only one text file at a time, and that's the file you chose to decrypted when assigning it to this argument. 
+
+`[Format: 2nd argument] <TRUE> || <FALSE>`
+`[Format: 4th argument] <TEXTFILE.txt> > <STRINGKEY8LIST>`
+
+Even though it's used to decrypt file, doesn't meant it would decrypt and re-write the whole decrypted one onto the same file! Make sure if you want to decrypt and save the whole decrypted content to another file, do the following conventions:
+```
+    EncryptTextFile(..., TEMPORARY..., -ENCRYPTION_KEY, ...); // Invert the used encryption key into a negative value (revert back to original)
+    // Do your stuff here.
+    EncryptTextFile(TEMPORARY..., ..., ENCRYPTION_KEY, ...); // Revert back to the encrypted one after doing the necessary work before.
+```
+NOTE: The 4th argument of `<TEXTFILE.txt>` MUST BE THE SAME with the one being decrypted at first call parameter!
+*/
+void DecryptTextFile(const char* DestinationTextFile, bool ReadDecryptedFile, int DecryptionKey, const char* ReadByFileNameAndKeys) {
     FILE *FDestination, *FTempDestination;
     int BufLen, Ptr = 0, KeyTracker = 0, LineTracker = 0, FTDPos = 0;
     char C, FDBuffer[BUFSIZE10], DeleteTempDestinationTxtFile[BUFSIZE07], TxtFileName[BUFSIZE07];
@@ -433,6 +478,7 @@ bool CheckInvalidInput = false, CheckSuccessInput = false, SuccessfullyLoggedIn 
 #define AcceptF(Message, Variable) fflush(stdin); printf((Message)); scanf("%f", &(Variable)); fflush(stdin);
 
 Kemenkeu AdminSignIn = { 0 };
+#define MAX_ADMIN_SAVINGS 1000000000000000LL
 void WritePrivateKemenkeu(bool _ReadWithCaution) {
     if (_ReadWithCaution) { DecryptTextFile(Admin_Kemenkeu, true, ENCRYPTCODE, NULL); }
     else {
@@ -467,6 +513,7 @@ KepalaDaerah KDSignIn = { 0 };
 char KD_SignInNIK[32] = { 0 }, KD_SignInPassword[32] = { 0 };
 char KDFullName[BUFSIZE07] = { 0 }, KDJobTitle[BUFSIZE07] = { 0 }, KDHeadRegion[BUFSIZE07] = { 0 };
 int KDLoggedIn = 0;
+#define MAX_USER_SAVINGS 1000000000000LL
 void WritePublicKepalaDaerah(bool _ReadWithCaution) {
     if (_ReadWithCaution) { DecryptTextFile(User_KepalaDaerah, true, ENCRYPTCODE, NULL); }
     else {
@@ -726,21 +773,21 @@ void AMMFeature01(void) {
     puts("Berikut adalah hasil laporan Pajak dan Keuangan Negara:");
     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
     printf(BRIGHTPINK219":: Pajak Negara    (~%%): %.02f%%\n", atof(StateProfile.StateTaxes));
-    if (1000000000000LL - atoll(StateProfile.StateSavings) > 0LL)
-         { printf(BRIGHTBLUE159":: Tabungan Negara (Rp): Rp%'lld,00 >> (-Rp%'lld,00)\n", atoll(StateProfile.StateSavings), 1000000000000LL - atoll(StateProfile.StateSavings)); }
-    else { printf(BRIGHTBLUE159":: Tabungan Negara (Rp): Rp%'lld,00 >> (+Rp%'lld,00)\n", atoll(StateProfile.StateSavings), atoll(StateProfile.StateSavings) - 1000000000000LL); }
+    if (MAX_ADMIN_SAVINGS - atoll(StateProfile.StateSavings) > 0LL)
+         { printf(BRIGHTGREEN156":: Tabungan Negara (Rp): Rp%'lld,00 >> " BRIGHTMAGENTA211"(-Rp%'lld,00)\n", atoll(StateProfile.StateSavings), MAX_ADMIN_SAVINGS - atoll(StateProfile.StateSavings)); }
+    else { printf(BRIGHTGREEN156":: Tabungan Negara (Rp): Rp%'lld,00 >> " BRIGHTBLUE159"(+Rp%'lld,00)\n", atoll(StateProfile.StateSavings), atoll(StateProfile.StateSavings) - MAX_ADMIN_SAVINGS); }
     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
 
     puts("");
     puts(BRIGHTPURPLE213 ANSI_STYLE_ITALIC"~ Apakah Anda ingin melakukan perubahan? ~"ANSI_COLOR_RESET);
-    puts(BRIGHTGREEN156"[1] Ubah besar Pajak Negara (%)");
-    puts(BRIGHTBLUE159"[2] Lihat alur Perekonomian Negara (Rp)");
+    puts(BRIGHTPINK219"[1] Ubah besar Pajak Negara (%)");
+    puts(BRIGHTGREEN156"[2] Lihat alur Perekonomian Negara (Rp)");
     puts(ANSI_COLOR_RED"[0] Kembali..."ANSI_COLOR_RESET);
     AcceptInputOption("> Pilihan Anda: ", Options);
 
     puts("");
     if (Options == 1) {
-        AcceptF(BRIGHTGREEN156"Sertakan besar persentase pajak negara terbaru (%%): ", NewST);
+        AcceptF(BRIGHTPINK219"Sertakan besar persentase pajak negara terbaru (%%): ", NewST);
         
         if (NewST < 0.0f || NewST > 100.0f) {
             puts(ANSI_COLOR_RED"ERROR: Persentase Pajak Negara harus berada dalam jangkauan 0.0% hingga 100.0%!"ANSI_COLOR_RESET);
@@ -770,9 +817,9 @@ void AMMFeature01(void) {
         puts("");
         puts("Berikut adalah hasil laporan Keuangan Negara secara keseluruhan:");
         puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
-        if (1000000000000LL - atoll(StateProfile.StateSavings) > 0LL)
-             { printf(BRIGHTGREEN156"Tabungan Negara (Rp): Rp%'lld.00 >> (-Rp%'lld.00)\n", atoll(StateProfile.StateSavings), 1000000000000LL - atoll(StateProfile.StateSavings)); }
-        else { printf(BRIGHTGREEN156"Tabungan Negara (Rp): Rp%'lld.00 >> (+Rp%'lld.00)\n", atoll(StateProfile.StateSavings), atoll(StateProfile.StateSavings) - 1000000000000LL); }
+        if (MAX_ADMIN_SAVINGS - atoll(StateProfile.StateSavings) > 0LL)
+             { printf(BRIGHTGREEN156":: Tabungan Negara (Rp): Rp%'lld,00 >> " BRIGHTMAGENTA211"(-Rp%'lld,00)\n", atoll(StateProfile.StateSavings), MAX_ADMIN_SAVINGS - atoll(StateProfile.StateSavings)); }
+        else { printf(BRIGHTGREEN156":: Tabungan Negara (Rp): Rp%'lld,00 >> " BRIGHTBLUE159"(+Rp%'lld,00)\n", atoll(StateProfile.StateSavings), atoll(StateProfile.StateSavings) - MAX_ADMIN_SAVINGS); }
         
         puts("");
         puts(BRIGHTBLUE159"Pemasukkan (Incomes):");
@@ -880,10 +927,10 @@ void AMMFeature02(void) {
         snprintf(CurrentFileKD, sizeof(CurrentFileKD) + 16, "KD - %s.txt", KDList.FullName);
         
         puts("");
-        puts(ANSI_COLOR_LIGHTWHITE"=== Data Perekonomian Kepala Daerah ===");
-        printf("Yth. Kepala Dserah a.n.: %s, menjabat sebagai %s %s.\n", KDList.FullName, KDList.JobTitle, KDList.HeadRegion);
-        printf(":: NIK/E-mail: %s/%s\n", KDList.NIK, KDList.Email);
-        printf(":: Tempat/Tanggal Lahir: %s\n"ANSI_COLOR_RESET, KDList.BirthPlaceDate);
+        puts(ANSI_COLOR_LIGHTWHITE"=== Data Kepala Daerah dan Perekonomiannya ===");
+        printf(ANSI_COLOR_WHITE"Yth. Kepala Dserah a.n.: %s, %s %s.\n", KDList.FullName, KDList.JobTitle, KDList.HeadRegion);
+        printf(ANSI_COLOR_WHITE":: NIK/E-mail: %s/%s\n", KDList.NIK, KDList.Email);
+        printf(ANSI_COLOR_WHITE":: Tempat/Tanggal Lahir: %s\n"ANSI_COLOR_RESET, KDList.BirthPlaceDate);
 
         EncryptTextFile("Temp_"User_KepalaDaerah, User_KepalaDaerah, ENCRYPTCODE, true);
         
@@ -896,7 +943,11 @@ void AMMFeature02(void) {
 
         puts("");
         puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
-        printf(BRIGHTGREEN156"Dana Perekonomian Total: Rp%'lld.00\n", atoll(TotalSavings)); puts("");
+        if (MAX_USER_SAVINGS - atoll(TotalSavings) > 0LL)
+             { printf(BRIGHTGREEN156":: Dana Perekonomian Total Daerah: Rp%'lld,00 >> " BRIGHTMAGENTA211"(-Rp%'lld,00)\n", atoll(TotalSavings), MAX_USER_SAVINGS - atoll(TotalSavings)); }
+        else { printf(BRIGHTGREEN156":: Dana Perekonomian Total Daerah: Rp%'lld,00 >> " BRIGHTBLUE159"(+Rp%'lld,00)\n", atoll(TotalSavings), atoll(TotalSavings) - MAX_USER_SAVINGS); }
+
+        puts("");
         puts(BRIGHTBLUE159"Pemasukkan (Incomes): ");
         DecryptTextFile(CurrentFileKD, false, ENCRYPTCODE, KDSSPositive); puts("");
         puts(BRIGHTMAGENTA211"Pengeluaran (Expenses): ");
@@ -2168,7 +2219,11 @@ void UMMFeature01(void) {
     puts("");
     puts("Berikut adalah data akumulasi perekonomian dana daerah dari yang bersangkutan:");
     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
-    printf(BRIGHTGREEN156"Dana Perekonomian Total: Rp%'lld.00\n", atoll(TotalSavings)); puts("");
+    if (MAX_USER_SAVINGS - atoll(TotalSavings) > 0LL)
+         { printf(BRIGHTGREEN156":: Dana Perekonomian Total Daerah: Rp%'lld,00 >> " BRIGHTMAGENTA211"(-Rp%'lld,00)\n", atoll(TotalSavings), MAX_USER_SAVINGS - atoll(TotalSavings)); }
+    else { printf(BRIGHTGREEN156":: Dana Perekonomian Total Daerah: Rp%'lld,00 >> " BRIGHTBLUE159"(+Rp%'lld,00)\n", atoll(TotalSavings), atoll(TotalSavings) - MAX_USER_SAVINGS); }
+
+    puts("");
     puts(BRIGHTBLUE159"Pemasukkan (Incomes): ");
     DecryptTextFile(CurrentFileKD, false, ENCRYPTCODE, KDSSPositive); puts("");
     puts(BRIGHTMAGENTA211"Pengeluaran (Expenses): ");
@@ -3989,7 +4044,7 @@ void CMMFeature03(void) {
                                 // bool CheckForCurrentKD = false;
                                 // strcpy(CurrentKDFile, "New_"UserCartStore_Keranjang);
                                 // AccessCart = fopen(CurrentKDFile, "w");
-                                // for (int Line = 1; Line <= CountBufferEOF("Temp_"UserCartStore_Keranjang); Line++) {
+                                // for (int Line = 1; Line <= CountFDBuffer("Temp_"UserCartStore_Keranjang); Line++) {
                                 //     if (Line == 1) {
                                 //         fprintf(AccessCart, "%d", atoi(ReadLine("Temp_"UserCartStore_Keranjang, Line)) - 1);
                                 //     } else {
@@ -4083,7 +4138,7 @@ void CMMFeature03(void) {
                                 // bool CheckForCurrentKD = false;
                                 // strcpy(CurrentKDFile, "New_"UserCartStore_Keranjang);
                                 // AccessCart = fopen(CurrentKDFile, "w");
-                                // for (int Line = 1; Line <= CountBufferEOF("Temp_"UserCartStore_Keranjang); Line++) {
+                                // for (int Line = 1; Line <= CountFDBuffer("Temp_"UserCartStore_Keranjang); Line++) {
                                 //     if (Line == 1) {
                                 //         fprintf(AccessCart, "%d\n", atoi(ReadLine("Temp_"UserCartStore_Keranjang, Line)) - 1);
                                 //     } else if (!CheckForCurrentKD && Line == ((4 + 1) * AvailableReqs) + 2) {
@@ -4729,6 +4784,109 @@ void ClientLobbyMenu(void) {
     }
 }
 
+void FAQPage(void) {
+    ClearScreen();
+    puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
+    puts(ANSI_COLOR_LIGHTBLUE"Anda berada dalam menu: Home Menu :: Tanya Jawab (FAQ)");
+
+    puts("");
+    puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
+    
+    puts("(ADMIN) Fitur Kemenkeu:");
+    puts("A. Menu Sign-In Admin/Kemenkeu");
+    puts("1) Login: Pengguna dapat masuk sebagai admin (Kemenkeu) tanpa perlu mendaftar.");
+    puts("    (nama pengguna dan kata sandi ditetapkan sendiri oleh perekayasa)");
+    puts("");
+    puts("B. Menu Utama Kemenkeu");
+    puts("1) [EDIT] Pajak Negara: Memungkinkan pengaturan pajak negara.");
+    puts("Pengaturan pajak diperlukan untuk proses investasi yang dilakukan baik dari pihak kepala daerah agar dapat menjadi nilai tambah bagi negara (dalam konsep aritmatika sosial berupa keuntungan), yang akan disimpan keuntungannya pada bagian \"Tabungan Negara\" berikut ini.");
+    puts("> BANTUAN: Fitur ini memengaruhi bagian-bagian berikut: (ADMIN) Fitur 5 dan 6");
+    puts("");
+    puts("2) [VIEW] Tabungan Negara: Menampilkan informasi tentang tabungan negara.");
+    puts("Tabungan negara dapat dilihat dari total banyaknya pendapatan hasil investasi yang dilakukan dalam bentuk keuntungan yang didapat.");
+    puts("3) [VIEW] Pendapatan Daerah: Menampilkan seluruh pendapatan dari masing-masing daerah yang telah terdaftarkan oleh pihak dari para kepala daerah.");
+    puts("Pendapatan per daerah didapat pada saat kepala daerah melakukan pendataan sebelumnya, dan pastikan bahwa keseluruhan pendapatan telah diakumulasikan secara otomasi sebelum ditampilkan seiringnya daerah tersebut terus mendapatkan distribusi dana dari pihak Kemenkeu ataupun dari sektor industri positif.");
+    puts("> BANTUAN: Lihat pada \"(USER TIPE 1) Fitur Kepala Daerah\", fitur \"B. Menu Utama Kepala Daerah\", bagian \"1) [VIEW] Alur Perekonomian Dana Daerah\".");
+    puts("");
+    puts("4) [EDIT & VIEW] Data Kepala Wilayah: Menampilkan informasi tentang wilayah yang ditugaskan kepada masing-masing kepala daerah.");
+    puts("Informasi ini hanya didapat ketika ada pihak ketiga yang mendaftarkan diri sebagai kepala daerah dan dapat diimplementasikan sistem pengurutan data (bebas menggunakan pendekatan apapun) dan pencarian data agar lebih memudahkan pihak admin untuk mencari data mengenai pihak tertentu. Informasi yang ditampilkan hanya memuat data pribadi masing-masing kepala daerah saja.");
+    puts("> BANTUAN: Lihat pada \"(USER TIPE 1) Fitur Kepala Daerah\", fitur \"A. Menu Sign-Up dan Sign-In Kepala Daerah\", bagian \"1) Registrasi\".");
+    puts("");
+    puts("5) [EDIT & VIEW] Data Sektor Industri: Menampilkan informasi tentang pelbagai sektor industri yang terdaftar.");
+    puts("Informasi ini hanya didapat ketika ada pihak ketiga yang mendaftarkan diri sebagai perwakilan sektor industri dan dapat diimplementasikan sistem pengurutan data (bebas menggunakan pendekatan apapun) dan pencarian data agar lebih memudahkan pihak admin untuk mencari data mengenai pihak tertentu. Informasi yang ditampilkan hanya memuat data personil dari masing-masing sektor industri.");
+    puts("> BANTUAN: Lihat pada \"(USER TIPE 2) Fitur Sektor Industri\", fitur \"A. Menu Sign-Up dan Sign-In Sektor Industri\", bagian \"1) Registrasi\".");
+    puts("");
+    puts("6) [EDIT] Pendistribusian Pendapatan atau Bantuan Dana: Mengatur pendistribusian pendapatan/dana ke masing-masing daerah.");
+    puts("Pihak admin dapat melakukan pendistribusian dana (difokuskan dalam rupa nominal angka bilangan bulat positif saja) dan dianulirkan terhadap pihak kepala daerah yang mau kita berikan pendanaannya secara instant. Pendistribusian dana dapat dikenakan biaya pajak ataupun tidak (bebas), dan untuk alokasinya boleh melalui permintaan dari kepala daerah tertentu terlebih dahulu. Akan tetapi, jika ingin langsung diberikan melalui pihak admin secara inisiatif maka tidak akan menjadi masalah juga (cara ini bebas untuk diimplementasikan maupun tidak).");
+    puts("");
+    puts("7) [EDIT] Distribusi Perdagangan Internasional: Distribusi skala internasional barang hasil kerja sama antar kepala daerah dengan sektor industri.");
+    puts("Pihak Kemenkeu dapat menerima pengajuan distribusi ini (dengan tampilan menu dari asal kepala daerah, asal sektor industri, dan barang yang hendak didistribusikan), untuk dijual ke sektor perdagangan luar negeri (anggapannya) agar bisa diambil keuntungannya oleh negara yang dikenai pajak. Jadi, untuk penjualannya bersifat instant dan langsung masuk ke dalam tabungan negara, hingga tidak perlu ada pihak dari sektor perdagangan luar negeri nya yang perlu memantau kegiatan jual-beli ini lebih lanjut. Hasil penjualan yang didapat akan dibagi rata kepada pihak dari kepala daerah yang mengajukan distribusi perdagangan ini.");
+    puts("> BANTUAN: Lihat pada \"(USER TIPE 1) Fitur Kepala Daerah\", fitur \"B. Menu Utama Kepala Daerah\", bagian \"3) [EDIT & VIEW] Distribusi Pemerintah Pusat\".");
+    puts("");
+    puts("-------------------------------------------------");
+    puts("(USER TIPE 1) Fitur Kepala Daerah:");
+    puts("A. Menu Sign-Up dan Sign-In Kepala Daerah");
+    puts("1) Registrasi: Pendaftaran sebagai kepala daerah memerlukan TUJUH (7) informasi sebagai berikut:");
+    puts("   - Nama Lengkap (bebas dengan gelar pendidikan ataupun tidak, bagian nama boleh disingkat dengan tanda titik)");
+    puts("   - NIK (wajib 16 digit, informasi penting pertama untuk dapat masuk/sign-in sebagai kepala daerah)");
+    puts("   - E-mail (e-mail bisa berupa pribadi ataupun dari pemerintah pusat untuk daerah tersebut, misal \"nama.golongan@daerah.com\")");
+    puts("   - Kata Sandi (wajib minimal 8 karakter, informasi penting kedua untuk dapat masuk/sign-in sebagai kepala daerah)");
+    puts("   - Tempat/Tanggal Lahir (sesuai format TTL pada umumnya)");
+    puts("   - Jabatan (dalam kasus ini, terbagi beberapa golongan seperti gubernur, bupati, dan wali kota; hal ini hanya menjadi perlambangan saja)");
+    puts("   - Daerah Perwakilan (daerah yang diwakilkan berdasarkan golongan jabatan di atas)");
+    puts("2) Login: Untuk dapat masuk sebagai kepala daerah yang telah ter-registrasikan memerlukan DUA (2) informasi sebagai berikut:");
+    puts("   - NIK (wajib 16 digit)");
+    puts("   - Kata Sandi (wajib minimal 8 karakter)");
+    puts("");
+    puts("B. Menu Utama Kepala Daerah");
+    puts("1) [VIEW] Alur Perekonomian Dana Daerah: Melihat data pemasukkan serta pengeluaran dana di daerah tersebut.");
+    puts("Pihak dari kepala daerah dapat melihat pemasukkan dan pengeluaran dana berupa data pada daerah yang di-ayomikan olehnya, dan fitur ini dapat diimplementasikan algoritma pengurutan (bebas menggunakan pendekatan yang diinginkan) ataupun pencarian guna memudahkan pihak dari kepala daerah mencari informasi yang dibutuhkan.");
+    puts("2) [EDIT & VIEW] Pengajuan Dana Bantuan dari Pemerintah Pusat: Mengajukan permintaan bantuan dana tambahan kepada pihak Kemenkeu.");
+    puts("Pihak dari kepala daerah dapat mengajukan dana bantuan kepada pihak Kemenkeu dengan melihat status persetujuannya terlebih dahulu. Jika telah dikonfirmasi oleh pihak Kemenkeu, maka pihak Kemenkeu akan segera mengirimkan bantuan dananya kepada kepala daerah yang membutuhkan dana tersebut secara instant, namun hal ini juga dapat dilakukan secara iniatif dari pihak Kemenkeu-nya sendiri tanpa perlu pengajuan dari kepala daerah tertentu.");
+    puts("> BANTUAN: Lihat pada \"(ADMIN) Fitur Kemenkeu\", fitur \"B. Menu Utama Kemenkeu\", bagian \"5) [EDIT] Pendistribusian Pendapatan atau Bantuan Dana\".");
+    puts("");
+    puts("3) [EDIT & VIEW] Distribusi Pemerintah Pusat: Mengatur proses pendistribusian produksi industri terhadap pihak Kemenkeu.");
+    puts("Pihak dari kepala daerah dapat mengajukan dana bantuan dari pihak Kemenkeu dengan melihat status persetujuannya terlebih dahulu. Selain itu, pihak kepala daerah juga dapat melakukan pendistribusian hasil produksi kerja sama dengan pihak sektor industri kepada pihak Kemenkeu dengan cara langsung memberikan data lengkapnya dalam sesi input yang kemudian akan menunggu hasil konfirmasi dari pihak Kemenkeu. Jika dikonfirmasi, maka kedua belah pihak akan mendapat keuntungannya yang sudah dibagi rata secara otomatis setelah diperdagangkan oleh pihak Kemenkeu.");
+    puts("> BANTUAN: Lihat pada \"(ADMIN) Fitur Kemenkeu\", fitur \"B. Menu Utama Kemenkeu\", bagian \"6) [EDIT] Distribusi Perdagangan Internasional\".");
+    puts("");
+    puts("4) [EDIT & VIEW] Pengaturan Kerja Sama dengan Sektor Industri: Mengatur proses kerja sama dengan sektor industri positif.");
+    puts("Pihak dari kepala daerah dapat mengajukan kerja sama dengan pihak industri untuk dapat saling menguntungkan satu sama lain dan harus ada persetujuannya terlebih dahulu dari sektor industri tersebut sebelum dilakukannya kerja sama. Kerja sama dengan pihak industri tidak dibatasi oleh daerah, jadi fokuskan hanya pada kegiatan kerja sama dan nominal yang didapat sebagai hasil keuntungannya.");
+    puts("> BANTUAN: Lihat pada \"(USER TIPE 2) Fitur Sektor Industri\", fitur \"B. Menu Utama Sektor Industri\", bagian \"3) [EDIT & VIEW] Pengaturan Kerja Sama dengan Kepala Daerah\".");
+    puts("");
+    puts("Contoh penerapan dari poin 4) di atas:");
+    puts("Pihak kepala daerah hendak sektor industri cokelat dan telah disetujui oleh pihak industri. Sektor industri menanyakan berapa banyak cokelat yang hendak didistribusikan kepada daerah tersebut selama stok nya masih ada, dan kepala daerah menyampaikan banyaknya dalam angka bilangan bulat positif. Pihak dari kepala daerah mendapatkan cokelatnya yang dapat didistribusikan kepada pihak Kemenkeu untuk dijual dan mendapat pendapatan lebih, dan dari pihak sektor industri positif mendapat keuntungan berupa nominal uang. Sebagai informasi, kegiatan kerja sama yang dilakukan dapat disimpan dalam bentuk nota ataupun tidak, karena hal ini bersifat tidak wajib.");
+    puts("");
+    puts("-------------------------------------------------");
+    puts("(USER TIPE 2) Fitur Sektor Industri:");
+    puts("A. Menu Sign-Up dan Sign-In Sektor Industri");
+    puts("1) Registrasi: Untuk melakukan registrasi, diperlukan perwakilan seorang diri dari sektor industri yang memiliki EMPAT (4) informasi berikut, yaitu:");
+    puts("   - Nama Lengkap (perwakilan dari sektor industri yang hendak didaftarkan)");
+    puts("   - Nama Pengguna (singkatnya, username dari pendaftar untuk keperluan login sebagai data penting pertama)");
+    puts("   - Nama Sektor Industri (nama industri yang diwakilkan)");
+    puts("   - Kata Sandi (wajib minimal 8 karakter dan untuk keperluan login sebagai data penting kedua)");
+    puts("2) Login: Untuk melakukan login, diperlukan perwakilan seorang diri dari sektor industri yang memiliki DUA (2) informasi berikut, yaitu:");
+    puts("   - Nama Pengguna (singkatnya, username dari pendaftar)");
+    puts("   - Kata Sandi (wajib minimal 8 karakter)");
+    puts("");
+    puts("B. Menu Utama Sektor Industri");
+    puts("1) [VIEW] Pendapatan Sektor Industri: Menampilkan pendapatan total dari hasil produksi industri.");
+    puts("Sederhananya, pihak industri dapat melihat total pendapatan yang diterima dari hasil kerja sama dengan kepala daerah yang telah diakumulasikan.");
+    puts("2) [EDIT & VIEW] Pengaturan Produksi: Memampukan perwakilan dari industri untuk mencatat banyak produksi terhadap suatu produk.");
+    puts("Produk yang dihasilkan bersifat (bebas menurut pemakai, diusahakan untuk dilogikakan dengan nama industrinya), hingga dalam sesi fitur ini diperlihatkan tampilan produk-produk dan banyak dari masing-masingnya serta harga per produksi (bisa per item atau sejenisnya), juga apabila diinginkan maka dapat diimplementasikan fitur algoritma pengurutan/pencarian data agar lebih memudahkan pihak industri dalam mengatur produk-produknya. Jika ingin menambahkan produk baru, maka diperlukan konfirmasi terlebih dahulu, lalu tinggal di-inputkan saja nama produk yang diproduksi dan banyak produksinya serta harga per produksi. Jika ingin mengubah atau menambahkan jumlah produk terhadap produk yang masih terdata, maka cukup tinggal input biasa nama produk, penambahan banyak produk, serta harga terbarunya.");
+    puts("3) [EDIT & VIEW] Pengaturan Kerja Sama dengan Kepala Daerah: Mengatur proses kerja sama dari permintaan kepala daerah tertentu.");
+    puts("Pihak dari sektor industri dapat mengajukan kerja sama dengan pihak kepala daerah untuk dapat saling menguntungkan satu sama lain dan harus ada persetujuannya terlebih dahulu dari sektor industri tersebut sebelum dilakukannya kerja sama. Kerja sama dengan pihak kepala daerah tidak dibatasi oleh daerah tempat ia menjabat, jadi fokuskan hanya pada kegiatan kerja sama dan nominal yang didapat sebagai hasil keuntungannya.");
+    puts("> BANTUAN: Lihat pada \"(USER TIPE 1) Fitur Kepala Daerah\", fitur \"B. Menu Utama Kepala Daerah\", bagian \"4) [EDIT & VIEW] Pengaturan Kerja Sama dengan Sektor Industri\".");
+    puts("");
+    puts("Contoh penerapan dari poin 3) di atas:");
+    puts("Pihak sektor industri mengajukan kerja sama dalam distribusi cokelat dengan kuantitas (dalam angka bilangan bulat positif) yang telah ditetapkan kepada pihak kepala daerah. Setelah mendapat persetujuan dari pihak kepala daerah, maka kepala daerah akan LANGSUNG menerima distribusi hasil produksi dari pihak industri tersebut dan kepada pihak industri diuntungkan dalam jumlah nominal uang yang setara dengan harga total distribusi tersebut.");
+
+    puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
+
+    puts("");
+    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+    system("pause"); HomeMenu();
+}
+
 void AboutDWakandaPage(void) {
     ClearScreen();
     puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
@@ -4775,6 +4933,7 @@ void HomeMenu(void) {
     puts(BRIGHTPURPLE218"[3] Client :: Sektor Industri");
 
     puts("");
+    puts(BRIGHTRED216"[8] F.A.Q.: Tanya Jawab SEMENTARA (Frequently Ask Questions)");
     puts(BRIGHTMAGENTA211"[9] Tentang D'Wakanda"ANSI_COLOR_RESET);
     AcceptInputOption("> Pilihan Anda: ", AUCOption);
 
@@ -4785,10 +4944,11 @@ void HomeMenu(void) {
         CheckInvalidInput = false;
 
         switch (AUCOption) {
-            case 1:  { AdminLobbyMenu();                     } break;
-            case 2:  { UserLobbyMenu();                      } break;
-            case 3:  { ClientLobbyMenu();                    } break;
-            case 9:  { AboutDWakandaPage();                  } break;
+            case 1:  { AdminLobbyMenu();            } break;
+            case 2:  { UserLobbyMenu();             } break;
+            case 3:  { ClientLobbyMenu();           } break;
+            case 8:  { FAQPage();                   } break;
+            case 9:  { AboutDWakandaPage();         } break;
             default: { CheckInvalidInput = true; HomeMenu(); } break;
         }
     }
@@ -4800,7 +4960,7 @@ int main(void) {
     fflush(stdout); fflush(stdin);
     setlocale(LC_NUMERIC, "");               //// NOTE: Formatting thousands with comma!
 
-    WritePrivateKemenkeu(false);
+    WritePrivateKemenkeu(false);             //// NOTE: Do this only ONCE if the file are not EXIST yet!
     WritePrivateKeranjang(true, 1, false);   //// NOTE: Do this only ONCE if the file are not EXIST yet!
     WritePrivateKeranjang(false, 1, false);  //// NOTE: Do this only ONCE if the file are not EXIST yet!
     HomeMenu();
@@ -4808,12 +4968,17 @@ int main(void) {
     return 0;
 }
 #else
+    /* The following lines are used for TECHNICAL PURPOSES ONLY! */
+    /* DO NOT ATTEMPT TO DO SO IF YOU DO NOT KNOW WHAT YOU'RE DOING! */
+
     // EncryptTextFile("contoh.txt", "contoh_hasil_enkripsi.txt", 255780, true);
     // DecryptTextFile("contoh_hasil_enkripsi.txt", true, 255780, NULL);
 
     // DecryptTextFile("Kemenkeu.txt", true, ENCRYPTCODE, NULL); puts("");
     // DecryptTextFile("KepalaDaerah.txt", true, ENCRYPTCODE, NULL); puts("");
     // DecryptTextFile("SektorIndustri.txt", true, ENCRYPTCODE, NULL); puts("");
+    // DecryptTextFile("KerangjangKemenkeu.txt", true, ENCRYPTCODE, NULL); puts("");
+    // DecryptTextFile("KerangjangKepalaDaerah.txt", true, ENCRYPTCODE, NULL); puts("");
 
     EncryptTextFile("e.txt", AdminCartStore_Keranjang, ENCRYPTCODE, false);
     // EncryptTextFile("b.txt", "KD - Stevannie.txt", ENCRYPTCODE, false);
@@ -4828,7 +4993,7 @@ int main(void) {
     // DecryptTextFile("KD - Stevannie.txt", true, ENCRYPTCODE, NULL);
     // DecryptTextFile("SektorIndustri.txt", true, ENCRYPTCODE, NULL);
 
-    // printf("%d\n", CountBufferEOF("contoh_hasil_enkripsi.txt"));
+    // printf("%d\n", CountFDBuffer("contoh_hasil_enkripsi.txt"));
 
     return 0;
 }
