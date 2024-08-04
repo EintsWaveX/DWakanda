@@ -440,7 +440,7 @@ void WritePrivateKemenkeu(bool _ReadWithCaution) {
                                     .Username = "D'Wakanda",
                                     .Password = "Kemenkeu2024",
                                     .StateTaxes = "0",
-                                    .StateSavings = "1000000000000",
+                                    .StateSavings = "1000000000000000",
                                     .Status = 1
                                 };
         
@@ -449,6 +449,8 @@ void WritePrivateKemenkeu(bool _ReadWithCaution) {
 
             if (Admin == NULL) {
                 fprintf(stderr, "ERROR: Tidak dapat menuliskan data admin Kemenkeu ke dalam file.\n");
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause");
                 HomeMenu();
             }
@@ -476,6 +478,8 @@ void WritePublicKepalaDaerah(bool _ReadWithCaution) {
 
             if (User == NULL) {
                 fprintf(stderr, "ERROR: Tidak dapat menuliskan data pengguna Kepala Daerah ke dalam file.\n");
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause");
                 HomeMenu();
             }
@@ -518,7 +522,7 @@ void WritePublicKepalaDaerah(bool _ReadWithCaution) {
 
         snprintf(CreateKDSavings, sizeof(CreateKDSavings) + 16, "KD - %s.txt", KDSignIn.FullName);
         User = fopen("Temp_NewKD.txt", "w");
-        fprintf(User, "100000000000\n\n");
+        fprintf(User, "1000000000000\n\n");
         fclose(User);
         EncryptTextFile("Temp_NewKD.txt", CreateKDSavings, ENCRYPTCODE, true);
     }
@@ -539,6 +543,8 @@ void WritePublicSektorIndustri(bool _ReadWithCaution) {
 
             if (Client == NULL) {
                 fprintf(stderr, "ERROR: Tidak dapat menuliskan data pengguna Sektor Industri ke dalam file.\n");
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause");
                 HomeMenu();
             }
@@ -654,7 +660,9 @@ void AdminMainMenu(void) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         AdminMainMenu();
     }
@@ -703,7 +711,9 @@ void AMMFeature01(void) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         AMMFeature01();
     }
@@ -735,6 +745,7 @@ void AMMFeature01(void) {
         if (NewST < 0.0f || NewST > 100.0f) {
             puts(ANSI_COLOR_RED"ERROR: Persentase Pajak Negara harus berada dalam jangkauan 0.0% hingga 100.0%!"ANSI_COLOR_RESET);
             puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
             system("pause");
             AMMFeature01();
         }
@@ -746,6 +757,7 @@ void AMMFeature01(void) {
 
         puts(ANSI_COLOR_GREEN"Pembaruan Pajak Negara telah berhasil!"ANSI_COLOR_RESET);
         puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
         system("pause");
         AMMFeature01();
     
@@ -769,7 +781,9 @@ void AMMFeature01(void) {
         DecryptTextFile(Admin_Kemenkeu, false, ENCRYPTCODE, Admin_Kemenkeu" > [-]");
         puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
 
-        puts(""); system("pause"); AMMFeature01();
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); AMMFeature01();
 
     } else if (Options == 0) { AdminMainMenu(); }
     else                     { CheckInvalidInput = true; AMMFeature01(); }
@@ -786,7 +800,9 @@ void AMMFeature02(void) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         AMMFeature02();
     }
@@ -804,7 +820,9 @@ void AMMFeature02(void) {
         puts("");
         puts(ANSI_COLOR_MAGENTA"Mohon maaf, saat ini belum ada Kepala Daerah yang mendaftar...");
         puts("... Silakan untuk ditunggu konfirmasi lanjutannya dan Anda dapat memantau data ini secara berkala..." ANSI_COLOR_RESET);
-        puts(""); system("pause"); AdminMainMenu();
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); AdminMainMenu();
     }
 
     EncryptTextFile(User_KepalaDaerah, "Temp_"User_KepalaDaerah, -ENCRYPTCODE, true);
@@ -886,6 +904,7 @@ void AMMFeature02(void) {
         puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
 
         puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
         system("pause");
         AMMFeature02();
     
@@ -903,7 +922,9 @@ void AMMFeature03(void) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         AMMFeature03();
     }
@@ -921,7 +942,9 @@ void AMMFeature03(void) {
         puts("");
         puts(ANSI_COLOR_MAGENTA"Mohon maaf, saat ini belum ada Sektor Industri yang mendaftar...");
         puts("... Silakan untuk ditunggu konfirmasi lanjutannya dan Anda dapat memantau data ini secara berkala..." ANSI_COLOR_RESET);
-        puts(""); system("pause"); AdminMainMenu();
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); AdminMainMenu();
     }
 
     EncryptTextFile(Client_SektorIndustri, "Temp_"Client_SektorIndustri, -ENCRYPTCODE, true);
@@ -994,6 +1017,7 @@ void AMMFeature03(void) {
         puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
 
         puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
         system("pause");
         AMMFeature03();
     
@@ -1005,7 +1029,7 @@ void AMMFeature04(void) {
     KepalaDaerah KDList = { 0 };
 
     long long int GivenNomina = 0LL;
-    char KDFileName[BUFSIZE07] = { 0 }, GetKDSavings[BUFSIZE07] = { 0 };
+    char KDFileName[BUFSIZE07] = { 0 };
     char UpdateStatus, WriteString01_A[BUFSIZE07] = { 0 }, WriteString02_U[BUFSIZE07] = { 0 }, WriteString03_U[BUFSIZE07] = { 0 };
     char GetKDFullName[BUFSIZE07] = { 0 }, GetKDJobTitle[BUFSIZE07] = { 0 }, GetKDHeadRegion[BUFSIZE07] = { 0 };
     int StatusList[BUFSIZE10] = { 0 };
@@ -1016,7 +1040,9 @@ void AMMFeature04(void) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         AMMFeature04();
     }
@@ -1034,7 +1060,9 @@ void AMMFeature04(void) {
         puts("");
         puts(ANSI_COLOR_MAGENTA"Mohon maaf, saat ini belum ada Kepala Daerah yang mendaftar...");
         puts("... Silakan untuk ditunggu konfirmasi lanjutannya dan Anda dapat memantau data ini secara berkala..." ANSI_COLOR_RESET);
-        puts(""); system("pause"); AdminMainMenu();
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); AdminMainMenu();
     }
 
     EncryptTextFile(User_KepalaDaerah, "Temp_"User_KepalaDaerah, -ENCRYPTCODE, true);
@@ -1074,7 +1102,9 @@ void AMMFeature04(void) {
         puts("");
         puts(ANSI_COLOR_MAGENTA"Mohon maaf, saat ini belum ada Kepala Daerah yang hendak mengajukan bantuan dana kepada Anda...");
         puts("... Silakan untuk ditunggu konfirmasi lanjutannya dan Anda dapat memantau data ini secara berkala..." ANSI_COLOR_RESET);
-        puts(""); system("pause"); AdminMainMenu();
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); AdminMainMenu();
     }
 
     puts("");
@@ -1138,17 +1168,29 @@ void AMMFeature04(void) {
 
         puts("");
         if (StatusList[PeekKD - 1] == 0) {
+            
             puts(ANSI_COLOR_LIGHTMAGENTA"Sepertinya untuk Kepala Daerah yang bersangkutan saat ini TIDAK dalam masa pengajuan permintaan bantuan dana...");
             puts(ANSI_COLOR_MAGENTA"Dipersilakan untuk melakukan re-load dan memilih Kepala Daerah lain yang tengah tertulis: " ANSI_COLOR_YELLOW"SEDANG DIPROSES!"ANSI_COLOR_RESET);
-            puts(""); system("pause"); AMMFeature04();
+            
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+            system("pause"); AMMFeature04();
+
         } else if (StatusList[PeekKD - 1] == 2) {
             puts(ANSI_COLOR_LIGHTGREEN"Anda telah MENYETUJUI permintaan bantuan dana dari ajuan Kepala Daerah yang bersengakutan sebelumnya...");
             puts(ANSI_COLOR_GREEN"Dipersilakan untuk melakukan re-load dan memilih Kepala Daerah lain yang tengah tertulis: " ANSI_COLOR_YELLOW"SEDANG DIPROSES!"ANSI_COLOR_RESET);
-            puts(""); system("pause"); AMMFeature04();
+            
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+            system("pause"); AMMFeature04();
+
         } else if (StatusList[PeekKD - 1] == -1) {
             puts(ANSI_COLOR_LIGHTRED"Anda telah MENOLAK permintaan bantuan dana dari ajuan Kepala Daerah yang bersengakutan sebelumnya...");
             puts(ANSI_COLOR_RED"Dipersilakan untuk melakukan re-load dan memilih Kepala Daerah lain yang tengah tertulis: " ANSI_COLOR_YELLOW"SEDANG DIPROSES!"ANSI_COLOR_RESET);
-            puts(""); system("pause"); AMMFeature04();
+            
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+            system("pause"); AMMFeature04();
         
         } else if (StatusList[PeekKD - 1] == 1) {
             puts(ANSI_COLOR_CYAN"Saat ini Kepala Daerah yang bersangkutan tengah dalam masa pemrosesan dana bantuan dari pihak Anda.");
@@ -1249,6 +1291,8 @@ void AMMFeature04(void) {
                         if (atoll(WriteString01_A) < 1000000000) { puts(ANSI_COLOR_LIGHTRED"... Mohon perhatikan tabungan negara berikut dikarenakan agar tidak berhutang!"); }
                         else                                     { puts(ANSI_COLOR_GREEN"... Saat ini tabungan negara masih aman, tingkatkan terus kinerja Anda!"); }
                         puts(ANSI_COLOR_LIGHTGREEN"Pemberian sumbangan dana tambahan bagi Kepala Daerah yang bersangkutan telah berhasil!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                         system("pause"); AMMFeature04();
                 
                     } else {
@@ -1259,6 +1303,8 @@ void AMMFeature04(void) {
                         puts("");
                         puts(ANSI_COLOR_ORANGE"WARNING: Kesalahan input nominal ditemukan! Nominal yang diberikan tidaklah memenuhi syarat...");
                         puts("... Demi keamanan data, mohon dilakukan penyetelan ulang dari awal pilihan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                         system("pause");
                     }
                 }
@@ -1314,6 +1360,8 @@ void AMMFeature04(void) {
                 puts("");
                 puts(ANSI_COLOR_LIGHTRED"Anda telah memilih untuk MENOLAK pengajuan permintaan dana bantuan dari Kepala Daerah yang bersangkutan!");
                 puts(BRIGHTGREEN156"... Dipersilakan untuk kembali ke menu sebelumnya tanpa modifikasi pengguna..."ANSI_COLOR_RESET);
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause"); AMMFeature04();
             
             } else { CheckInvalidInput = true; AMMFeature04(); }
@@ -1321,6 +1369,7 @@ void AMMFeature04(void) {
 
     } else if (PeekKD == 0) {
         puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
         system("pause");
         AdminMainMenu();
 
@@ -1345,7 +1394,9 @@ void AMMFeature05(void) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         AMMFeature05();
     }
@@ -1406,11 +1457,15 @@ void AMMFeature05(void) {
 
                 puts("");
                 puts(ANSI_COLOR_LIGHTGREEN"Anda telah MEMBUKA sesi peluang pengajuan kerja sama dengan Kepala Daerah..."ANSI_COLOR_RESET);
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause"); AMMFeature05();
 
             } else if (UpdateStatus == 'N' || UpdateStatus == 'n') {
                 puts("");
                 puts(ANSI_COLOR_LIGHTRED"Anda tetap MENUTUP sesi peluang pengajuan kerja sama dengan Kepala Daerah..."ANSI_COLOR_RESET);
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause"); AMMFeature05();
             }
 
@@ -1441,11 +1496,15 @@ void AMMFeature05(void) {
 
                 puts("");
                 puts(ANSI_COLOR_LIGHTRED"Anda telah MENUTUP sesi peluang pengajuan kerja sama dengan Kepala Daerah..."ANSI_COLOR_RESET);
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause"); AMMFeature05();
 
             } else if (UpdateStatus == 'N' || UpdateStatus == 'n') {
                 puts("");
                 puts(ANSI_COLOR_LIGHTGREEN"Anda tetap MEMBUKA sesi peluang pengajuan kerja sama dengan Kepala Daerah..."ANSI_COLOR_RESET);
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause"); AMMFeature05();
             }
         }
@@ -1509,7 +1568,9 @@ void AMMFeature05(void) {
                 puts(BRIGHTGREEN154"PERHATIAN: Saat ini belum ada Kepala Daerah yang hendak mengajukan distribusi barang kepada Kemenkeu!");
                 puts("...        Silakan untuk ditunggu dan diperhatikan menu ini secara berkala..."ANSI_COLOR_RESET);
 
-                puts(""); system("pause"); AMMFeature05();
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                system("pause"); AMMFeature05();
             }
 
             puts("");
@@ -1627,8 +1688,6 @@ void AMMFeature05(void) {
 
                     EncryptTextFile(UserCartStore_Keranjang, "Temp_"UserCartStore_Keranjang, -ENCRYPTCODE, true);
                     AvailableReqs = atoi(ReadLine("Temp_"UserCartStore_Keranjang, 1));
-                    strcpy(CurrentCartFile, "New_"UserCartStore_Keranjang);
-                    AccessCart = fopen(CurrentCartFile, "w");
 
                     char WriteNewSavings[BUFSIZE07] = { 0 };
                     snprintf(CurrentFileKD, sizeof(CurrentFileKD) + 12, "KD - %s.txt", DisplayKDFullName);
@@ -1640,6 +1699,9 @@ void AMMFeature05(void) {
                     OverWriteStringAtLine("TempKD.txt", WriteNewSavings, 0, 1);
                     EncryptTextFile("TempKD.txt", CurrentFileKD, ENCRYPTCODE, false); system("del TempKD.txt");
 
+                    strcpy(CurrentCartFile, "New_"UserCartStore_Keranjang);
+                    AccessCart = fopen(CurrentCartFile, "w");
+                    
                     fprintf(AccessCart, "0\n");
                     for (int ReqID = 0; ReqID < AvailableReqs; ReqID++) {
                         strcpy(CartInfo.Requester, ReadLine("Temp_"UserCartStore_Keranjang, ((4 + 1) * ReqID) + 3));
@@ -1678,7 +1740,9 @@ void AMMFeature05(void) {
                     puts(ANSI_COLOR_GREEN":: Selamat, Anda telah menyetujui pengajuan kerja sama dari Kepala Daerah dengan Sektor Industri yang bersangkutan...");
                     puts(ANSI_COLOR_GREEN":: Kini Anda siap untuk mendistribusikan produk pesanan tersebut ke skala INTERNASIONAL!"ANSI_COLOR_RESET);
 
-                    puts(""); system("pause"); AMMFeature05();
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause"); AMMFeature05();
                 
                 } else if (ConfirmRequest == 'N' || ConfirmRequest == 'n') {
                     ClearScreen();
@@ -1715,13 +1779,25 @@ void AMMFeature05(void) {
                     puts(ANSI_COLOR_RED":: Maaf, Anda telah menolak pengajuan kerja sama dari Kepala Daerah yang bersangkutan...");
                     puts(ANSI_COLOR_RED":: Namun jangan khawatir, karena Anda masih dapat MENERIMA pengajuannya kembali di lain waktu!"ANSI_COLOR_RESET);
 
-                    puts(""); system("pause"); AMMFeature05();
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause"); AMMFeature05();
                 
-                } else if (ConfirmRequest == 'Q' || ConfirmRequest == 'q') { puts(""); system("pause"); }
-                else { puts(""); system("pause"); }
+                } else if (ConfirmRequest == 'Q' || ConfirmRequest == 'q') {
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause");
+                } else {
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause");
+                }
             
-            } else if (PeekReq == 0) { puts(""); system("pause"); AMMFeature05(); }
-            else { CheckInvalidInput = true; AMMFeature05(); }
+            } else if (PeekReq == 0) {
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                system("pause"); AMMFeature05();
+            } else { CheckInvalidInput = true; AMMFeature05(); }
         }
     
     } else if (OCManaging == 2 && AdminStatus == 0) {
@@ -1741,9 +1817,15 @@ void AMMFeature05(void) {
         puts(ANSI_COLOR_LIGHTMAGENTA"Sekedar informasi, bahwa Anda tidak dapat mengelola pengajuan-pengajuan yang disampaikan oleh pelbagai");
         puts("pihak Kepala Daerah jika status penerimaan pengajuan Anda saat ini sedang TIDAK AKTIF!");
         puts(ANSI_COLOR_GREEN"... Silakan untuk DIBUKA terlebih dahulu akses pengajuannya agar Anda dapat mengelola lebih lenjut..."ANSI_COLOR_RESET);
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
         system("pause"); AMMFeature05();
 
-    } else if (OCManaging == 0) { puts(""); system("pause"); AdminMainMenu(); } else { CheckInvalidInput = true; AMMFeature05(); }
+    } else if (OCManaging == 0) {
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); AdminMainMenu();
+    } else { CheckInvalidInput = true; AMMFeature05(); }
 }
 
 void AMMFeature06(void) {
@@ -1763,7 +1845,9 @@ void AMMFeature06(void) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         AMMFeature06();
     }
@@ -1819,7 +1903,9 @@ void AMMFeature06(void) {
         puts(BRIGHTGREEN154"PERHATIAN: Saat ini Anda belumm menerima daftar keranjang dari Kepala Daerah yang mengajukannya!");
         puts("...        Silakan untuk ditunggu dan diperhatikan menu ini secara berkala..."ANSI_COLOR_RESET);
 
-        puts(""); system("pause"); AdminMainMenu();
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); AdminMainMenu();
     }
 
     puts("");
@@ -1960,7 +2046,9 @@ void AMMFeature06(void) {
             puts(ANSI_COLOR_LIGHTGREEN"Status Distribusi: DISTRIBUSI SUKSES (TIDAK DAPAT DIBATALKAN, PERMANEN)");
             puts(ANSI_COLOR_GREEN":: Selamat, Anda telah mendistribusikan barang produksi yang bersangkutan ke skala internasional..."ANSI_COLOR_RESET);
 
-            puts(""); system("pause"); AMMFeature06();
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+            system("pause"); AMMFeature06();
         
         } else if (ConfirmRequest == 'N' || ConfirmRequest == 'n') {
             ClearScreen();
@@ -1997,13 +2085,21 @@ void AMMFeature06(void) {
             puts(ANSI_COLOR_RED":: Sepertinya saat ini Anda masih belum ingin mendistribusikan barang produksi yang bersangkutan...");
             puts(ANSI_COLOR_RED":: Namun jangan khawatir, karena Anda masih dapat MENDISTRIBUSIKANNYA kembali di lain waktu!"ANSI_COLOR_RESET);
 
-            puts(""); system("pause"); AMMFeature06();
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+            system("pause"); AMMFeature06();
         
-        } else if (ConfirmRequest == 'Q' || ConfirmRequest == 'q') { puts(""); system("pause"); AMMFeature06(); }
-        else { CheckInvalidInput = true; AMMFeature06(); }
+        } else if (ConfirmRequest == 'Q' || ConfirmRequest == 'q') {
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+            system("pause"); AMMFeature06();
+        } else { CheckInvalidInput = true; AMMFeature06(); }
     
-    } else if (PeekReq == 0) { puts(""); system("pause"); AdminMainMenu(); }
-    else { CheckInvalidInput = true; AMMFeature06(); }
+    } else if (PeekReq == 0) {
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); AdminMainMenu();
+    } else { CheckInvalidInput = true; AMMFeature06(); }
 }
 
 void UserMainMenu(void) {
@@ -2014,7 +2110,9 @@ void UserMainMenu(void) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         AdminMainMenu();
     }
@@ -2092,7 +2190,9 @@ void UMMFeature02(void) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         UMMFeature02();
     }
@@ -2143,15 +2243,19 @@ void UMMFeature02(void) {
             
             puts("");
             puts(ANSI_COLOR_GREEN"Pengajuan permintaan bantuan dana telah berhasil!"ANSI_COLOR_RESET);
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
             system("pause");
             UMMFeature02();
             
         } else if (OpenRequest == 'N' || OpenRequest == 'n') {
             puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
             system("pause");
             UMMFeature02();
         } else if (OpenRequest == 'Q' || OpenRequest == 'q') {            
             puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
             system("pause");
             UserMainMenu();
         } else { CheckInvalidInput = true; UMMFeature02(); }
@@ -2184,15 +2288,19 @@ void UMMFeature02(void) {
             
             puts("");
             puts(ANSI_COLOR_GREEN"Pembatalan pengajuan bantuan dana telah berhasil!"ANSI_COLOR_RESET);
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
             system("pause");
             UMMFeature02();
 
         } else if (OpenRequest == 'N' || OpenRequest == 'n') {
             puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
             system("pause");
             UMMFeature02();
         }  else if (OpenRequest == 'Q' || OpenRequest == 'q') {
             puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
             system("pause");
             UserMainMenu();
         } else { CheckInvalidInput = true; UMMFeature02(); }
@@ -2213,7 +2321,9 @@ void UMMFeature03(void) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         UMMFeature03();
     }
@@ -2255,7 +2365,9 @@ void UMMFeature03(void) {
     } if (MaxConfirms > 0) {
         EncryptTextFile("Temp_"AdminCartStore_Keranjang, AdminCartStore_Keranjang, ENCRYPTCODE, true);
         puts(BRIGHTBLUE159"===================================================================================================="ANSI_COLOR_RESET);
-        puts(""); system("pause"); UMMFeature03();
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); UMMFeature03();
     }
 
     EncryptTextFile("Temp_"AdminCartStore_Keranjang, AdminCartStore_Keranjang, ENCRYPTCODE, true);
@@ -2274,7 +2386,10 @@ void UMMFeature03(void) {
         puts("");
         puts(ANSI_COLOR_LIGHTRED"Mohon maaf, saat ini pihak Kemenkeu tengah MENONAKTIFKAN masa pengajuan untuk sementara waktu!");
         puts(ANSI_COLOR_RED"... Harap untuk menunggu lebih lanjut mengenai kabar masa pengajuan menjadi AKTIF ke depannya..."ANSI_COLOR_RESET);
-        puts(""); system("pause"); UserMainMenu();
+        
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); UserMainMenu();
     }
 
     EncryptTextFile(UserCartStore_Keranjang, "Temp_"UserCartStore_Keranjang, -ENCRYPTCODE, true);
@@ -2338,7 +2453,9 @@ void UMMFeature03(void) {
         puts(BRIGHTGREEN154"PERHATIAN: Saat ini Anda belum ada membeli produk dari Sektor Industri yang hendak diajukan ke kepada Kemenkeu!");
         puts("...        Anda diperkenankan untuk memesan produk dari Sektor Industri terlebih dahulu..."ANSI_COLOR_RESET);
 
-        puts(""); system("pause"); UserMainMenu();
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); UserMainMenu();
     }
 
     puts("");
@@ -2454,11 +2571,15 @@ void UMMFeature03(void) {
 
                 puts("");
                 puts(ANSI_COLOR_GREEN"Anda telah berhasil membatalkan status pengajuan distribusi Anda kepada Kemenkeu!"ANSI_COLOR_RESET);
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause"); UMMFeature03();
            
             } else if (ConfirmRequest == 'N' || ConfirmRequest == 'n') {
                 puts("");
                 puts(ANSI_COLOR_RED"Anda tetap meneruskan status pengajuan distribusi Anda kepada Kemenkeu!"ANSI_COLOR_RESET);
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause"); UMMFeature03();
             }
         }
@@ -2526,30 +2647,50 @@ void UMMFeature03(void) {
 
             EncryptTextFile("Temp_"Admin_Kemenkeu, Admin_Kemenkeu, ENCRYPTCODE, true);
 
-            puts(""); system("pause"); UMMFeature03();
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+            system("pause"); UMMFeature03();
         
-        } else if (ConfirmRequest == 'N' || ConfirmRequest == 'n') { puts(""); system("pause"); UMMFeature03(); }
-        else if   (ConfirmRequest == 'Q' || ConfirmRequest == 'q') { puts(""); system("pause"); UserMainMenu(); }
-        else { puts(""); system("pause"); }
+        } else if (ConfirmRequest == 'N' || ConfirmRequest == 'n') {
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+            system("pause"); UMMFeature03();
+        } else if   (ConfirmRequest == 'Q' || ConfirmRequest == 'q') {
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+            system("pause"); UserMainMenu();
+        } else { puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+            system("pause");
+        }
     
-    } else if (PeekReq == 0) { puts(""); system("pause"); UserMainMenu(); }
-    else { CheckInvalidInput = true; UMMFeature03(); }
+    } else if (PeekReq == 0) {
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); UserMainMenu();
+    } else { CheckInvalidInput = true; UMMFeature03(); }
 }
 
 void UMMFeature04(void) {
+    FILE *AccessCart;
     SektorIndustri SIList = { 0 };
+    Keranjang CartInfo = { 0 };
+
+    char CurrentCartFile[BUFSIZE07] = { 0 }, FinalWrittenReqs[BUFSIZE07] = { 0 };
     char ConfirmStockInput = 0, KDFile[BUFSIZE07] = { 0 }, BeforeSavings[BUFSIZE07] = { 0 }, AfterSavings[BUFSIZE07] = { 0 };
     char CheckStock[BUFSIZE07] = { 0 }, NewProductStock[BUFSIZE07] = { 0 }, ProductName[BUFSIZE07] = { 0 }, *ProductStock = "", *ProductPrice = "";
     char DisplayProductName[BUFSIZE07] = { 0 }, DisplayProductStock[BUFSIZE07] = { 0 }, DisplayProductPrice[BUFSIZE07] = { 0 };
     int MaxStocks = 5, InStocks[5] = { 0, 0, 0, 0, 0 }, AvailableStocks = 0, RecentStatus = 0, KDRequestStatus = 0;
-    int PeekStockID = 0, PeekSI = 0, MaxSI = 0;
+    int PeekStockID = 0, AvailableReqs = 0, SetNewReqs = 0, PeekSI = 0, MaxSI = 0;
 
     ClearScreen();
     if (CheckInvalidInput) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         UMMFeature04();
     }
@@ -2568,7 +2709,11 @@ void UMMFeature04(void) {
         puts(ANSI_COLOR_LIGHTYELLOW"Status Pengajuan: SEDANG DIPROSES");
         puts(ANSI_COLOR_YELLOW":: Sebelumnya Anda telah melakukan pemesanan barang produksi dari Sektor Industri...");
         puts(ANSI_COLOR_YELLOW":: Perhatikan bahwa tindakan tersebut TIDAK DAPAT Anda batalkan kembali, jadi mohon untuk ditunggu konfirmasinya!"ANSI_COLOR_RESET);
-        puts(""); system("pause"); UserMainMenu();
+        
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); UserMainMenu();
+
     } else if (KDRequestStatus == 2) {
         EncryptTextFile(User_KepalaDaerah, "Temp_"User_KepalaDaerah, -ENCRYPTCODE, true);
         OverWriteStringAtLine("Temp_"User_KepalaDaerah, "0", 0, ((10 + 1) * KDLoggedIn) + 12);
@@ -2577,16 +2722,50 @@ void UMMFeature04(void) {
         puts(ANSI_COLOR_LIGHTGREEN"Status Pengajuan: PENGAJUAN DITERIMA");
         puts(ANSI_COLOR_GREEN":: Selamat telah menyelesaikan transaksi barang produksi pesanan Anda dengan Sektor Industri yang bersangkutan...");
         puts(ANSI_COLOR_GREEN":: Saat ini Anda dapat memesan barang produksi Sektor Industri kembali, jadi silakan untuk di-refresh kembali!"ANSI_COLOR_RESET);
-        puts(""); system("pause"); UMMFeature04();
+        
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); UMMFeature04();
+
     } else if (KDRequestStatus == -1) {
         EncryptTextFile(User_KepalaDaerah, "Temp_"User_KepalaDaerah, -ENCRYPTCODE, true);
         OverWriteStringAtLine("Temp_"User_KepalaDaerah, "0", 0, ((10 + 1) * KDLoggedIn) + 12);
         EncryptTextFile("Temp_"User_KepalaDaerah, User_KepalaDaerah, ENCRYPTCODE, true);
 
+        EncryptTextFile(UserCartStore_Keranjang, "Temp_"UserCartStore_Keranjang, -ENCRYPTCODE, true);
+        AvailableReqs = atoi(ReadLine("Temp_"UserCartStore_Keranjang, 1));
+
+        strcpy(CurrentCartFile, "New_"UserCartStore_Keranjang);
+        AccessCart = fopen(CurrentCartFile, "w");
+        
+        fprintf(AccessCart, "0\n");
+        for (int ReqID = 0; ReqID < AvailableReqs; ReqID++) {
+            strcpy(CartInfo.Requester, ReadLine("Temp_"UserCartStore_Keranjang, ((4 + 1) * ReqID) + 3));
+            strcpy(CartInfo.Accepter, ReadLine("Temp_"UserCartStore_Keranjang, ((4 + 1) * ReqID) + 4));
+            strcpy(CartInfo.ProductInDemand, ReadLine("Temp_"UserCartStore_Keranjang, ((4 + 1) * ReqID) + 5));
+            CartInfo.Status = atoi(ReadLine("Temp_"UserCartStore_Keranjang, ((4 + 1) * ReqID) + 6));
+            CartInfo.Requester[strlen(CartInfo.Requester) - 1] = '\0'; CartInfo.Accepter[strlen(CartInfo.Accepter) - 1] = '\0'; CartInfo.ProductInDemand[strlen(CartInfo.ProductInDemand) - 1] = '\0';
+            
+            if (CartInfo.Status == -1 && strstr(CartInfo.Requester, KDFullName) != NULL && strstr(CartInfo.Requester, KDJobTitle) != NULL && strstr(CartInfo.Requester, KDHeadRegion) != NULL) {
+                continue;
+            } else {
+                SetNewReqs++; // Guarantee to be always - 1 by ALL requests before!
+                fprintf(AccessCart, "\n%s\n%s\n%s\n%d\n", CartInfo.Requester, CartInfo.Accepter, CartInfo.ProductInDemand, CartInfo.Status);
+            }
+        } fclose(AccessCart);
+
+        snprintf(FinalWrittenReqs, sizeof(FinalWrittenReqs), "%d", SetNewReqs);
+        OverWriteStringAtLine("New_"UserCartStore_Keranjang, FinalWrittenReqs, 0, 1);
+        EncryptTextFile("New_"UserCartStore_Keranjang, UserCartStore_Keranjang, ENCRYPTCODE, true);
+        system("del Temp_"UserCartStore_Keranjang);
+
         puts(ANSI_COLOR_LIGHTRED"Status Pengajuan: PENGAJUAN DITOLAK");
         puts(ANSI_COLOR_RED":: Walaupun pengajuan pemesanan Anda ditolak, namun jangan khawatir karena Anda bisa memesan yang lainnya...");
         puts(ANSI_COLOR_RED":: Saat ini Anda dapat memesan barang produksi Sektor Industri kembali, jadi silakan untuk di-refresh kembali!"ANSI_COLOR_RESET);
-        puts(""); system("pause"); UMMFeature04();
+
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); UMMFeature04();
     }
     
     EncryptTextFile(Client_SektorIndustri, "Temp_"Client_SektorIndustri, -ENCRYPTCODE, true);
@@ -2621,7 +2800,9 @@ void UMMFeature04(void) {
         puts("... Silakan untuk ditunggu konfirmasi lebih lanjutnya dari pihak Sektor Industri yang mendaftar, ");
         puts("... dan dimohon untuk dinantikan dan dipantau menu ini secara berkala..."ANSI_COLOR_RESET);
 
-        puts(""); system("pause"); UserMainMenu();
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); UserMainMenu();
     }
 
     puts("");
@@ -2662,6 +2843,8 @@ void UMMFeature04(void) {
                 puts("");
                 puts(ANSI_COLOR_RED"Mohon maaf, tapi saat ini Sektor Industri yang bersangkutan sedang " ANSI_COLOR_LIGHTRED"TIDAK menerima " ANSI_COLOR_RED"pengajuan kerja sama dengan Kepala Daerah!");
                 puts(ANSI_COLOR_GREEN"... Silakan untuk memilih Sektor Industri lainnya..."ANSI_COLOR_RESET);
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause"); UMMFeature04();
             }
 
@@ -2794,7 +2977,9 @@ void UMMFeature04(void) {
                             puts(ANSI_COLOR_RED"Maaf, Anda tidak dapat memesan produk yang bersangkutan karena belum diisi kembali oleh Sektor Industri yang bersangkutan!");
                             puts(ANSI_COLOR_YELLOW"Silakan untuk memilih produk lainnya yang masih tersedia..."ANSI_COLOR_RESET);
                             
-                            puts(""); system("pause"); break;
+                            puts("");
+                            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                            system("pause"); break;
                         }
 
                         puts("");
@@ -2813,6 +2998,8 @@ void UMMFeature04(void) {
                             puts("");
                             puts(ANSI_COLOR_ORANGE"WARNING: Sesuai dengan penjelasan di atas, nilai stok produk yang dipesan HARUS >= 1!");
                             puts(ANSI_COLOR_LIGHTORANGE"Demi keamaan, harap untuk diulang kembali dan dimohon untuk DIPERHATIKAN perintah yang diminta!"ANSI_COLOR_RESET);
+                            puts("");
+                            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                             system("pause");
 
                         } else {
@@ -2916,12 +3103,24 @@ void UMMFeature04(void) {
                                 printf(BRIGHTMAGENTA211"[SI] Pengelola kepada Yth. %s, Direktur dari %s.\n", SIList.FullName, SIList.IndustryName);
                                 printf(BRIGHTPURPLE218"... 1. Nama Produk: %s\n... 2. Stok Pesanan: %s\n... 3. Harga Total: Rp%'lld.00\n"ANSI_COLOR_RESET, DisplayProductName, NewProductStock, (atoll(DisplayProductPrice) * atoll(NewProductStock)));
 
-                                puts(""); system("pause"); UMMFeature04();
+                                puts("");
+                                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                                system("pause"); UMMFeature04();
                             }
                             
-                            else if (ConfirmStockInput == 'N' || ConfirmStockInput == 'n') { puts(""); system("pause"); }
-                            else if (ConfirmStockInput == 'X' || ConfirmStockInput == 'x') { puts(""); system("pause"); break; }
-                            else if (ConfirmStockInput == 'Q' || ConfirmStockInput == 'q') { puts(""); system("pause"); UMMFeature04(); }
+                            else if (ConfirmStockInput == 'N' || ConfirmStockInput == 'n') {
+                                puts("");
+                                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                                system("pause");
+                            } else if (ConfirmStockInput == 'X' || ConfirmStockInput == 'x') {
+                                puts("");
+                                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                                system("pause"); break;
+                            } else if (ConfirmStockInput == 'Q' || ConfirmStockInput == 'q') {
+                                puts("");
+                                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                                system("pause"); UMMFeature04();
+                            }
                         }
 
                     } else if (InStocks[PeekStockID - 1] == 0) {
@@ -2983,15 +3182,23 @@ void UMMFeature04(void) {
                         puts("");
                         puts(ANSI_COLOR_RED"Mohon maaf, untuk saat ini slot produk hasil Sektor Industri yang bersangkutan MASIH kosong...");
                         puts(ANSI_COLOR_GREEN"... Silakan untuk memilih produk lainnya hasil produksi dari yang bersangkutan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                         system("pause"); break;
                     }
                 }
 
-            } else if (PeekStockID == 0) { puts(""); system("pause"); UMMFeature04(); }
-            else                         { CheckInvalidInput = true; UMMFeature04();  }
+            } else if (PeekStockID == 0) {
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                system("pause"); UMMFeature04();
+            } else { CheckInvalidInput = true; UMMFeature04();  }
         }
-    } else if (PeekSI == 0) { puts(""); system("pause"); UserMainMenu(); }
-    else                    { CheckInvalidInput = true; UMMFeature04();  }
+    } else if (PeekSI == 0) {
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); UserMainMenu();
+    } else { CheckInvalidInput = true; UMMFeature04();  }
 }
 
 void ClientMainMenu(void) {
@@ -3002,7 +3209,9 @@ void ClientMainMenu(void) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         ClientMainMenu();
     }
@@ -3061,6 +3270,7 @@ void CMMFeature01(void) {
     EncryptTextFile("TempSI.txt", CurrentFileSI, ENCRYPTCODE, true);
 
     puts("");
+    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
     system("pause");
     ClientMainMenu();
 }
@@ -3078,7 +3288,9 @@ void CMMFeature02(void) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         CMMFeature02();
     }
@@ -3223,6 +3435,8 @@ void CMMFeature02(void) {
 
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"Penghapusan data produk yang bersangkutan TELAH BERHASIL!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause"); CMMFeature02();
                 
                 } else if (strlen(NewProductName) > 1 && strchr(NewProductName, '-')) {
@@ -3230,7 +3444,10 @@ void CMMFeature02(void) {
                     puts(ANSI_COLOR_RED"ERROR: Maaf, nama produk yang mengandung tanga '-' kami anggap TIDAK VALID dikarekanakan SINTAKS penggunaan");
                     puts("...    tanda '-' hanya untuk PENGHAPUSAN data produk yang bersangkutan, jadi mohon pengertiannya!");
                     puts(ANSI_COLOR_YELLOW":: Anda akan dibawa kembali ke pengisian data produk industri..."ANSI_COLOR_RESET);
-                    puts(""); system("pause");
+                    
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause");
 
                 } else if (strcmp(NewProductName, "-") != 0 && strcmp(NewProductStock, "-") != 0 && strcmp(NewProductPrice, "-") != 0) {
                     if (strlen(NewProductName) == 0)  { strcpy(NewProductName, DisplayProductName);   }
@@ -3254,6 +3471,8 @@ void CMMFeature02(void) {
 
                     puts("");
                     puts(ANSI_COLOR_LIGHTGREEN"Data produk industri yang bersangkutan telah diperbaharui!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     CMMFeature02();
                 
@@ -3262,7 +3481,10 @@ void CMMFeature02(void) {
                     puts(ANSI_COLOR_RED"ERROR: Sekali lagi, dimohon jika ingin dilakukan penghapusan data produk, pastikan SINTAKS INPUT-NYA TELAH SESUAI");
                     puts("...    dengan yang diminta agar tidak terjadi kesalahan input data, jadi mohon pengertiannya!");
                     puts(ANSI_COLOR_YELLOW":: Anda akan dibawa kembali ke pengisian data produk industri..."ANSI_COLOR_RESET);
-                    puts(""); system("pause");
+                    
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause");
                 }
 
             } else if (InStocks[PeekStockID - 1] == 0) {
@@ -3283,21 +3505,30 @@ void CMMFeature02(void) {
                     puts(ANSI_COLOR_RED"ERROR: Sekali lagi, dimohon untuk tidak mengosongkan sesi input Nama Produk yang bersangkutan dikarenakan");
                     puts("...    saat ini Anda tengah mengisi data baru, jadi mohon pengertiannya!");
                     puts(ANSI_COLOR_YELLOW":: Anda akan dibawa kembali ke pengisian data produk industri..."ANSI_COLOR_RESET);
-                    puts(""); system("pause");
+                    
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause");
 
                 } else if ((strcmp(NewProductName, "-") == 0 && strcmp(NewProductStock, "-") == 0 && strcmp(NewProductPrice, "-") == 0)) {
                     puts("");
                     puts(ANSI_COLOR_RED"ERROR: Maaf, kami tidak menerima PENGHAPUSAN data produk industri apabila data yang bersangkutan masih");
                     puts("...    kosong dikarenakan belum ada diisi oleh apapun dari pihak Anda, jadi mohon pengertiannya!");
                     puts(ANSI_COLOR_YELLOW":: Anda akan dibawa kembali ke pengisian data produk industri..."ANSI_COLOR_RESET);
-                    puts(""); system("pause");
+                    
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause");
                  
                 } else if (strlen(NewProductName) > 1 && strchr(NewProductName, '-')) {
                     puts("");
                     puts(ANSI_COLOR_RED"ERROR: Maaf, nama produk yang mengandung tanga '-' kami anggap TIDAK VALID dikarekanakan SINTAKS penggunaan");
                     puts("...    tanda '-' hanya untuk PENGHAPUSAN data produk yang bersangkutan, jadi mohon pengertiannya!");
                     puts(ANSI_COLOR_YELLOW":: Anda akan dibawa kembali ke pengisian data produk industri..."ANSI_COLOR_RESET);
-                    puts(""); system("pause");
+                    
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause");
 
                 } else { 
                     if (atoll(NewProductStock) < 1LL || strchr(NewProductStock, '.') != NULL) {
@@ -3317,14 +3548,19 @@ void CMMFeature02(void) {
 
                     puts("");
                     puts(ANSI_COLOR_LIGHTGREEN"Data produk industri BARU telah ditambahkan!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     CMMFeature02();
                 }
             }
         }
 
-    } else if (PeekStockID == 0) { puts(""); system("pause"); ClientMainMenu(); }
-    else { CheckInvalidInput = true; CMMFeature02(); }
+    } else if (PeekStockID == 0) {
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); ClientMainMenu();
+    } else { CheckInvalidInput = true; CMMFeature02(); }
 }
 
 void CMMFeature03(void) {
@@ -3345,7 +3581,9 @@ void CMMFeature03(void) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
 
-        puts(""); system("pause");
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause");
         CheckInvalidInput = false;
         CMMFeature03();
     }
@@ -3409,11 +3647,15 @@ void CMMFeature03(void) {
 
                 puts("");
                 puts(ANSI_COLOR_GREEN"Anda telah MEMBUKA sesi peluang pengajuan kerja sama dengan Kepala Daerah..."ANSI_COLOR_RESET);
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause"); CMMFeature03();
 
             } else if (UpdateStatus == 'N' || UpdateStatus == 'n') {
                 puts("");
                 puts(ANSI_COLOR_RED"Anda tetap MENUTUP sesi peluang pengajuan kerja sama dengan Kepala Daerah..."ANSI_COLOR_RESET);
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause"); CMMFeature03();
             }
 
@@ -3445,11 +3687,15 @@ void CMMFeature03(void) {
 
                 puts("");
                 puts(ANSI_COLOR_RED"Anda telah MENUTUP sesi peluang pengajuan kerja sama dengan Kepala Daerah..."ANSI_COLOR_RESET);
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause"); CMMFeature03();
 
             } else if (UpdateStatus == 'N' || UpdateStatus == 'n') {
                 puts("");
                 puts(ANSI_COLOR_GREEN"Anda tetap MEMBUKA sesi peluang pengajuan kerja sama dengan Kepala Daerah..."ANSI_COLOR_RESET);
+                puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause"); CMMFeature03();
             }
         }
@@ -3606,13 +3852,20 @@ void CMMFeature03(void) {
                     puts(ANSI_COLOR_LIGHTGREEN"Status Pengajuan: PENGAJUAN DITERIMA");
                     puts(ANSI_COLOR_GREEN":: Selamat, Anda telah menyetujui pengajuan kerja sama dari Kepala Daerah yang bersangkutan...");
                     puts(ANSI_COLOR_GREEN":: Anda dapat menunggu ajakan pengajuan kembali darinya pada saat-saat berikutnya!"ANSI_COLOR_RESET);
-                    puts(""); system("pause"); CMMFeature03();
+                    
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause"); CMMFeature03();
+
                 } else if (RecentStatus == -1) {
                     puts("====================================================================================================\n"ANSI_COLOR_RESET);
                     puts(ANSI_COLOR_LIGHTRED"Status Pengajuan: PENGAJUAN DITOLAK");
                     puts(ANSI_COLOR_RED":: Maaf, Anda telah menolak pengajuan kerja sama dari Kepala Daerah yang bersangkutan");
                     puts(ANSI_COLOR_RED":: Anda dapat menunggu ajakan pengajuan kembali darinya pada saat-saat berikutnya!"ANSI_COLOR_RESET);
-                    puts(""); system("pause"); CMMFeature03();
+                    
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause"); CMMFeature03();
                 
                 } else if (RecentStatus == 0) {
                     puts("==================================================" ANSI_COLOR_LIGHTCYAN"=================================================="ANSI_COLOR_RESET);
@@ -3653,7 +3906,10 @@ void CMMFeature03(void) {
                         puts(ANSI_COLOR_LIGHTORANGE"Maaf, saat ini stok produk Anda yang dipesan oleh Kepala Daerah yang bersangkutan tidak memenuhi!");
                         puts(ANSI_COLOR_YELLOW"Mohon diperhatikan kembali lebih lanjut mengenai ketersediaan stok produk industri...");
                         puts("... Anda akan di bawa kembali ke menu sebelumnya..."ANSI_COLOR_RESET);
-                        puts(""); system("pause"); CMMFeature03();
+                        
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause"); CMMFeature03();
                     }
 
                     puts(ANSI_COLOR_CYAN"Saat ini Kepala Daerah yang bersangkutan tengah dalam masa pemrosesan pengajuan kerja sama dari pihak Anda.");
@@ -3775,11 +4031,10 @@ void CMMFeature03(void) {
                         puts(ANSI_COLOR_LIGHTGREEN"Status Pengajuan: PENGAJUAN DITERIMA");
                         puts(ANSI_COLOR_GREEN":: Selamat, Anda telah menyetujui pengajuan kerja sama dari Kepala Daerah yang bersangkutan...");
                         puts(ANSI_COLOR_GREEN":: Anda dapat menunggu ajakan pengajuan kembali darinya pada saat-saat berikutnya!"ANSI_COLOR_RESET);
-                        puts(""); system("pause"); CMMFeature03();
-
+                        
                         puts("");
-                        system("pause");
-                        CMMFeature03();
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause"); CMMFeature03();
 
                     } else if (UpdateStatus == 'N' || UpdateStatus == 'n') {
                         ClearScreen();
@@ -3864,13 +4119,21 @@ void CMMFeature03(void) {
                         puts(ANSI_COLOR_LIGHTRED"Status Pengajuan: PENGAJUAN DITOLAK");
                         puts(ANSI_COLOR_RED":: Maaf, Anda telah menolak pengajuan kerja sama dari Kepala Daerah yang bersangkutan");
                         puts(ANSI_COLOR_RED":: Anda dapat menunggu ajakan pengajuan kembali darinya pada saat-saat berikutnya!"ANSI_COLOR_RESET);
-                        puts(""); system("pause"); CMMFeature03();
+                        
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause"); CMMFeature03();
                     
-                    } else if (UpdateStatus == 'Q' || UpdateStatus == 'q') { puts(""); system("pause"); CMMFeature03(); }
+                    } else if (UpdateStatus == 'Q' || UpdateStatus == 'q') {
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause"); CMMFeature03();
+                    }
                 }
 
             } else if (PeekKD == 0) {
                 puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause");
                 ClientMainMenu();
 
@@ -3881,6 +4144,8 @@ void CMMFeature03(void) {
             puts(ANSI_COLOR_LIGHTYELLOW"Saat ini belum ada Kepala Daerah yang ingin mengajukan pemesanan produk kerja sama dengan pihak Anda...");
             puts(ANSI_COLOR_YELLOW"... Anda dapat menunggu dan/atau memantau secara berkala apakah ada pemesanan yang dilakukan ke depannya!");
             puts(ANSI_COLOR_CYAN"... Dipersilakan untuk kembali ke menu semula..."ANSI_COLOR_RESET);
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
             system("pause"); ClientMainMenu();
         }
 
@@ -3901,9 +4166,15 @@ void CMMFeature03(void) {
         puts(ANSI_COLOR_LIGHTMAGENTA"Sekedar informasi, bahwa Anda tidak dapat mengelola pengajuan-pengajuan yang disampaikan oleh pelbagai");
         puts("pihak Kepala Daerah jika status penerimaan pengajuan Anda saat ini sedang TIDAK AKTIF!");
         puts(ANSI_COLOR_GREEN"... Silakan untuk DIBUKA terlebih dahulu akses pengajuannya agar Anda dapat mengelola lebih lenjut..."ANSI_COLOR_RESET);
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
         system("pause"); CMMFeature03();
 
-    } else if (OCManaging == 0) { puts(""); system("pause"); ClientMainMenu(); } else { CheckInvalidInput = true; CMMFeature03(); }
+    } else if (OCManaging == 0) {
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); ClientMainMenu();
+    } else { CheckInvalidInput = true; CMMFeature03(); }
 }
 
 void AdminLobbyMenu(void) {
@@ -4028,6 +4299,8 @@ void UserLobbyMenu(void) {
                 if (strlen(KDSignIn.FullName) < 2 || strlen(KDSignIn.FullName) > 128) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama lengkap melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; KDSignIn.FullName[strlen(KDSignIn.FullName) - 1] = '\0'; UserLobbyMenu(); }
@@ -4037,6 +4310,8 @@ void UserLobbyMenu(void) {
                 if (strlen(KDSignIn.NIK) != 17) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data NIK belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; KDSignIn.NIK[strlen(KDSignIn.NIK) - 1] = '\0'; UserLobbyMenu(); }
@@ -4046,6 +4321,8 @@ void UserLobbyMenu(void) {
                 if (strchr(KDSignIn.Email, '@') == NULL || strchr(KDSignIn.Email, '.') == NULL || strchr(KDSignIn.Email, ' ') != NULL || strlen(KDSignIn.Email) > 128) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data e-mail belum sesuai dengan sintaks yang ditentukan!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; KDSignIn.Email[strlen(KDSignIn.Email) - 1] = '\0'; UserLobbyMenu(); }
@@ -4055,6 +4332,8 @@ void UserLobbyMenu(void) {
                 if (strlen(KDSignIn.Password) < 9 || strlen(KDSignIn.Password) > 17) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; KDSignIn.Password[strlen(KDSignIn.Password) - 1] = '\0'; UserLobbyMenu(); }
@@ -4064,6 +4343,8 @@ void UserLobbyMenu(void) {
                 if (strchr(KDSignIn.BirthPlaceDate, ',') == NULL || strchr(KDSignIn.BirthPlaceDate, ' ') == NULL || strlen(KDSignIn.BirthPlaceDate) > 128) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data tempat/tanggal lahir belum memenuhi kriteria yang diminta!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; KDSignIn.BirthPlaceDate[strlen(KDSignIn.BirthPlaceDate) - 1] = '\0'; UserLobbyMenu(); }
@@ -4073,6 +4354,8 @@ void UserLobbyMenu(void) {
                 if (strcmp(StringCapitalize(KDSignIn.JobTitle), "Gubernur\n") != 0 && strcmp(StringCapitalize(KDSignIn.JobTitle), "Bupati\n") != 0 && strcmp(StringCapitalize(KDSignIn.JobTitle), "Wali kota\n") != 0) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data golongan jabatan belum sesuai dengan pilihan yang tersedia!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     UserLobbyMenu();
                 } else { 
@@ -4085,6 +4368,8 @@ void UserLobbyMenu(void) {
                 if (strlen(KDSignIn.HeadRegion) < 2 || strlen(KDSignIn.HeadRegion) > 128) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data kepala wilayah/daerah terlalu singkat/panjang!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; KDSignIn.HeadRegion[strlen(KDSignIn.HeadRegion) - 1] = '\0'; UserLobbyMenu(); }    
@@ -4097,6 +4382,7 @@ void UserLobbyMenu(void) {
                 puts(ANSI_COLOR_MAGENTA"INFO: Silakan untuk melanjutkan interaksi berikut dengan masuk ke menu sign-in/login... ."ANSI_COLOR_RESET);
                 
                 puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause");
 
                 WritePublicKepalaDaerah(false);
@@ -4115,6 +4401,7 @@ void UserLobbyMenu(void) {
                 puts(ANSI_COLOR_YELLOW"... Silahkan untuk masuk ke menu registrasi kepala daerah terlebih dahulu!"ANSI_COLOR_RESET);
 
                 puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause");
                 
                 CountRegists = 1; RSOption = 1;
@@ -4141,6 +4428,8 @@ void UserLobbyMenu(void) {
                 if (strlen(KD_SignInNIK) != 17) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data NIK belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; strncpy(KDSignIn.NIK, KD_SignInNIK, 32); KDSignIn.NIK[strlen(KDSignIn.NIK) - 1] = '\0'; UserLobbyMenu(); }
@@ -4150,6 +4439,8 @@ void UserLobbyMenu(void) {
                 if (strlen(KD_SignInPassword) < 9 || strlen(KD_SignInPassword) > 17) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; strncpy(KDSignIn.Password, KD_SignInPassword, 32); KDSignIn.Password[strlen(KDSignIn.Password) - 1] = '\0'; UserLobbyMenu(); }
@@ -4273,6 +4564,8 @@ void ClientLobbyMenu(void) {
                 if (strlen(SISignIn.FullName) < 2 || strlen(SISignIn.FullName) > 128) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama lengkap melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     ClientLobbyMenu();
                 } else { CountRegists++; SISignIn.FullName[strlen(SISignIn.FullName) - 1] = '\0'; ClientLobbyMenu(); }
@@ -4282,6 +4575,8 @@ void ClientLobbyMenu(void) {
                 if (strlen(SISignIn.IndustryName) < 2 || strlen(SISignIn.IndustryName) > 128) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama industri melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     ClientLobbyMenu();
                 } else { CountRegists++; SISignIn.IndustryName[strlen(SISignIn.IndustryName) - 1] = '\0'; ClientLobbyMenu(); }
@@ -4291,6 +4586,8 @@ void ClientLobbyMenu(void) {
                 if (strlen(SISignIn.Username) < 2 || strlen(SISignIn.Username) > 128) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama pengguna melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     ClientLobbyMenu();
                 } else { CountRegists++; SISignIn.Username[strlen(SISignIn.Username) - 1] = '\0'; ClientLobbyMenu(); }
@@ -4300,6 +4597,8 @@ void ClientLobbyMenu(void) {
                 if (strlen(SISignIn.Password) < 9 || strlen(SISignIn.Password) > 17) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     ClientLobbyMenu();
                 } else { CountRegists++; SISignIn.Password[strlen(SISignIn.Password) - 1] = '\0'; ClientLobbyMenu(); }
@@ -4313,6 +4612,7 @@ void ClientLobbyMenu(void) {
                 puts(ANSI_COLOR_MAGENTA"INFO: Silakan untuk melanjutkan interaksi berikut dengan masuk ke menu sign-in/login... ."ANSI_COLOR_RESET);
                 
                 puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause");
 
                 WritePublicSektorIndustri(false);
@@ -4330,6 +4630,7 @@ void ClientLobbyMenu(void) {
                 puts(ANSI_COLOR_YELLOW"... Silahkan untuk masuk ke menu registrasi sektor industri terlebih dahulu!"ANSI_COLOR_RESET);
 
                 puts("");
+                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                 system("pause");
                 
                 CountRegists = 1; RSOption = 1;
@@ -4355,6 +4656,8 @@ void ClientLobbyMenu(void) {
                 if (strlen(SI_SignInUsername) < 2 || strlen(SI_SignInUsername) > 128) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama pengguna melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     ClientLobbyMenu();
                 } else { CountRegists++; strncpy(SISignIn.Username, SI_SignInUsername, BUFSIZE07); SISignIn.Username[strlen(SISignIn.Username) - 1] = '\0'; ClientLobbyMenu(); }
@@ -4364,6 +4667,8 @@ void ClientLobbyMenu(void) {
                 if (strlen(SI_SignInPassword) < 9 || strlen(SI_SignInPassword) > 17) {
                     puts("");
                     puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
                     system("pause");
                     ClientLobbyMenu();
                 } else { CountRegists++; strncpy(SISignIn.Password, SI_SignInPassword, 32); SISignIn.Password[strlen(SISignIn.Password) - 1] = '\0'; ClientLobbyMenu(); }
@@ -4437,7 +4742,9 @@ void AboutDWakandaPage(void) {
     puts(BRIGHTMAGENTA211"Untuk Klien/Client, yakni Sektor Industri, terdapat fitur registrasi yang memerlukan informasi nama\nlengkap, nama pengguna, dan nama sektor industri. Diperlukan nama pengguna dan kata sandi untuk\nmelakukan login. Sektor Industri dapat melihat pendapatan dari hasil produksi industri, mengatur\nproduksi dari industri, dan mengatur kerja sama dengan kepala daerah.");
     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
 
-    puts(""); system("pause"); HomeMenu();
+    puts("");
+    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+    system("pause"); HomeMenu();
 }
 
 void HomeMenu(void) {
@@ -4447,7 +4754,11 @@ void HomeMenu(void) {
     if (CheckInvalidInput) {
         puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
         puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
-        CheckInvalidInput = false; puts(""); system("pause"); HomeMenu();
+        CheckInvalidInput = false;
+        
+        puts("");
+        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+        system("pause"); HomeMenu();
     }
 
     puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!");
