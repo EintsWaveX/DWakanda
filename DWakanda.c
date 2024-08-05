@@ -4784,108 +4784,128 @@ void ClientLobbyMenu(void) {
     }
 }
 
-void FAQPage(void) {
-    ClearScreen();
-    puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
-    puts(ANSI_COLOR_LIGHTBLUE"Anda berada dalam menu: Home Menu :: Tanya Jawab (FAQ)");
+// void FAQPage(void) {
+//     ClearScreen();
+//     puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
+//     puts(ANSI_COLOR_LIGHTBLUE"Anda berada dalam menu: Home Menu :: Tanya Jawab (FAQ)");
 
-    puts("");
-    puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
+//     puts("");
+//     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
+//     puts(ANSI_COLOR_LIGHTYELLOW"Q: Apa saja fitur-fitur yang diperlukan dengan penjelasannya?");
+//     puts("");
+//     puts(ANSI_COLOR_LIGHTGREEN"A: Berikut telah disertakan semua fitur dengan bentuk implementasinya...");
+//     puts(ANSI_COLOR_GREEN"   Apabila masih ada pertanyaan, silakan hubungi saya dengan daftar kontak berikut:");
+//     puts(ANSI_COLOR_GREEN"   ... WHATSAPP:  085829290950 (SELALU AKTIF)");
+//     puts(ANSI_COLOR_GREEN"   ... INSTAGRAM: eintswavex   (AKTIF)");
+//     puts(ANSI_COLOR_GREEN"   ... LINE:      eintswx      (JARANG AKTIF)");
+//     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
     
-    puts("(ADMIN) Fitur Kemenkeu:");
-    puts("A. Menu Sign-In Admin/Kemenkeu");
-    puts("1) Login: Pengguna dapat masuk sebagai admin (Kemenkeu) tanpa perlu mendaftar.");
-    puts("    (nama pengguna dan kata sandi ditetapkan sendiri oleh perekayasa)");
-    puts("");
-    puts("B. Menu Utama Kemenkeu");
-    puts("1) [EDIT] Pajak Negara: Memungkinkan pengaturan pajak negara.");
-    puts("Pengaturan pajak diperlukan untuk proses investasi yang dilakukan baik dari pihak kepala daerah agar dapat menjadi nilai tambah bagi negara (dalam konsep aritmatika sosial berupa keuntungan), yang akan disimpan keuntungannya pada bagian \"Tabungan Negara\" berikut ini.");
-    puts("> BANTUAN: Fitur ini memengaruhi bagian-bagian berikut: (ADMIN) Fitur 5 dan 6");
-    puts("");
-    puts("2) [VIEW] Tabungan Negara: Menampilkan informasi tentang tabungan negara.");
-    puts("Tabungan negara dapat dilihat dari total banyaknya pendapatan hasil investasi yang dilakukan dalam bentuk keuntungan yang didapat.");
-    puts("3) [VIEW] Pendapatan Daerah: Menampilkan seluruh pendapatan dari masing-masing daerah yang telah terdaftarkan oleh pihak dari para kepala daerah.");
-    puts("Pendapatan per daerah didapat pada saat kepala daerah melakukan pendataan sebelumnya, dan pastikan bahwa keseluruhan pendapatan telah diakumulasikan secara otomasi sebelum ditampilkan seiringnya daerah tersebut terus mendapatkan distribusi dana dari pihak Kemenkeu ataupun dari sektor industri positif.");
-    puts("> BANTUAN: Lihat pada \"(USER TIPE 1) Fitur Kepala Daerah\", fitur \"B. Menu Utama Kepala Daerah\", bagian \"1) [VIEW] Alur Perekonomian Dana Daerah\".");
-    puts("");
-    puts("4) [EDIT & VIEW] Data Kepala Wilayah: Menampilkan informasi tentang wilayah yang ditugaskan kepada masing-masing kepala daerah.");
-    puts("Informasi ini hanya didapat ketika ada pihak ketiga yang mendaftarkan diri sebagai kepala daerah dan dapat diimplementasikan sistem pengurutan data (bebas menggunakan pendekatan apapun) dan pencarian data agar lebih memudahkan pihak admin untuk mencari data mengenai pihak tertentu. Informasi yang ditampilkan hanya memuat data pribadi masing-masing kepala daerah saja.");
-    puts("> BANTUAN: Lihat pada \"(USER TIPE 1) Fitur Kepala Daerah\", fitur \"A. Menu Sign-Up dan Sign-In Kepala Daerah\", bagian \"1) Registrasi\".");
-    puts("");
-    puts("5) [EDIT & VIEW] Data Sektor Industri: Menampilkan informasi tentang pelbagai sektor industri yang terdaftar.");
-    puts("Informasi ini hanya didapat ketika ada pihak ketiga yang mendaftarkan diri sebagai perwakilan sektor industri dan dapat diimplementasikan sistem pengurutan data (bebas menggunakan pendekatan apapun) dan pencarian data agar lebih memudahkan pihak admin untuk mencari data mengenai pihak tertentu. Informasi yang ditampilkan hanya memuat data personil dari masing-masing sektor industri.");
-    puts("> BANTUAN: Lihat pada \"(USER TIPE 2) Fitur Sektor Industri\", fitur \"A. Menu Sign-Up dan Sign-In Sektor Industri\", bagian \"1) Registrasi\".");
-    puts("");
-    puts("6) [EDIT] Pendistribusian Pendapatan atau Bantuan Dana: Mengatur pendistribusian pendapatan/dana ke masing-masing daerah.");
-    puts("Pihak admin dapat melakukan pendistribusian dana (difokuskan dalam rupa nominal angka bilangan bulat positif saja) dan dianulirkan terhadap pihak kepala daerah yang mau kita berikan pendanaannya secara instant. Pendistribusian dana dapat dikenakan biaya pajak ataupun tidak (bebas), dan untuk alokasinya boleh melalui permintaan dari kepala daerah tertentu terlebih dahulu. Akan tetapi, jika ingin langsung diberikan melalui pihak admin secara inisiatif maka tidak akan menjadi masalah juga (cara ini bebas untuk diimplementasikan maupun tidak).");
-    puts("");
-    puts("7) [EDIT] Distribusi Perdagangan Internasional: Distribusi skala internasional barang hasil kerja sama antar kepala daerah dengan sektor industri.");
-    puts("Pihak Kemenkeu dapat menerima pengajuan distribusi ini (dengan tampilan menu dari asal kepala daerah, asal sektor industri, dan barang yang hendak didistribusikan), untuk dijual ke sektor perdagangan luar negeri (anggapannya) agar bisa diambil keuntungannya oleh negara yang dikenai pajak. Jadi, untuk penjualannya bersifat instant dan langsung masuk ke dalam tabungan negara, hingga tidak perlu ada pihak dari sektor perdagangan luar negeri nya yang perlu memantau kegiatan jual-beli ini lebih lanjut. Hasil penjualan yang didapat akan dibagi rata kepada pihak dari kepala daerah yang mengajukan distribusi perdagangan ini.");
-    puts("> BANTUAN: Lihat pada \"(USER TIPE 1) Fitur Kepala Daerah\", fitur \"B. Menu Utama Kepala Daerah\", bagian \"3) [EDIT & VIEW] Distribusi Pemerintah Pusat\".");
-    puts("");
-    puts("-------------------------------------------------");
-    puts("(USER TIPE 1) Fitur Kepala Daerah:");
-    puts("A. Menu Sign-Up dan Sign-In Kepala Daerah");
-    puts("1) Registrasi: Pendaftaran sebagai kepala daerah memerlukan TUJUH (7) informasi sebagai berikut:");
-    puts("   - Nama Lengkap (bebas dengan gelar pendidikan ataupun tidak, bagian nama boleh disingkat dengan tanda titik)");
-    puts("   - NIK (wajib 16 digit, informasi penting pertama untuk dapat masuk/sign-in sebagai kepala daerah)");
-    puts("   - E-mail (e-mail bisa berupa pribadi ataupun dari pemerintah pusat untuk daerah tersebut, misal \"nama.golongan@daerah.com\")");
-    puts("   - Kata Sandi (wajib minimal 8 karakter, informasi penting kedua untuk dapat masuk/sign-in sebagai kepala daerah)");
-    puts("   - Tempat/Tanggal Lahir (sesuai format TTL pada umumnya)");
-    puts("   - Jabatan (dalam kasus ini, terbagi beberapa golongan seperti gubernur, bupati, dan wali kota; hal ini hanya menjadi perlambangan saja)");
-    puts("   - Daerah Perwakilan (daerah yang diwakilkan berdasarkan golongan jabatan di atas)");
-    puts("2) Login: Untuk dapat masuk sebagai kepala daerah yang telah ter-registrasikan memerlukan DUA (2) informasi sebagai berikut:");
-    puts("   - NIK (wajib 16 digit)");
-    puts("   - Kata Sandi (wajib minimal 8 karakter)");
-    puts("");
-    puts("B. Menu Utama Kepala Daerah");
-    puts("1) [VIEW] Alur Perekonomian Dana Daerah: Melihat data pemasukkan serta pengeluaran dana di daerah tersebut.");
-    puts("Pihak dari kepala daerah dapat melihat pemasukkan dan pengeluaran dana berupa data pada daerah yang di-ayomikan olehnya, dan fitur ini dapat diimplementasikan algoritma pengurutan (bebas menggunakan pendekatan yang diinginkan) ataupun pencarian guna memudahkan pihak dari kepala daerah mencari informasi yang dibutuhkan.");
-    puts("2) [EDIT & VIEW] Pengajuan Dana Bantuan dari Pemerintah Pusat: Mengajukan permintaan bantuan dana tambahan kepada pihak Kemenkeu.");
-    puts("Pihak dari kepala daerah dapat mengajukan dana bantuan kepada pihak Kemenkeu dengan melihat status persetujuannya terlebih dahulu. Jika telah dikonfirmasi oleh pihak Kemenkeu, maka pihak Kemenkeu akan segera mengirimkan bantuan dananya kepada kepala daerah yang membutuhkan dana tersebut secara instant, namun hal ini juga dapat dilakukan secara iniatif dari pihak Kemenkeu-nya sendiri tanpa perlu pengajuan dari kepala daerah tertentu.");
-    puts("> BANTUAN: Lihat pada \"(ADMIN) Fitur Kemenkeu\", fitur \"B. Menu Utama Kemenkeu\", bagian \"5) [EDIT] Pendistribusian Pendapatan atau Bantuan Dana\".");
-    puts("");
-    puts("3) [EDIT & VIEW] Distribusi Pemerintah Pusat: Mengatur proses pendistribusian produksi industri terhadap pihak Kemenkeu.");
-    puts("Pihak dari kepala daerah dapat mengajukan dana bantuan dari pihak Kemenkeu dengan melihat status persetujuannya terlebih dahulu. Selain itu, pihak kepala daerah juga dapat melakukan pendistribusian hasil produksi kerja sama dengan pihak sektor industri kepada pihak Kemenkeu dengan cara langsung memberikan data lengkapnya dalam sesi input yang kemudian akan menunggu hasil konfirmasi dari pihak Kemenkeu. Jika dikonfirmasi, maka kedua belah pihak akan mendapat keuntungannya yang sudah dibagi rata secara otomatis setelah diperdagangkan oleh pihak Kemenkeu.");
-    puts("> BANTUAN: Lihat pada \"(ADMIN) Fitur Kemenkeu\", fitur \"B. Menu Utama Kemenkeu\", bagian \"6) [EDIT] Distribusi Perdagangan Internasional\".");
-    puts("");
-    puts("4) [EDIT & VIEW] Pengaturan Kerja Sama dengan Sektor Industri: Mengatur proses kerja sama dengan sektor industri positif.");
-    puts("Pihak dari kepala daerah dapat mengajukan kerja sama dengan pihak industri untuk dapat saling menguntungkan satu sama lain dan harus ada persetujuannya terlebih dahulu dari sektor industri tersebut sebelum dilakukannya kerja sama. Kerja sama dengan pihak industri tidak dibatasi oleh daerah, jadi fokuskan hanya pada kegiatan kerja sama dan nominal yang didapat sebagai hasil keuntungannya.");
-    puts("> BANTUAN: Lihat pada \"(USER TIPE 2) Fitur Sektor Industri\", fitur \"B. Menu Utama Sektor Industri\", bagian \"3) [EDIT & VIEW] Pengaturan Kerja Sama dengan Kepala Daerah\".");
-    puts("");
-    puts("Contoh penerapan dari poin 4) di atas:");
-    puts("Pihak kepala daerah hendak sektor industri cokelat dan telah disetujui oleh pihak industri. Sektor industri menanyakan berapa banyak cokelat yang hendak didistribusikan kepada daerah tersebut selama stok nya masih ada, dan kepala daerah menyampaikan banyaknya dalam angka bilangan bulat positif. Pihak dari kepala daerah mendapatkan cokelatnya yang dapat didistribusikan kepada pihak Kemenkeu untuk dijual dan mendapat pendapatan lebih, dan dari pihak sektor industri positif mendapat keuntungan berupa nominal uang. Sebagai informasi, kegiatan kerja sama yang dilakukan dapat disimpan dalam bentuk nota ataupun tidak, karena hal ini bersifat tidak wajib.");
-    puts("");
-    puts("-------------------------------------------------");
-    puts("(USER TIPE 2) Fitur Sektor Industri:");
-    puts("A. Menu Sign-Up dan Sign-In Sektor Industri");
-    puts("1) Registrasi: Untuk melakukan registrasi, diperlukan perwakilan seorang diri dari sektor industri yang memiliki EMPAT (4) informasi berikut, yaitu:");
-    puts("   - Nama Lengkap (perwakilan dari sektor industri yang hendak didaftarkan)");
-    puts("   - Nama Pengguna (singkatnya, username dari pendaftar untuk keperluan login sebagai data penting pertama)");
-    puts("   - Nama Sektor Industri (nama industri yang diwakilkan)");
-    puts("   - Kata Sandi (wajib minimal 8 karakter dan untuk keperluan login sebagai data penting kedua)");
-    puts("2) Login: Untuk melakukan login, diperlukan perwakilan seorang diri dari sektor industri yang memiliki DUA (2) informasi berikut, yaitu:");
-    puts("   - Nama Pengguna (singkatnya, username dari pendaftar)");
-    puts("   - Kata Sandi (wajib minimal 8 karakter)");
-    puts("");
-    puts("B. Menu Utama Sektor Industri");
-    puts("1) [VIEW] Pendapatan Sektor Industri: Menampilkan pendapatan total dari hasil produksi industri.");
-    puts("Sederhananya, pihak industri dapat melihat total pendapatan yang diterima dari hasil kerja sama dengan kepala daerah yang telah diakumulasikan.");
-    puts("2) [EDIT & VIEW] Pengaturan Produksi: Memampukan perwakilan dari industri untuk mencatat banyak produksi terhadap suatu produk.");
-    puts("Produk yang dihasilkan bersifat (bebas menurut pemakai, diusahakan untuk dilogikakan dengan nama industrinya), hingga dalam sesi fitur ini diperlihatkan tampilan produk-produk dan banyak dari masing-masingnya serta harga per produksi (bisa per item atau sejenisnya), juga apabila diinginkan maka dapat diimplementasikan fitur algoritma pengurutan/pencarian data agar lebih memudahkan pihak industri dalam mengatur produk-produknya. Jika ingin menambahkan produk baru, maka diperlukan konfirmasi terlebih dahulu, lalu tinggal di-inputkan saja nama produk yang diproduksi dan banyak produksinya serta harga per produksi. Jika ingin mengubah atau menambahkan jumlah produk terhadap produk yang masih terdata, maka cukup tinggal input biasa nama produk, penambahan banyak produk, serta harga terbarunya.");
-    puts("3) [EDIT & VIEW] Pengaturan Kerja Sama dengan Kepala Daerah: Mengatur proses kerja sama dari permintaan kepala daerah tertentu.");
-    puts("Pihak dari sektor industri dapat mengajukan kerja sama dengan pihak kepala daerah untuk dapat saling menguntungkan satu sama lain dan harus ada persetujuannya terlebih dahulu dari sektor industri tersebut sebelum dilakukannya kerja sama. Kerja sama dengan pihak kepala daerah tidak dibatasi oleh daerah tempat ia menjabat, jadi fokuskan hanya pada kegiatan kerja sama dan nominal yang didapat sebagai hasil keuntungannya.");
-    puts("> BANTUAN: Lihat pada \"(USER TIPE 1) Fitur Kepala Daerah\", fitur \"B. Menu Utama Kepala Daerah\", bagian \"4) [EDIT & VIEW] Pengaturan Kerja Sama dengan Sektor Industri\".");
-    puts("");
-    puts("Contoh penerapan dari poin 3) di atas:");
-    puts("Pihak sektor industri mengajukan kerja sama dalam distribusi cokelat dengan kuantitas (dalam angka bilangan bulat positif) yang telah ditetapkan kepada pihak kepala daerah. Setelah mendapat persetujuan dari pihak kepala daerah, maka kepala daerah akan LANGSUNG menerima distribusi hasil produksi dari pihak industri tersebut dan kepada pihak industri diuntungkan dalam jumlah nominal uang yang setara dengan harga total distribusi tersebut.");
+//     /*
+//     puts(BRIGHTGREEN156"[1] Pajak dan Tabungan Negara: "ANSI_COLOR_RESET ANSI_STYLE_ITALIC"Mengatur dan menampilkan informasi mengenai Pajak dan Tabungan Negara."ANSI_COLOR_RESET);
+//     puts(BRIGHTPINK219"[2] Data Kepala Daerah dan Perekonomiannya: "ANSI_COLOR_RESET ANSI_STYLE_ITALIC"Menampilkan informasi Kepala Daerah beserta data perekonomian tiap daerahnya."ANSI_COLOR_RESET);
+//     puts(BRIGHTPINK219"[3] Data Sektor Industri dan Penghasilannya: "ANSI_COLOR_RESET ANSI_STYLE_ITALIC"Menampilkan informasi Sektor Industri beserta beserta data penghasilannya."ANSI_COLOR_RESET);
+//     puts(BRIGHTBLUE159"[4] Pendistribusian Bantuan Dana: "ANSI_COLOR_RESET ANSI_STYLE_ITALIC"Mengatur pendistribusian bantuan dana ke masing-masing Kepala Daerah."ANSI_COLOR_RESET);
+//     puts(BRIGHTBLUE159"[5] Pengaturan Kerja Sama dengan Kepala Daerah: "ANSI_COLOR_RESET ANSI_STYLE_ITALIC"Mengatur kegiatan kerja sama yang tengah diajukan oleh Kepala Daerah."ANSI_COLOR_RESET);
+//     puts(BRIGHTBLUE159"[6] Distribusi Perdagangan Internasional: "ANSI_COLOR_RESET ANSI_STYLE_ITALIC"Mengatur distribusi barang skala internasional setelah pengajuan sebelumnya."ANSI_COLOR_RESET);
+//     */
 
-    puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
+//     puts("");
+//     puts("(ADMIN) Fitur Kemenkeu:");
+//     puts("A. Menu Sign-In Admin/Kemenkeu");
+//     puts("1) Login: Pengguna dapat masuk sebagai admin (Kemenkeu) tanpa perlu mendaftar.");
+//     puts("          (nama pengguna dan kata sandi ditetapkan sendiri oleh perekayasa)");
+//     puts("");
+//     puts("B. Menu Utama Kemenkeu");
+//     puts(BRIGHTGREEN156"1) Pajak dan Tabungan Negara: Mengatur dan menampilkan informasi mengenai Pajak dan Tabungan Negara."ANSI_COLOR_RESET);
+//     puts("Pengaturan pajak diperlukan untuk proses investasi yang dilakukan baik dari pihak kepala daerah agar dapat menjadi nilai tambah bagi negara (dalam konsep aritmatika sosial berupa keuntungan), yang akan disimpan keuntungannya pada bagian \"Tabungan Negara\" berikut ini. Tabungan negara dapat dilihat dari total banyaknya pendapatan hasil investasi yang dilakukan dalam bentuk keuntungan yang didapat.");
+//     puts("> BANTUAN: Fitur ini memengaruhi bagian-bagian berikut: \"(ADMIN) Fitur 5 dan 6\".");
+//     puts("");
+//     puts(BRIGHTPINK219"2) Data Kepala Wilayah dan Perekonomiannya: Menampilkan informasi Kepala Daerah beserta data perekonomian tiap daerahnya."ANSI_COLOR_RESET);
+//     puts("Informasi ini hanya didapat ketika ada pihak ketiga yang mendaftarkan diri sebagai kepala daerah dan dapat diimplementasikan sistem pengurutan data (bebas menggunakan pendekatan apapun) dan pencarian data agar lebih memudahkan pihak admin untuk mencari data mengenai pihak tertentu. Informasi yang ditampilkan hanya memuat data pribadi masing-masing kepala daerah saja.");
+//     puts("> BANTUAN: Lihat pada \"(USER) Fitur Kepala Daerah\", fitur \"A. Menu Sign-Up dan Sign-In Kepala Daerah\", bagian \"1) Registrasi\".");
+//     puts("");
+//     puts(BRIGHTPINK219"3) Data Sektor Industri dan Penghasilannya: Menampilkan informasi Sektor Industri beserta beserta data penghasilannya."ANSI_COLOR_RESET);
+//     puts("Informasi ini hanya didapat ketika ada pihak ketiga yang mendaftarkan diri sebagai perwakilan sektor industri dan dapat diimplementasikan sistem pengurutan data (bebas menggunakan pendekatan apapun) dan pencarian data agar lebih memudahkan pihak admin untuk mencari data mengenai pihak tertentu. Informasi yang ditampilkan hanya memuat data personil dari masing-masing sektor industri.");
+//     puts("> BANTUAN: Lihat pada \"(CLIENT) Fitur Sektor Industri\", fitur \"A. Menu Sign-Up dan Sign-In Sektor Industri\", bagian \"1) Registrasi\".");
+//     puts("");
+//     puts(BRIGHTBLUE159"4) Pendistribusian Bantuan Dana: Mengatur pendistribusian bantuan dana ke masing-masing Kepala Daerah."ANSI_COLOR_RESET);
+//     puts("Pihak admin dapat melakukan pendistribusian dana (difokuskan dalam rupa nominal angka bilangan bulat positif saja) dan dianulirkan terhadap pihak kepala daerah yang mau kita berikan pendanaannya secara instant, HANYA JIKA Kepala Daerah yang bersangkutan tengah dalam proses/status permintaan dana. Namun jika tidak, maka Kemenkeu tidak akan memberikan bantuan dana kepada siapapun.");
+//     puts("");
+//     puts(BRIGHTBLUE159"5) Pengaturan Kerja Sama dengan Kepala Daerah: Mengatur kegiatan kerja sama yang tengah diajukan oleh Kepala Daerah."ANSI_COLOR_RESET);
+//     puts("Pihak Kemenkeu dapat mengelola kerja sama dari Kepala Daerah yang bersangkutan (apabila ada Kepala Daerah yang tengah mengajukan hasil belanjanya dari Sektor Industri sebelumnya), untuk dikelola dengan cara menerima belanjaannya yang membuat tabungan negara berkurang sebesar harga beli produk (dikenai Pajak Negara), ataupun menolaknya (namun penolakan ini tidak permanen, jadi bisa diterima kembali kapan saja).");
+//     puts("> BANTUAN: Lihat pada \"(USER) Fitur Kepala Daerah\", fitur \"B. Menu Utama Kepala Daerah\", bagian \"3) Distribusi Pemerintah Pusat\".");
+//     puts("");
+//     puts(BRIGHTBLUE159"6) Distribusi Perdagangan Internasional: Mengatur distribusi barang skala internasional setelah pengajuan sebelumnya."ANSI_COLOR_RESET);
+//     puts("Pihak Kemenkeu dapat menerima pengajuan distribusi ini (dengan tampilan menu dari asal kepala daerah, asal sektor industri, dan barang yang hendak didistribusikan), untuk dijual ke sektor perdagangan luar negeri (anggapannya) agar bisa diambil keuntungannya oleh negara yang dikenai pajak. Jadi, untuk penjualannya bersifat instant dan langsung masuk ke dalam tabungan negara, hingga tidak perlu ada pihak dari sektor perdagangan luar negeri nya yang perlu memantau kegiatan jual-beli ini lebih lanjut. Hasil penjualan yang didapat beserta draft-nya disimpan dalam perekonomian negara.");
+//     puts("> BANTUAN: Lihat pada \"(ADMIN) Fitur 5\".");
+    
+//     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
+    
+//     puts("(USER) Fitur Kepala Daerah:");
+//     puts("A. Menu Sign-Up dan Sign-In Kepala Daerah");
+//     puts("1) Registrasi: Pendaftaran sebagai kepala daerah memerlukan TUJUH (7) informasi sebagai berikut:");
+//     puts("   - Nama Lengkap         (BEBAS INPUT, dalam jangkauan 1-128 karakter)");
+//     puts("   - NIK                  (WAJIB 16 DIGIT)");
+//     puts("   - E-mail               (BEBAS INPUT, dengan catatan tanda `@` dan `.` HARUS ADA, minimal satu masing-masingnya)");
+//     puts("   - Kata Sandi           (WAJIB 8-16 KARAKTER)");
+//     puts("   - Tempat/Tanggal Lahir (BEBAS INPUT)");
+//     puts("   - Jabatan              (WAJIB MEMILIH antara TIGA golongan berikut, yaitu: Gubernur, Bupati, Wali Kota");
+//     puts("   - Daerah Perwakilan    (BEBAS INPUT)");
+//     puts("2) Login: Untuk dapat masuk sebagai kepala daerah yang telah ter-registrasikan memerlukan DUA (2) informasi sebagai berikut:");
+//     puts("   - NIK                  (WAJIB 16 DIGIT)");
+//     puts("   - Kata Sandi           (WAJIB 8-16 KARAKTER)");
+    
+//     puts("");
+//     puts("B. Menu Utama Kepala Daerah");
+//     puts("1) [VIEW] Alur Perekonomian Dana Daerah: Melihat data pemasukkan serta pengeluaran dana di daerah tersebut.");
+//     puts("Pihak dari kepala daerah dapat melihat pemasukkan dan pengeluaran dana berupa data pada daerah yang di-ayomikan olehnya, dan fitur ini dapat diimplementasikan algoritma pengurutan (bebas menggunakan pendekatan yang diinginkan) ataupun pencarian guna memudahkan pihak dari kepala daerah mencari informasi yang dibutuhkan.");
+//     puts("2) [EDIT & VIEW] Pengajuan Dana Bantuan dari Pemerintah Pusat: Mengajukan permintaan bantuan dana tambahan kepada pihak Kemenkeu.");
+//     puts("Pihak dari kepala daerah dapat mengajukan dana bantuan kepada pihak Kemenkeu dengan melihat status persetujuannya terlebih dahulu. Jika telah dikonfirmasi oleh pihak Kemenkeu, maka pihak Kemenkeu akan segera mengirimkan bantuan dananya kepada kepala daerah yang membutuhkan dana tersebut secara instant, namun hal ini juga dapat dilakukan secara iniatif dari pihak Kemenkeu-nya sendiri tanpa perlu pengajuan dari kepala daerah tertentu.");
+//     puts("> BANTUAN: Lihat pada \"(ADMIN) Fitur Kemenkeu\", fitur \"B. Menu Utama Kemenkeu\", bagian \"5) [EDIT] Pendistribusian Pendapatan atau Bantuan Dana\".");
+//     puts("");
+//     puts("3) [EDIT & VIEW] Distribusi Pemerintah Pusat: Mengatur proses pendistribusian produksi industri terhadap pihak Kemenkeu.");
+//     puts("Pihak dari kepala daerah dapat mengajukan dana bantuan dari pihak Kemenkeu dengan melihat status persetujuannya terlebih dahulu. Selain itu, pihak kepala daerah juga dapat melakukan pendistribusian hasil produksi kerja sama dengan pihak sektor industri kepada pihak Kemenkeu dengan cara langsung memberikan data lengkapnya dalam sesi input yang kemudian akan menunggu hasil konfirmasi dari pihak Kemenkeu. Jika dikonfirmasi, maka kedua belah pihak akan mendapat keuntungannya yang sudah dibagi rata secara otomatis setelah diperdagangkan oleh pihak Kemenkeu.");
+//     puts("> BANTUAN: Lihat pada \"(ADMIN) Fitur Kemenkeu\", fitur \"B. Menu Utama Kemenkeu\", bagian \"6) [EDIT] Distribusi Perdagangan Internasional\".");
+//     puts("");
+//     puts("4) [EDIT & VIEW] Pengaturan Kerja Sama dengan Sektor Industri: Mengatur proses kerja sama dengan sektor industri positif.");
+//     puts("Pihak dari kepala daerah dapat mengajukan kerja sama dengan pihak industri untuk dapat saling menguntungkan satu sama lain dan harus ada persetujuannya terlebih dahulu dari sektor industri tersebut sebelum dilakukannya kerja sama. Kerja sama dengan pihak industri tidak dibatasi oleh daerah, jadi fokuskan hanya pada kegiatan kerja sama dan nominal yang didapat sebagai hasil keuntungannya.");
+//     puts("> BANTUAN: Lihat pada \"(USER TIPE 2) Fitur Sektor Industri\", fitur \"B. Menu Utama Sektor Industri\", bagian \"3) [EDIT & VIEW] Pengaturan Kerja Sama dengan Kepala Daerah\".");
+//     puts("");
+//     puts("Contoh penerapan dari poin 4) di atas:");
+//     puts("Pihak kepala daerah hendak sektor industri cokelat dan telah disetujui oleh pihak industri. Sektor industri menanyakan berapa banyak cokelat yang hendak didistribusikan kepada daerah tersebut selama stok nya masih ada, dan kepala daerah menyampaikan banyaknya dalam angka bilangan bulat positif. Pihak dari kepala daerah mendapatkan cokelatnya yang dapat didistribusikan kepada pihak Kemenkeu untuk dijual dan mendapat pendapatan lebih, dan dari pihak sektor industri positif mendapat keuntungan berupa nominal uang. Sebagai informasi, kegiatan kerja sama yang dilakukan dapat disimpan dalam bentuk nota ataupun tidak, karena hal ini bersifat tidak wajib.");
+    
+//     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
+    
+//     puts("(CLIENT) Fitur Sektor Industri:");
+//     puts("A. Menu Sign-Up dan Sign-In Sektor Industri");
+//     puts("1) Registrasi: Untuk melakukan registrasi, diperlukan perwakilan seorang diri dari sektor industri yang memiliki EMPAT (4) informasi berikut, yaitu:");
+//     puts("   - Nama Lengkap (perwakilan dari sektor industri yang hendak didaftarkan)");
+//     puts("   - Nama Pengguna (singkatnya, username dari pendaftar untuk keperluan login sebagai data penting pertama)");
+//     puts("   - Nama Sektor Industri (nama industri yang diwakilkan)");
+//     puts("   - Kata Sandi (wajib minimal 8 karakter dan untuk keperluan login sebagai data penting kedua)");
+//     puts("2) Login: Untuk melakukan login, diperlukan perwakilan seorang diri dari sektor industri yang memiliki DUA (2) informasi berikut, yaitu:");
+//     puts("   - Nama Pengguna (singkatnya, username dari pendaftar)");
+//     puts("   - Kata Sandi (wajib minimal 8 karakter)");
+    
+//     puts("");
+//     puts("B. Menu Utama Sektor Industri");
+//     puts("1) [VIEW] Pendapatan Sektor Industri: Menampilkan pendapatan total dari hasil produksi industri.");
+//     puts("Sederhananya, pihak industri dapat melihat total pendapatan yang diterima dari hasil kerja sama dengan kepala daerah yang telah diakumulasikan.");
+//     puts("2) [EDIT & VIEW] Pengaturan Produksi: Memampukan perwakilan dari industri untuk mencatat banyak produksi terhadap suatu produk.");
+//     puts("Produk yang dihasilkan bersifat (bebas menurut pemakai, diusahakan untuk dilogikakan dengan nama industrinya), hingga dalam sesi fitur ini diperlihatkan tampilan produk-produk dan banyak dari masing-masingnya serta harga per produksi (bisa per item atau sejenisnya), juga apabila diinginkan maka dapat diimplementasikan fitur algoritma pengurutan/pencarian data agar lebih memudahkan pihak industri dalam mengatur produk-produknya. Jika ingin menambahkan produk baru, maka diperlukan konfirmasi terlebih dahulu, lalu tinggal di-inputkan saja nama produk yang diproduksi dan banyak produksinya serta harga per produksi. Jika ingin mengubah atau menambahkan jumlah produk terhadap produk yang masih terdata, maka cukup tinggal input biasa nama produk, penambahan banyak produk, serta harga terbarunya.");
+//     puts("3) [EDIT & VIEW] Pengaturan Kerja Sama dengan Kepala Daerah: Mengatur proses kerja sama dari permintaan kepala daerah tertentu.");
+//     puts("Pihak dari sektor industri dapat mengajukan kerja sama dengan pihak kepala daerah untuk dapat saling menguntungkan satu sama lain dan harus ada persetujuannya terlebih dahulu dari sektor industri tersebut sebelum dilakukannya kerja sama. Kerja sama dengan pihak kepala daerah tidak dibatasi oleh daerah tempat ia menjabat, jadi fokuskan hanya pada kegiatan kerja sama dan nominal yang didapat sebagai hasil keuntungannya.");
+//     puts("> BANTUAN: Lihat pada \"(USER TIPE 1) Fitur Kepala Daerah\", fitur \"B. Menu Utama Kepala Daerah\", bagian \"4) [EDIT & VIEW] Pengaturan Kerja Sama dengan Sektor Industri\".");
+//     puts("");
+//     puts("Contoh penerapan dari poin 3) di atas:");
+//     puts("Pihak sektor industri mengajukan kerja sama dalam distribusi cokelat dengan kuantitas (dalam angka bilangan bulat positif) yang telah ditetapkan kepada pihak kepala daerah. Setelah mendapat persetujuan dari pihak kepala daerah, maka kepala daerah akan LANGSUNG menerima distribusi hasil produksi dari pihak industri tersebut dan kepada pihak industri diuntungkan dalam jumlah nominal uang yang setara dengan harga total distribusi tersebut.");
 
-    puts("");
-    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-    system("pause"); HomeMenu();
-}
+//     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
+
+//     puts("");
+//     puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+//     system("pause"); HomeMenu();
+// }
 
 void AboutDWakandaPage(void) {
     ClearScreen();
@@ -4933,7 +4953,7 @@ void HomeMenu(void) {
     puts(BRIGHTPURPLE218"[3] Client :: Sektor Industri");
 
     puts("");
-    puts(BRIGHTRED216"[8] F.A.Q.: Tanya Jawab SEMENTARA (Frequently Ask Questions)");
+    // puts(BRIGHTRED216"[8] F.A.Q.: Tanya Jawab (Frequently Ask Questions)");
     puts(BRIGHTMAGENTA211"[9] Tentang D'Wakanda"ANSI_COLOR_RESET);
     AcceptInputOption("> Pilihan Anda: ", AUCOption);
 
@@ -4947,7 +4967,7 @@ void HomeMenu(void) {
             case 1:  { AdminLobbyMenu();            } break;
             case 2:  { UserLobbyMenu();             } break;
             case 3:  { ClientLobbyMenu();           } break;
-            case 8:  { FAQPage();                   } break;
+            // case 8:  { FAQPage();                   } break;
             case 9:  { AboutDWakandaPage();         } break;
             default: { CheckInvalidInput = true; HomeMenu(); } break;
         }
