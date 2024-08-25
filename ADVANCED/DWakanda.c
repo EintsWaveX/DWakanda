@@ -158,6 +158,7 @@ char *TrimWhiteSpaces(char*);
 char *StringUppercase(char*);
 char *StringLowercase(char*);
 char *StringCapitalize(char*);
+char *StringCapitalizeAll(char*);
 char *ReadLine(const char*, intmax_t);
 
 void HomeMenu(void);
@@ -446,6 +447,7 @@ void DecryptTextFile(const char* DestinationTextFile, bool ReadDecryptedFile, in
 }
 
 FILE *Admin, *User, *Client, *AdminCart, *UserCart;
+bool SwitchLanguage = false; // Default: Indonesian
 
 typedef struct Admin {
     const char *Username, *Password;
@@ -601,7 +603,7 @@ void WritePublicSektorIndustri(bool _ReadWithCaution) {
             fprintf(Client, "%s\n", SISignIn.IndustryName);
             fprintf(Client, "%s\n", SISignIn.Username);
             fprintf(Client, "%s\n", SISignIn.Password);
-            fprintf(Client, "0\n");
+            fprintf(Client, "1\n"); // Client open-sale status.
             for (int _ = 0; _ < 5; _++) { fprintf(Client, "-, -, -\n"); }
             
             fclose(Client);
@@ -621,7 +623,7 @@ void WritePublicSektorIndustri(bool _ReadWithCaution) {
             fprintf(Client, "%s\n", SISignIn.IndustryName);
             fprintf(Client, "%s\n", SISignIn.Username);
             fprintf(Client, "%s\n", SISignIn.Password);
-            fprintf(Client, "0\n");
+            fprintf(Client, "1\n"); // Client open-sale status.
             for (int _ = 0; _ < 5; _++) { fprintf(Client, "-, -, -\n"); }
 
             fclose(Client);
@@ -4040,31 +4042,6 @@ void CMMFeature03(void) {
                                 EncryptTextFile("TempSI.txt", CurrentSIFile, ENCRYPTCODE, false); system("del TempSI.txt");
                                 CurrentSIFile[0] = 0;
 
-                                /* The following algorithm is used for NOT ACCEPTING purposes ONLY... */
-                                // bool CheckForCurrentKD = false;
-                                // strcpy(CurrentKDFile, "New_"UserCartStore_Keranjang);
-                                // AccessCart = fopen(CurrentKDFile, "w");
-                                // for (int Line = 1; Line <= CountFDBuffer("Temp_"UserCartStore_Keranjang); Line++) {
-                                //     if (Line == 1) {
-                                //         fprintf(AccessCart, "%d", atoi(ReadLine("Temp_"UserCartStore_Keranjang, Line)) - 1);
-                                //     } else {
-                                //         if (strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), KDList.FullName) != NULL && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), KDList.JobTitle) != NULL && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), KDList.HeadRegion) != NULL) {
-                                //             CheckForCurrentKD = true;
-                                //             continue;
-                                //         } else if (CheckForCurrentKD && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), SIFullName) != NULL && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), SIIndustryName) != NULL) {
-                                //             continue;
-                                //         } else if (CheckForCurrentKD && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), DisplayProductName) != NULL && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), DisplayProductStock) != NULL && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), DisplayProductPrice) != NULL) {
-                                //             continue;
-                                //         } else if (CheckForCurrentKD && atoi(ReadLine("Temp_"UserCartStore_Keranjang, Line)) == 0) {
-                                //             CheckForCurrentKD = false;
-                                //             continue;
-                                //         } else {
-                                //             fprintf(AccessCart, "%s", ReadLine("Temp_"UserCartStore_Keranjang, Line));
-                                //         }
-                                //     }
-                                // } fclose(AccessCart); system("del Temp_"UserCartStore_Keranjang);
-                                /* The following algorithm is used for NOT ACCEPTING purposes ONLY... */
-
                                 char GetCurrentStock[BUFSIZE07] = { 0 }, SetCurrentStock[BUFSIZE07] = { 0 };
                                 strcpy(GetCurrentStock, ReadLine("Temp_"Client_SektorIndustri, ((10 + 1) * SILoggedIn) + (8 + GetStockID)));
                                 GetCurrentStock[strlen(GetCurrentStock) - 1] = '\0';
@@ -4134,34 +4111,6 @@ void CMMFeature03(void) {
                                 
                                 puts("");
                                 printf(ANSI_COLOR_LIGHTWHITE"Daftar Pesanan:\n... 1. Nama Pesanan Produk: %s\n... 2. Stok Pesanan Produk: %s\n... 3. Harga Total Pesanan Produk: Rp%'lld.00\n", DisplayProductName, DisplayProductStock, atoll(DisplayProductPrice));
-
-                                // bool CheckForCurrentKD = false;
-                                // strcpy(CurrentKDFile, "New_"UserCartStore_Keranjang);
-                                // AccessCart = fopen(CurrentKDFile, "w");
-                                // for (int Line = 1; Line <= CountFDBuffer("Temp_"UserCartStore_Keranjang); Line++) {
-                                //     if (Line == 1) {
-                                //         fprintf(AccessCart, "%d\n", atoi(ReadLine("Temp_"UserCartStore_Keranjang, Line)) - 1);
-                                //     } else if (!CheckForCurrentKD && Line == ((4 + 1) * AvailableReqs) + 2) {
-                                //         CheckForCurrentKD = false;
-                                //         fprintf(AccessCart, "\n");
-                                //     }
-                                    
-                                //     if (CheckForCurrentKD) { CheckForCurrentKD = false; }
-                                //     if (Line != 1 && Line != ((4 + 1) * AvailableReqs) + 2) {
-                                //         if (strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), KDList.FullName) != NULL && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), KDList.JobTitle) != NULL && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), KDList.HeadRegion) != NULL) {
-                                //             CheckForCurrentKD = true;
-                                //             continue;
-                                //         } else if (CheckForCurrentKD && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), SIFullName) != NULL && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), SIIndustryName) != NULL) {
-                                //             continue;
-                                //         } else if (CheckForCurrentKD && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), DisplayProductName) != NULL && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), DisplayProductStock) != NULL && strstr(ReadLine("Temp_"UserCartStore_Keranjang, Line), DisplayProductPrice) != NULL) {
-                                //             continue;
-                                //         } else if (CheckForCurrentKD && atoi(ReadLine("Temp_"UserCartStore_Keranjang, Line)) == 0) {
-                                //             continue;
-                                //         } else if (!CheckForCurrentKD) {
-                                //             fprintf(AccessCart, "%s", ReadLine("Temp_"UserCartStore_Keranjang, Line));
-                                //         }
-                                //     }
-                                // } fclose(AccessCart);
 
                                 EncryptTextFile("Temp_"User_KepalaDaerah, User_KepalaDaerah, ENCRYPTCODE, true);
                                 EncryptTextFile("Temp_"Client_SektorIndustri, Client_SektorIndustri, ENCRYPTCODE, true);
@@ -4235,56 +4184,111 @@ void CMMFeature03(void) {
 void AdminLobbyMenu(void) {
     ClearScreen();
 
-    if (CheckInvalidInput) {
-        puts(ANSI_COLOR_LIGHTRED"ERROR: Nama pengguna dan/atau kata sandi salah!");
-        puts(ANSI_COLOR_YELLOW"... Silahkan untuk diperiksa kembali (tanpa batas pengecekan)!"ANSI_COLOR_RESET);
-        
+    if (!SwitchLanguage) {
+        if (CheckInvalidInput) {
+            puts(ANSI_COLOR_LIGHTRED"ERROR: Nama pengguna dan/atau kata sandi salah!");
+            puts(ANSI_COLOR_YELLOW"... Silahkan untuk diperiksa kembali (tanpa batas pengecekan)!"ANSI_COLOR_RESET);
+            
+            puts("");
+            AcceptInputOption("> Sebelum itu, ingin melanjutkan? [1: Ya, 0: Tidak]: ", Continuing)
+            if ((bool)Continuing) { CheckInvalidInput = false; AdminLobbyMenu(); }
+            else { CheckInvalidInput = false; HomeMenu(); }
+        }
+
+        puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
+        puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"Admin :: Kementerian Keuangan."ANSI_COLOR_RESET);
+
         puts("");
-        AcceptInputOption("> Sebelum itu, ingin melanjutkan? [1: Ya, 0: Tidak]: ", Continuing)
-        if ((bool)Continuing) { CheckInvalidInput = false; AdminLobbyMenu(); }
-        else { CheckInvalidInput = false; HomeMenu(); }
-    }
+        puts("Silakan untuk memasukkan DUA (2) kredensial Anda seperti berikut:");
+        puts("... 1. Nama Pengguna (maks. 128 karakter)");
+        puts("... 2. Kata Sandi    (8-16 karakter)");
 
-    puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
-    puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"Admin :: Kementerian Keuangan."ANSI_COLOR_RESET);
+        puts("");
+        AcceptInputText("Nama Pengguna: ", AdminSignIn.SignInUsername)
+        AcceptInputText("Kata Sandi:    ", AdminSignIn.SignInPassword)
 
-    puts("");
-    puts("Silakan untuk memasukkan DUA (2) kredensial Anda seperti berikut:");
-    puts("... 1. Nama Pengguna (maks. 128 karakter)");
-    puts("... 2. Kata Sandi    (8-16 karakter)");
-
-    puts("");
-    AcceptInputText("Nama Pengguna: ", AdminSignIn.SignInUsername)
-    AcceptInputText("Kata Sandi:    ", AdminSignIn.SignInPassword)
-
-    EncryptTextFile(Admin_Kemenkeu, "Temp_"Admin_Kemenkeu, -ENCRYPTCODE, false);
-    if (strcmp(AdminSignIn.SignInUsername, ReadLine("Temp_"Admin_Kemenkeu, 1)) == 0 && \
-        strcmp(AdminSignIn.SignInPassword, ReadLine("Temp_"Admin_Kemenkeu, 2)) == 0) {
-            
+        EncryptTextFile(Admin_Kemenkeu, "Temp_"Admin_Kemenkeu, -ENCRYPTCODE, false);
+        if (strcmp(AdminSignIn.SignInUsername, ReadLine("Temp_"Admin_Kemenkeu, 1)) == 0 && \
+            strcmp(AdminSignIn.SignInPassword, ReadLine("Temp_"Admin_Kemenkeu, 2)) == 0) {
+                
+                EncryptTextFile("Temp_"Admin_Kemenkeu, Admin_Kemenkeu, ENCRYPTCODE, true);
+                
+                ClearScreen();
+                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: ADMIN.");
+                puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
+                puts(ANSI_COLOR_CYAN"    dalam 3"ANSI_COLOR_RESET);
+                sleep(1);
+                ClearScreen();
+                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: ADMIN.");
+                puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
+                puts(ANSI_COLOR_CYAN"    dalam 3, 2"ANSI_COLOR_RESET);
+                sleep(1);
+                ClearScreen();
+                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: ADMIN.");
+                puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
+                puts(ANSI_COLOR_CYAN"    dalam 3, 2, 1..."ANSI_COLOR_RESET);
+                sleep(1);
+                
+                AdminMainMenu();
+        
+        } else {
+            CheckInvalidInput = true;
             EncryptTextFile("Temp_"Admin_Kemenkeu, Admin_Kemenkeu, ENCRYPTCODE, true);
-            
-            ClearScreen();
-            puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: ADMIN.");
-            puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
-            puts(ANSI_COLOR_CYAN"    dalam 3"ANSI_COLOR_RESET);
-            sleep(1);
-            ClearScreen();
-            puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: ADMIN.");
-            puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
-            puts(ANSI_COLOR_CYAN"    dalam 3, 2"ANSI_COLOR_RESET);
-            sleep(1);
-            ClearScreen();
-            puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: ADMIN.");
-            puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
-            puts(ANSI_COLOR_CYAN"    dalam 3, 2, 1..."ANSI_COLOR_RESET);
-            sleep(1);
-            
-            AdminMainMenu();
+            AdminLobbyMenu();
+        }
     
     } else {
-        CheckInvalidInput = true;
-        EncryptTextFile("Temp_"Admin_Kemenkeu, Admin_Kemenkeu, ENCRYPTCODE, true);
-        AdminLobbyMenu();
+        if (CheckInvalidInput) {
+            puts(ANSI_COLOR_LIGHTRED"ERROR: Username and/or password are incorrect!");
+            puts(ANSI_COLOR_YELLOW"... Please check your input data once again (no limit)!"ANSI_COLOR_RESET);
+            
+            puts("");
+            AcceptInputOption("> Beforehand, keep proceeding? [1: Yes, 0: No]: ", Continuing)
+            if ((bool)Continuing) { CheckInvalidInput = false; AdminLobbyMenu(); }
+            else { CheckInvalidInput = false; HomeMenu(); }
+        }
+
+        puts(ANSI_COLOR_LIGHTMAGENTA"Welcome to the application: D'Wakanda!");
+        puts(ANSI_COLOR_BLUE"You're now in the menu of: " BRIGHTGREEN156"Admin :: Ministry of Finance."ANSI_COLOR_RESET);
+
+        puts("");
+        puts("Please insert your main 2 (TWO) credentials as an Admin:");
+        puts("... 1. Username (max. 128 characters)");
+        puts("... 2. Password (8-16 characters)");
+
+        puts("");
+        AcceptInputText("Username: ", AdminSignIn.SignInUsername)
+        AcceptInputText("Password: ", AdminSignIn.SignInPassword)
+
+        EncryptTextFile(Admin_Kemenkeu, "Temp_"Admin_Kemenkeu, -ENCRYPTCODE, false);
+        if (strcmp(AdminSignIn.SignInUsername, ReadLine("Temp_"Admin_Kemenkeu, 1)) == 0 && \
+            strcmp(AdminSignIn.SignInPassword, ReadLine("Temp_"Admin_Kemenkeu, 2)) == 0) {
+                
+                EncryptTextFile("Temp_"Admin_Kemenkeu, Admin_Kemenkeu, ENCRYPTCODE, true);
+                
+                ClearScreen();
+                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: You are now successfully logged in as an: ADMIN.");
+                puts(ANSI_COLOR_CYAN"... You may proceed to get into the body of the Admin"ANSI_COLOR_RESET);
+                puts(ANSI_COLOR_CYAN"    within 3"ANSI_COLOR_RESET);
+                sleep(1);
+                ClearScreen();
+                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: You are now successfully logged in as an: ADMIN.");
+                puts(ANSI_COLOR_CYAN"... You may proceed to get into the body of the Admin"ANSI_COLOR_RESET);
+                puts(ANSI_COLOR_CYAN"    within 3, 2"ANSI_COLOR_RESET);
+                sleep(1);
+                ClearScreen();
+                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: You are now successfully logged in as an: ADMIN.");
+                puts(ANSI_COLOR_CYAN"... You may proceed to get into the body of the Admin"ANSI_COLOR_RESET);
+                puts(ANSI_COLOR_CYAN"    within 3, 2, 1..."ANSI_COLOR_RESET);
+                sleep(1);
+                
+                AdminMainMenu();
+        
+        } else {
+            CheckInvalidInput = true;
+            EncryptTextFile("Temp_"Admin_Kemenkeu, Admin_Kemenkeu, ENCRYPTCODE, true);
+            AdminLobbyMenu();
+        }
     }
 }
 
@@ -4292,269 +4296,535 @@ void UserLobbyMenu(void) {
     ClearScreen();
 
     int RegisteredKDs = 0;
-    if (CheckInvalidInput) {
-        if (RSOption == 0) {
-            puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
-            puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
-        } else if (RSOption == 2) {
-            puts(ANSI_COLOR_LIGHTRED"ERROR: NIK dan/atau kata sandi salah!");
-            puts(ANSI_COLOR_YELLOW"... Silahkan untuk diperiksa kembali (tidak ada batasan pengecekan)!"ANSI_COLOR_RESET);
+    if (!SwitchLanguage) {
+        if (CheckInvalidInput) {
+            if (RSOption == 0) {
+                puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
+                puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
+            } else if (RSOption == 2) {
+                puts(ANSI_COLOR_LIGHTRED"ERROR: NIK (Nomor Induk Kewarganegaraan) dan/atau kata sandi salah!");
+                puts(ANSI_COLOR_YELLOW"... Silahkan untuk diperiksa kembali (tidak ada batasan pengecekan)!"ANSI_COLOR_RESET);
+            }
+            
+            puts("");
+            AcceptInputOption("> Sebelum itu, ingin melanjutkan? [1: Ya, 0: Tidak]: ", Continuing)
+            if ((bool)Continuing) { CheckInvalidInput = false; UserLobbyMenu(); }
+            else { CheckInvalidInput = false; HomeMenu(); }
         }
+
+        if (RSOption == 0) {
+            puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"User :: Kepala Daerah."ANSI_COLOR_RESET);
+
+            puts("");
+            puts("Anda dipersilakan untuk memilih satu dari dua opsi berikut ini... .");
+            puts("[1] Registrasi  (Sign-up)");
+            puts("[2] Masuk       (Sign-in/Login)");
+            puts("[0] Kembali...");
+            AcceptInputOption("> Pilihan Anda: ", RSOption);
+        }
+
+        if (RSOption < 0) {
+            CheckInvalidInput = true;
+            UserLobbyMenu();
+        } else if (RSOption == 0) { HomeMenu(); }
         
-        puts("");
-        AcceptInputOption("> Sebelum itu, ingin melanjutkan? [1: Ya, 0: Tidak]: ", Continuing)
-        if ((bool)Continuing) { CheckInvalidInput = false; UserLobbyMenu(); }
-        else { CheckInvalidInput = false; HomeMenu(); }
-    }
-
-    if (RSOption == 0) {
-        puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
-        puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"User :: Kepala Daerah."ANSI_COLOR_RESET);
-
-        puts("");
-        puts("Anda dipersilakan untuk memilih satu dari dua opsi berikut ini... .");
-        puts("[1] Registrasi  (Sign-up)");
-        puts("[2] Masuk       (Sign-in/Login)");
-        puts("[0] Kembali...");
-        AcceptInputOption("> Pilihan Anda: ", RSOption);
-    }
-
-    if (RSOption < 0) {
-        CheckInvalidInput = true;
-        UserLobbyMenu();
-    } else if (RSOption == 0) { HomeMenu(); }
-    
-    else {
-        if (RSOption == 1) {
-            ClearScreen();
-
-            puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
-            puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"User :: Kepala Daerah."ANSI_COLOR_RESET);
-
-            puts("");
-            puts("Silakan untuk memasukkan TUJUH (7) kredensial baru Anda seperti berikut:");
-            if (CountRegists >= 2) printf(ANSI_COLOR_GREEN"... 1. Nama Lengkap:         %s\n"ANSI_COLOR_RESET, KDSignIn.FullName);
-            if (CountRegists >= 3) printf(ANSI_COLOR_GREEN"... 2. NIK:                  %s\n"ANSI_COLOR_RESET, KDSignIn.NIK);
-            if (CountRegists >= 4) printf(ANSI_COLOR_GREEN"... 3. E-mail:               %s\n"ANSI_COLOR_RESET, KDSignIn.Email);
-            if (CountRegists >= 5) { printf(ANSI_COLOR_GREEN"... 4. Kata Sandi:           "); for (size_t i = 0; i < strlen(KDSignIn.Password); i++) { printf("*"); } printf("\n"ANSI_COLOR_RESET); }
-            if (CountRegists >= 6) printf(ANSI_COLOR_GREEN"... 5. Tempat/Tanggal Lahir: %s\n"ANSI_COLOR_RESET, KDSignIn.BirthPlaceDate);
-            if (CountRegists >= 7) printf(ANSI_COLOR_GREEN"... 6. Jabatan:              %s\n"ANSI_COLOR_RESET, KDSignIn.JobTitle);
-            if (CountRegists >= 8) printf(ANSI_COLOR_GREEN"... 7. Daerah Perwakilan:    %s\n"ANSI_COLOR_RESET, KDSignIn.HeadRegion);
-            if (CountRegists < 2)  printf(ANSI_COLOR_YELLOW"... 1. Nama Lengkap:         (maks. 128 karakter)\n"ANSI_COLOR_RESET);
-            if (CountRegists < 3)  printf(ANSI_COLOR_YELLOW"... 2. NIK:                  (wajib 16 digit)\n"ANSI_COLOR_RESET);
-            if (CountRegists < 4)  printf(ANSI_COLOR_YELLOW"... 3. E-mail:               (memenuhi sintaks e-mail sesungguhnya)\n"ANSI_COLOR_RESET);
-            if (CountRegists < 5)  printf(ANSI_COLOR_YELLOW"... 4. Kata Sandi:           (8-16 karakter)\n"ANSI_COLOR_RESET);
-            if (CountRegists < 6)  printf(ANSI_COLOR_YELLOW"... 5. Tempat/Tanggal Lahir: (format: TEMPAT, DD/MM/YYYY)\n"ANSI_COLOR_RESET);
-            if (CountRegists < 7)  printf(ANSI_COLOR_YELLOW"... 6. Jabatan:              (golongan gubernur/bupati/wali kota)\n"ANSI_COLOR_RESET);
-            if (CountRegists < 8)  printf(ANSI_COLOR_YELLOW"... 7. Daerah Perwakilan:    (nama daerah dari kepala daerah)\n"ANSI_COLOR_RESET);
-            
-            puts("");
-            if (CountRegists == 1) {
-                AcceptInputText("Nama Lengkap: ", KDSignIn.FullName);
-                if (strlen(KDSignIn.FullName) < 2 || strlen(KDSignIn.FullName) > 128) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama lengkap melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    UserLobbyMenu();
-                } else { CountRegists++; KDSignIn.FullName[strlen(KDSignIn.FullName) - 1] = '\0'; UserLobbyMenu(); }
-            
-            } if (CountRegists == 2) {
-                AcceptInputText("NIK: ", KDSignIn.NIK);
-                if (strlen(KDSignIn.NIK) != 17) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data NIK belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    UserLobbyMenu();
-                } else { CountRegists++; KDSignIn.NIK[strlen(KDSignIn.NIK) - 1] = '\0'; UserLobbyMenu(); }
-            
-            } if (CountRegists == 3) {
-                AcceptInputText("E-mail: ", KDSignIn.Email);
-                if (strchr(KDSignIn.Email, '@') == NULL || strchr(KDSignIn.Email, '.') == NULL || strchr(KDSignIn.Email, ' ') != NULL || strlen(KDSignIn.Email) > 128) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data e-mail belum sesuai dengan sintaks yang ditentukan!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    UserLobbyMenu();
-                } else { CountRegists++; KDSignIn.Email[strlen(KDSignIn.Email) - 1] = '\0'; UserLobbyMenu(); }
-            
-            } if (CountRegists == 4) {
-                AcceptInputText("Kata Sandi: ", KDSignIn.Password);
-                if (strlen(KDSignIn.Password) < 9 || strlen(KDSignIn.Password) > 17) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    UserLobbyMenu();
-                } else { CountRegists++; KDSignIn.Password[strlen(KDSignIn.Password) - 1] = '\0'; UserLobbyMenu(); }
-            
-            } if (CountRegists == 5) {
-                AcceptInputText("Tempat/Tanggal Lahir: ", KDSignIn.BirthPlaceDate);
-                if (strchr(KDSignIn.BirthPlaceDate, ',') == NULL || strchr(KDSignIn.BirthPlaceDate, ' ') == NULL || strlen(KDSignIn.BirthPlaceDate) > 128) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data tempat/tanggal lahir belum memenuhi kriteria yang diminta!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    UserLobbyMenu();
-                } else { CountRegists++; KDSignIn.BirthPlaceDate[strlen(KDSignIn.BirthPlaceDate) - 1] = '\0'; UserLobbyMenu(); }
-            
-            } if (CountRegists == 6) {
-                AcceptInputText("Jabatan (Gubernur/Bupati/Wali Kota): ", KDSignIn.JobTitle);
-                if (strcmp(StringCapitalize(KDSignIn.JobTitle), "Gubernur\n") != 0 && strcmp(StringCapitalize(KDSignIn.JobTitle), "Bupati\n") != 0 && strcmp(StringCapitalize(KDSignIn.JobTitle), "Wali kota\n") != 0) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data golongan jabatan belum sesuai dengan pilihan yang tersedia!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    UserLobbyMenu();
-                } else { 
-                    if (strcmp(StringCapitalize(KDSignIn.JobTitle), "Wali kota\n") == 0) { strcpy(KDSignIn.JobTitle, "Wali Kota\n"); }
-                    CountRegists++; KDSignIn.JobTitle[strlen(KDSignIn.JobTitle) - 1] = '\0'; UserLobbyMenu();
-                }
-            
-            } if (CountRegists == 7) {
-                AcceptInputText("Kepala Wilayah/Daerah: ", KDSignIn.HeadRegion);
-                if (strlen(KDSignIn.HeadRegion) < 2 || strlen(KDSignIn.HeadRegion) > 128) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data kepala wilayah/daerah terlalu singkat/panjang!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    UserLobbyMenu();
-                } else { CountRegists++; KDSignIn.HeadRegion[strlen(KDSignIn.HeadRegion) - 1] = '\0'; UserLobbyMenu(); }    
-            }
-
-            if (CountRegists == 8) {
+        else {
+            if (RSOption == 1) {
                 ClearScreen();
 
-                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Kepala daerah baru telah berhasil didaftarkan!");
-                puts(ANSI_COLOR_MAGENTA"INFO: Silakan untuk melanjutkan interaksi berikut dengan masuk ke menu sign-in/login... ."ANSI_COLOR_RESET);
-                
-                puts("");
-                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                system("pause");
-
-                WritePublicKepalaDaerah(false);
-
-                CountRegists = 1; RSOption = 2;
-                KDSignIn.FullName[0] = 0; KDSignIn.NIK[0] = 0; KDSignIn.Email[0] = 0; KDSignIn.Password[0] = 0;
-                KDSignIn.BirthPlaceDate[0] = 0; KDSignIn.JobTitle[0] = 0; KDSignIn.HeadRegion[0] = 0;
-                UserLobbyMenu();
-            }
-
-        } else if (RSOption == 2) {
-            if (access(User_KepalaDaerah, F_OK) != 0) {
-                ClearScreen();
-
-                puts(ANSI_COLOR_LIGHTRED"ERROR: Belum terdapat kepala daerah yang terdaftarkan!");
-                puts(ANSI_COLOR_YELLOW"... Silahkan untuk masuk ke menu registrasi kepala daerah terlebih dahulu!"ANSI_COLOR_RESET);
+                puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
+                puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"User :: Kepala Daerah."ANSI_COLOR_RESET);
 
                 puts("");
-                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                system("pause");
+                puts("Silakan untuk memasukkan TUJUH (7) kredensial baru Anda seperti berikut:");
+                if (CountRegists >= 2) printf(ANSI_COLOR_GREEN"... 1. Nama Lengkap:         %s\n"ANSI_COLOR_RESET, KDSignIn.FullName);
+                if (CountRegists >= 3) printf(ANSI_COLOR_GREEN"... 2. NIK:                  %s\n"ANSI_COLOR_RESET, KDSignIn.NIK);
+                if (CountRegists >= 4) printf(ANSI_COLOR_GREEN"... 3. E-mail:               %s\n"ANSI_COLOR_RESET, KDSignIn.Email);
+                if (CountRegists >= 5) { printf(ANSI_COLOR_GREEN"... 4. Kata Sandi:           "); for (size_t i = 0; i < strlen(KDSignIn.Password); i++) { printf("*"); } printf("\n"ANSI_COLOR_RESET); }
+                if (CountRegists >= 6) printf(ANSI_COLOR_GREEN"... 5. Tempat/Tanggal Lahir: %s\n"ANSI_COLOR_RESET, KDSignIn.BirthPlaceDate);
+                if (CountRegists >= 7) printf(ANSI_COLOR_GREEN"... 6. Jabatan:              %s\n"ANSI_COLOR_RESET, KDSignIn.JobTitle);
+                if (CountRegists >= 8) printf(ANSI_COLOR_GREEN"... 7. Daerah Perwakilan:    %s\n"ANSI_COLOR_RESET, KDSignIn.HeadRegion);
+                if (CountRegists < 2)  printf(ANSI_COLOR_YELLOW"... 1. Nama Lengkap:         (maks. 128 karakter)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 3)  printf(ANSI_COLOR_YELLOW"... 2. NIK:                  (wajib 16 digit)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 4)  printf(ANSI_COLOR_YELLOW"... 3. E-mail:               (memenuhi sintaks e-mail sesungguhnya)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 5)  printf(ANSI_COLOR_YELLOW"... 4. Kata Sandi:           (8-16 karakter)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 6)  printf(ANSI_COLOR_YELLOW"... 5. Tempat/Tanggal Lahir: (format: TEMPAT, DD/MM/YYYY)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 7)  printf(ANSI_COLOR_YELLOW"... 6. Jabatan:              (golongan gubernur/bupati/wali kota)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 8)  printf(ANSI_COLOR_YELLOW"... 7. Daerah Perwakilan:    (nama daerah dari kepala daerah)\n"ANSI_COLOR_RESET);
                 
-                CountRegists = 1; RSOption = 1;
-                KDSignIn.FullName[0] = 0; KDSignIn.NIK[0] = 0; KDSignIn.Email[0] = 0; KDSignIn.Password[0] = 0;
-                KDSignIn.BirthPlaceDate[0] = 0; KDSignIn.JobTitle[0] = 0; KDSignIn.HeadRegion[0] = 0;
-                UserLobbyMenu();
-            }
-
-            ClearScreen();
-
-            puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
-            puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"User :: Kepala Daerah."ANSI_COLOR_RESET);
-
-            puts("");
-            puts("Silakan untuk memasukkan DUA (2) kredensial Anda seperti berikut:");
-            if (CountRegists >= 2) printf(ANSI_COLOR_GREEN"... 1. NIK:        %s\n"ANSI_COLOR_RESET, KDSignIn.NIK);
-            if (CountRegists >= 3) { printf(ANSI_COLOR_GREEN"... 2. Kata Sandi: "); for (size_t i = 0; i < strlen(KDSignIn.Password); i++) { printf("*"); } printf("\n"ANSI_COLOR_RESET); }
-            if (CountRegists < 2)  printf(ANSI_COLOR_YELLOW"... 1. NIK:        (wajib 16 digit)\n"ANSI_COLOR_RESET);
-            if (CountRegists < 3)  printf(ANSI_COLOR_YELLOW"... 2. Kata Sandi: (8-16 karakter)\n"ANSI_COLOR_RESET);
-
-            puts("");
-            if (CountRegists == 1) {
-                AcceptInputText("NIK: ", KD_SignInNIK);
-                if (strlen(KD_SignInNIK) != 17) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data NIK belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    UserLobbyMenu();
-                } else { CountRegists++; strncpy(KDSignIn.NIK, KD_SignInNIK, 32); KDSignIn.NIK[strlen(KDSignIn.NIK) - 1] = '\0'; UserLobbyMenu(); }
-            
-            } if (CountRegists == 2) {
-                AcceptInputText("Kata Sandi: ", KD_SignInPassword);
-                if (strlen(KD_SignInPassword) < 9 || strlen(KD_SignInPassword) > 17) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    UserLobbyMenu();
-                } else { CountRegists++; strncpy(KDSignIn.Password, KD_SignInPassword, 32); KDSignIn.Password[strlen(KDSignIn.Password) - 1] = '\0'; UserLobbyMenu(); }
-            }
-
-            if (CountRegists == 3) {
-                EncryptTextFile(User_KepalaDaerah, "Temp_"User_KepalaDaerah, -ENCRYPTCODE, false);
-                RegisteredKDs = atoi(ReadLine("Temp_"User_KepalaDaerah, 1));
-
-                for (int KD = 0; KD < RegisteredKDs; KD++) {
-                    if (strcmp(KD_SignInNIK, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 4))) == 0 && \
-                        strcmp(KD_SignInPassword, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 6))) == 0) {
-
-                            strncpy(KDFullName, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 3)), BUFSIZE07);
-                            strncpy(KDJobTitle, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 8)), BUFSIZE07);
-                            strncpy(KDHeadRegion, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 9)), BUFSIZE07);
-                            KDFullName[strlen(KDFullName) - 1] = '\0'; KDJobTitle[strlen(KDJobTitle) - 1] = '\0'; KDHeadRegion[strlen(KDHeadRegion) - 1] = '\0';
-
-                            SuccessfullyLoggedIn = true; KDLoggedIn = KD;
-                            EncryptTextFile("Temp_"User_KepalaDaerah, User_KepalaDaerah, ENCRYPTCODE, true);
+                puts("");
+                if (CountRegists == 1) {
+                    AcceptInputText("Nama Lengkap: ", KDSignIn.FullName);
+                    if (strlen(KDSignIn.FullName) < 2 || strlen(KDSignIn.FullName) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama lengkap melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; KDSignIn.FullName[strlen(KDSignIn.FullName) - 1] = '\0'; UserLobbyMenu(); }
                 
-                            ClearScreen();
-                            puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: USER.");
-                            puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
-                            puts(ANSI_COLOR_CYAN"    dalam 3"ANSI_COLOR_RESET);
-                            sleep(1);
-                            ClearScreen();
-                            puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: USER.");
-                            puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
-                            puts(ANSI_COLOR_CYAN"    dalam 3, 2"ANSI_COLOR_RESET);
-                            sleep(1);
-                            ClearScreen();
-                            puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: USER.");
-                            puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
-                            puts(ANSI_COLOR_CYAN"    dalam 3, 2, 1..."ANSI_COLOR_RESET);
-                            sleep(1);
-                            
-                            CountRegists = 1; RSOption = 3; // Just to be sure to avoid the infinite loop after first-time registration.
-                            KDSignIn.FullName[0] = 0; KDSignIn.NIK[0] = 0; KDSignIn.Email[0] = 0; KDSignIn.Password[0] = 0;
-                            KDSignIn.BirthPlaceDate[0] = 0; KDSignIn.JobTitle[0] = 0; KDSignIn.HeadRegion[0] = 0;
+                } if (CountRegists == 2) {
+                    AcceptInputText("NIK: ", KDSignIn.NIK);
+                    if (strlen(KDSignIn.NIK) != 17) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data NIK belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; KDSignIn.NIK[strlen(KDSignIn.NIK) - 1] = '\0'; UserLobbyMenu(); }
+                
+                } if (CountRegists == 3) {
+                    AcceptInputText("E-mail: ", KDSignIn.Email);
+                    if (strchr(KDSignIn.Email, '@') == NULL || strchr(KDSignIn.Email, '.') == NULL || strchr(KDSignIn.Email, ' ') != NULL || strlen(KDSignIn.Email) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data e-mail belum sesuai dengan sintaks yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; KDSignIn.Email[strlen(KDSignIn.Email) - 1] = '\0'; UserLobbyMenu(); }
+                
+                } if (CountRegists == 4) {
+                    AcceptInputText("Kata Sandi: ", KDSignIn.Password);
+                    if (strlen(KDSignIn.Password) < 9 || strlen(KDSignIn.Password) > 17) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; KDSignIn.Password[strlen(KDSignIn.Password) - 1] = '\0'; UserLobbyMenu(); }
+                
+                } if (CountRegists == 5) {
+                    AcceptInputText("Tempat/Tanggal Lahir: ", KDSignIn.BirthPlaceDate);
+                    if (strchr(KDSignIn.BirthPlaceDate, ',') == NULL || strchr(KDSignIn.BirthPlaceDate, ' ') == NULL || strlen(KDSignIn.BirthPlaceDate) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data tempat/tanggal lahir belum memenuhi kriteria yang diminta!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; KDSignIn.BirthPlaceDate[strlen(KDSignIn.BirthPlaceDate) - 1] = '\0'; UserLobbyMenu(); }
+                
+                } if (CountRegists == 6) {
+                    AcceptInputText("Jabatan (Gubernur/Bupati/Wali Kota): ", KDSignIn.JobTitle);
+                    if (strcmp(StringCapitalize(KDSignIn.JobTitle), "Gubernur\n") != 0 && strcmp(StringCapitalize(KDSignIn.JobTitle), "Bupati\n") != 0 && strcmp(StringCapitalize(KDSignIn.JobTitle), "Wali kota\n") != 0) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data golongan jabatan belum sesuai dengan pilihan yang tersedia!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { 
+                        if (strcmp(StringCapitalize(KDSignIn.JobTitle), "Wali kota\n") == 0) { strcpy(KDSignIn.JobTitle, "Wali Kota\n"); }
+                        CountRegists++; KDSignIn.JobTitle[strlen(KDSignIn.JobTitle) - 1] = '\0'; UserLobbyMenu();
                     }
+                
+                } if (CountRegists == 7) {
+                    AcceptInputText("Kepala Wilayah/Daerah: ", KDSignIn.HeadRegion);
+                    if (strlen(KDSignIn.HeadRegion) < 2 || strlen(KDSignIn.HeadRegion) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data kepala wilayah/daerah terlalu singkat/panjang!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; KDSignIn.HeadRegion[strlen(KDSignIn.HeadRegion) - 1] = '\0'; UserLobbyMenu(); }    
                 }
 
-                if (!SuccessfullyLoggedIn) {
-                    CheckInvalidInput = true;
+                if (CountRegists == 8) {
+                    ClearScreen();
+
+                    puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Kepala daerah baru telah berhasil didaftarkan!");
+                    puts(ANSI_COLOR_MAGENTA"INFO: Silakan untuk melanjutkan interaksi berikut dengan masuk ke menu sign-in/login... ."ANSI_COLOR_RESET);
+                    
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause");
+
+                    WritePublicKepalaDaerah(false);
+
                     CountRegists = 1; RSOption = 2;
                     KDSignIn.FullName[0] = 0; KDSignIn.NIK[0] = 0; KDSignIn.Email[0] = 0; KDSignIn.Password[0] = 0;
                     KDSignIn.BirthPlaceDate[0] = 0; KDSignIn.JobTitle[0] = 0; KDSignIn.HeadRegion[0] = 0;
-                    EncryptTextFile("Temp_"User_KepalaDaerah, User_KepalaDaerah, ENCRYPTCODE, true);
                     UserLobbyMenu();
+                }
+
+            } else if (RSOption == 2) {
+                if (access(User_KepalaDaerah, F_OK) != 0) {
+                    ClearScreen();
+
+                    puts(ANSI_COLOR_LIGHTRED"ERROR: Belum terdapat kepala daerah yang terdaftarkan!");
+                    puts(ANSI_COLOR_YELLOW"... Silahkan untuk masuk ke menu registrasi kepala daerah terlebih dahulu!"ANSI_COLOR_RESET);
+
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause");
+                    
+                    CountRegists = 1; RSOption = 1;
+                    KDSignIn.FullName[0] = 0; KDSignIn.NIK[0] = 0; KDSignIn.Email[0] = 0; KDSignIn.Password[0] = 0;
+                    KDSignIn.BirthPlaceDate[0] = 0; KDSignIn.JobTitle[0] = 0; KDSignIn.HeadRegion[0] = 0;
+                    UserLobbyMenu();
+                }
+
+                ClearScreen();
+
+                puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
+                puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"User :: Kepala Daerah."ANSI_COLOR_RESET);
+
+                puts("");
+                puts("Silakan untuk memasukkan DUA (2) kredensial Anda seperti berikut:");
+                if (CountRegists >= 2) printf(ANSI_COLOR_GREEN"... 1. NIK:        %s\n"ANSI_COLOR_RESET, KDSignIn.NIK);
+                if (CountRegists >= 3) { printf(ANSI_COLOR_GREEN"... 2. Kata Sandi: "); for (size_t i = 0; i < strlen(KDSignIn.Password); i++) { printf("*"); } printf("\n"ANSI_COLOR_RESET); }
+                if (CountRegists < 2)  printf(ANSI_COLOR_YELLOW"... 1. NIK:        (wajib 16 digit)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 3)  printf(ANSI_COLOR_YELLOW"... 2. Kata Sandi: (8-16 karakter)\n"ANSI_COLOR_RESET);
+
+                puts("");
+                if (CountRegists == 1) {
+                    AcceptInputText("NIK: ", KD_SignInNIK);
+                    if (strlen(KD_SignInNIK) != 17) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data NIK belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; strncpy(KDSignIn.NIK, KD_SignInNIK, 32); KDSignIn.NIK[strlen(KDSignIn.NIK) - 1] = '\0'; UserLobbyMenu(); }
                 
-                } else { UserMainMenu(); }
+                } if (CountRegists == 2) {
+                    AcceptInputText("Kata Sandi: ", KD_SignInPassword);
+                    if (strlen(KD_SignInPassword) < 9 || strlen(KD_SignInPassword) > 17) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; strncpy(KDSignIn.Password, KD_SignInPassword, 32); KDSignIn.Password[strlen(KDSignIn.Password) - 1] = '\0'; UserLobbyMenu(); }
+                }
+
+                if (CountRegists == 3) {
+                    EncryptTextFile(User_KepalaDaerah, "Temp_"User_KepalaDaerah, -ENCRYPTCODE, false);
+                    RegisteredKDs = atoi(ReadLine("Temp_"User_KepalaDaerah, 1));
+
+                    for (int KD = 0; KD < RegisteredKDs; KD++) {
+                        if (strcmp(KD_SignInNIK, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 4))) == 0 && \
+                            strcmp(KD_SignInPassword, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 6))) == 0) {
+
+                                strncpy(KDFullName, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 3)), BUFSIZE07);
+                                strncpy(KDJobTitle, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 8)), BUFSIZE07);
+                                strncpy(KDHeadRegion, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 9)), BUFSIZE07);
+                                KDFullName[strlen(KDFullName) - 1] = '\0'; KDJobTitle[strlen(KDJobTitle) - 1] = '\0'; KDHeadRegion[strlen(KDHeadRegion) - 1] = '\0';
+
+                                SuccessfullyLoggedIn = true; KDLoggedIn = KD;
+                                EncryptTextFile("Temp_"User_KepalaDaerah, User_KepalaDaerah, ENCRYPTCODE, true);
+                    
+                                ClearScreen();
+                                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: USER.");
+                                puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
+                                puts(ANSI_COLOR_CYAN"    dalam 3"ANSI_COLOR_RESET);
+                                sleep(1);
+                                ClearScreen();
+                                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: USER.");
+                                puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
+                                puts(ANSI_COLOR_CYAN"    dalam 3, 2"ANSI_COLOR_RESET);
+                                sleep(1);
+                                ClearScreen();
+                                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: USER.");
+                                puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
+                                puts(ANSI_COLOR_CYAN"    dalam 3, 2, 1..."ANSI_COLOR_RESET);
+                                sleep(1);
+                                
+                                CountRegists = 1; RSOption = 3; // Just to be sure to avoid the infinite loop after first-time registration.
+                                KDSignIn.FullName[0] = 0; KDSignIn.NIK[0] = 0; KDSignIn.Email[0] = 0; KDSignIn.Password[0] = 0;
+                                KDSignIn.BirthPlaceDate[0] = 0; KDSignIn.JobTitle[0] = 0; KDSignIn.HeadRegion[0] = 0;
+                        }
+                    }
+
+                    if (!SuccessfullyLoggedIn) {
+                        CheckInvalidInput = true;
+                        CountRegists = 1; RSOption = 2;
+                        KDSignIn.FullName[0] = 0; KDSignIn.NIK[0] = 0; KDSignIn.Email[0] = 0; KDSignIn.Password[0] = 0;
+                        KDSignIn.BirthPlaceDate[0] = 0; KDSignIn.JobTitle[0] = 0; KDSignIn.HeadRegion[0] = 0;
+                        EncryptTextFile("Temp_"User_KepalaDaerah, User_KepalaDaerah, ENCRYPTCODE, true);
+                        UserLobbyMenu();
+                    
+                    } else { UserMainMenu(); }
+                }
+            
+            } else if (RSOption == 3) { NULL; }
+            
+            else {
+                CheckInvalidInput = true;
+                UserLobbyMenu();
             }
-        
-        } else if (RSOption == 3) { NULL; }
-        
-        else {
+        }
+    
+    } else {
+        if (CheckInvalidInput) {
+            if (RSOption == 0) {
+                puts(ANSI_COLOR_LIGHTRED"ERROR: The given input is invalid!");
+                puts(ANSI_COLOR_YELLOW"... Please reconsider to be giving an input based on the given options!"ANSI_COLOR_RESET);
+            } else if (RSOption == 2) {
+                puts(ANSI_COLOR_LIGHTRED"ERROR: CIN (Citizenship Identification Number) and/or password are incorrect!");
+                puts(ANSI_COLOR_YELLOW"... Please check your input data once again (no limit)!"ANSI_COLOR_RESET);
+            }
+            
+            puts("");
+            AcceptInputOption("> Beforehand, keep proceeding? [1: Yes, 0: No]: ", Continuing)
+            if ((bool)Continuing) { CheckInvalidInput = false; UserLobbyMenu(); }
+            else { CheckInvalidInput = false; HomeMenu(); }
+        }
+
+        if (RSOption == 0) {
+            puts(ANSI_COLOR_LIGHTMAGENTA"Welcome to the application: D'Wakanda!");
+            puts(ANSI_COLOR_BLUE"You're now in the menu of: " BRIGHTGREEN156"User :: Head District."ANSI_COLOR_RESET);
+
+            puts("");
+            puts("You're obliged to choose either ONE out of THREE options below... .");
+            puts("[1] Registration (Sign-up)");
+            puts("[2] Proceeding   (Sign-in/Login)");
+            puts("[0] Go BACK...");
+            AcceptInputOption("> Your choice: ", RSOption);
+        }
+
+        if (RSOption < 0) {
             CheckInvalidInput = true;
             UserLobbyMenu();
+        } else if (RSOption == 0) { HomeMenu(); }
+        
+        else {
+            if (RSOption == 1) {
+                ClearScreen();
+
+                puts(ANSI_COLOR_LIGHTMAGENTA"Welcome to the application: D'Wakanda!");
+                puts(ANSI_COLOR_BLUE"You're now in the menu of: " BRIGHTGREEN156"User :: Head District."ANSI_COLOR_RESET);
+
+                puts("");
+                puts("Please proceed to registrate your main 7 (SEVEN) credentials as a new Head District:");
+                if (CountRegists >= 2) printf(ANSI_COLOR_GREEN"... 1. Full Name:           %s\n"ANSI_COLOR_RESET, KDSignIn.FullName);
+                if (CountRegists >= 3) printf(ANSI_COLOR_GREEN"... 2. CIN:                 %s\n"ANSI_COLOR_RESET, KDSignIn.NIK);
+                if (CountRegists >= 4) printf(ANSI_COLOR_GREEN"... 3. E-mail:              %s\n"ANSI_COLOR_RESET, KDSignIn.Email);
+                if (CountRegists >= 5) { printf(ANSI_COLOR_GREEN"... 4. Password:            "); for (size_t i = 0; i < strlen(KDSignIn.Password); i++) { printf("*"); } printf("\n"ANSI_COLOR_RESET); }
+                if (CountRegists >= 6) printf(ANSI_COLOR_GREEN"... 5. Birth of Place/Date: %s\n"ANSI_COLOR_RESET, KDSignIn.BirthPlaceDate);
+                if (CountRegists >= 7) printf(ANSI_COLOR_GREEN"... 6. Department:          %s\n"ANSI_COLOR_RESET, KDSignIn.JobTitle);
+                if (CountRegists >= 8) printf(ANSI_COLOR_GREEN"... 7. At District:         %s\n"ANSI_COLOR_RESET, KDSignIn.HeadRegion);
+                if (CountRegists < 2)  printf(ANSI_COLOR_YELLOW"... 1. Full Name:           (max. 128 characters)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 3)  printf(ANSI_COLOR_YELLOW"... 2. CIN:                 (must be 16 digits)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 4)  printf(ANSI_COLOR_YELLOW"... 3. E-mail:              (asserts the formal type of common e-mailings)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 5)  printf(ANSI_COLOR_YELLOW"... 4. Password:            (8-16 characters)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 6)  printf(ANSI_COLOR_YELLOW"... 5. Birth of Place/Date: (format: PLACE, DD/MM/YYYY)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 7)  printf(ANSI_COLOR_YELLOW"... 6. Department:          (grouped as governor/regent/mayor)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 8)  printf(ANSI_COLOR_YELLOW"... 7. At District:         (the district you're located at)\n"ANSI_COLOR_RESET);
+                
+                puts("");
+                if (CountRegists == 1) {
+                    AcceptInputText("Full Name: ", KDSignIn.FullName);
+                    if (strlen(KDSignIn.FullName) < 2 || strlen(KDSignIn.FullName) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: The given full name is invalid to the pre-requisites!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(press [ENTER] button to continue...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; KDSignIn.FullName[strlen(KDSignIn.FullName) - 1] = '\0'; UserLobbyMenu(); }
+                
+                } if (CountRegists == 2) {
+                    AcceptInputText("CIN: ", KDSignIn.NIK);
+                    if (strlen(KDSignIn.NIK) != 17) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: The given CIN is invalid to the pre-requisites!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(press [ENTER] button to continue...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; KDSignIn.NIK[strlen(KDSignIn.NIK) - 1] = '\0'; UserLobbyMenu(); }
+                
+                } if (CountRegists == 3) {
+                    AcceptInputText("E-mail: ", KDSignIn.Email);
+                    if (strchr(KDSignIn.Email, '@') == NULL || strchr(KDSignIn.Email, '.') == NULL || strchr(KDSignIn.Email, ' ') != NULL || strlen(KDSignIn.Email) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: The given e-mail is invalid to the pre-requisites!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(press [ENTER] button to continue...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; KDSignIn.Email[strlen(KDSignIn.Email) - 1] = '\0'; UserLobbyMenu(); }
+                
+                } if (CountRegists == 4) {
+                    AcceptInputText("Password: ", KDSignIn.Password);
+                    if (strlen(KDSignIn.Password) < 9 || strlen(KDSignIn.Password) > 17) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: The given password is invalid to the pre-requisites!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(press [ENTER] button to continue...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; KDSignIn.Password[strlen(KDSignIn.Password) - 1] = '\0'; UserLobbyMenu(); }
+                
+                } if (CountRegists == 5) {
+                    AcceptInputText("Birth of Place/Date: ", KDSignIn.BirthPlaceDate);
+                    if (strchr(KDSignIn.BirthPlaceDate, ',') == NULL || strchr(KDSignIn.BirthPlaceDate, ' ') == NULL || strlen(KDSignIn.BirthPlaceDate) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: The given birth of place/date is invalid to the pre-requisites!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(press [ENTER] button to continue...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; KDSignIn.BirthPlaceDate[strlen(KDSignIn.BirthPlaceDate) - 1] = '\0'; UserLobbyMenu(); }
+                
+                } if (CountRegists == 6) {
+                    AcceptInputText("Department (Governor/Regent/Mayor): ", KDSignIn.JobTitle);
+                    if (strcmp(StringCapitalize(KDSignIn.JobTitle), "Governor\n") != 0 && strcmp(StringCapitalize(KDSignIn.JobTitle), "Regent\n") != 0 && strcmp(StringCapitalize(KDSignIn.JobTitle), "Mayor\n") != 0) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: The given department is invalid to the pre-requisites as shown with the THREE options beforehand!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(press [ENTER] button to continue...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; KDSignIn.JobTitle[strlen(KDSignIn.JobTitle) - 1] = '\0'; UserLobbyMenu(); }
+                
+                } if (CountRegists == 7) {
+                    AcceptInputText("At District: ", KDSignIn.HeadRegion);
+                    if (strlen(KDSignIn.HeadRegion) < 2 || strlen(KDSignIn.HeadRegion) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: The given name of district is too short/long!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(press [ENTER] button to continue...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; KDSignIn.HeadRegion[strlen(KDSignIn.HeadRegion) - 1] = '\0'; UserLobbyMenu(); }    
+                }
+
+                if (CountRegists == 8) {
+                    ClearScreen();
+
+                    puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: The new Head District is now officially registered!");
+                    puts(ANSI_COLOR_MAGENTA"INFO: Please keep proceeding to get into the menu to do the sign-in/login process... ."ANSI_COLOR_RESET);
+                    
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(press [ENTER] button to continue...)"ANSI_COLOR_RESET);
+                    system("pause");
+
+                    WritePublicKepalaDaerah(false);
+
+                    CountRegists = 1; RSOption = 2;
+                    KDSignIn.FullName[0] = 0; KDSignIn.NIK[0] = 0; KDSignIn.Email[0] = 0; KDSignIn.Password[0] = 0;
+                    KDSignIn.BirthPlaceDate[0] = 0; KDSignIn.JobTitle[0] = 0; KDSignIn.HeadRegion[0] = 0;
+                    UserLobbyMenu();
+                }
+
+            } else if (RSOption == 2) {
+                if (access(User_KepalaDaerah, F_OK) != 0) {
+                    ClearScreen();
+
+                    puts(ANSI_COLOR_LIGHTRED"ERROR: No official registered Head Districts are available at the moment!");
+                    puts(ANSI_COLOR_YELLOW"... Please head to the registration menu first before signing in as a Head District!"ANSI_COLOR_RESET);
+
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(press [ENTER] button to continue...)"ANSI_COLOR_RESET);
+                    system("pause");
+                    
+                    CountRegists = 1; RSOption = 1;
+                    KDSignIn.FullName[0] = 0; KDSignIn.NIK[0] = 0; KDSignIn.Email[0] = 0; KDSignIn.Password[0] = 0;
+                    KDSignIn.BirthPlaceDate[0] = 0; KDSignIn.JobTitle[0] = 0; KDSignIn.HeadRegion[0] = 0;
+                    UserLobbyMenu();
+                }
+
+                ClearScreen();
+
+                puts(ANSI_COLOR_LIGHTMAGENTA"Welcome to the application: D'Wakanda!");
+                puts(ANSI_COLOR_BLUE"You're now in the menu of: " BRIGHTGREEN156"User :: Head District."ANSI_COLOR_RESET);
+
+                puts("");
+                puts("Please proceed to registrate your main 2 (TWO) credentials as a new Head District:");
+                if (CountRegists >= 2) printf(ANSI_COLOR_GREEN"... 1. CIN:        %s\n"ANSI_COLOR_RESET, KDSignIn.NIK);
+                if (CountRegists >= 3) { printf(ANSI_COLOR_GREEN"... 2. Password:   "); for (size_t i = 0; i < strlen(KDSignIn.Password); i++) { printf("*"); } printf("\n"ANSI_COLOR_RESET); }
+                if (CountRegists < 2)  printf(ANSI_COLOR_YELLOW"... 1. CIN:      (must be 16 digits)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 3)  printf(ANSI_COLOR_YELLOW"... 2. Password: (8-16 characters)\n"ANSI_COLOR_RESET);
+
+                puts("");
+                if (CountRegists == 1) {
+                    AcceptInputText("CIN: ", KD_SignInNIK);
+                    if (strlen(KD_SignInNIK) != 17) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: The given CIN is invalid to the pre-requisites!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(press [ENTER] button to continue...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; strncpy(KDSignIn.NIK, KD_SignInNIK, 32); KDSignIn.NIK[strlen(KDSignIn.NIK) - 1] = '\0'; UserLobbyMenu(); }
+                
+                } if (CountRegists == 2) {
+                    AcceptInputText("Password: ", KD_SignInPassword);
+                    if (strlen(KD_SignInPassword) < 9 || strlen(KD_SignInPassword) > 17) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: The given password is invalid to the pre-requisites!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(press [ENTER] button to continue...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        UserLobbyMenu();
+                    } else { CountRegists++; strncpy(KDSignIn.Password, KD_SignInPassword, 32); KDSignIn.Password[strlen(KDSignIn.Password) - 1] = '\0'; UserLobbyMenu(); }
+                }
+
+                if (CountRegists == 3) {
+                    EncryptTextFile(User_KepalaDaerah, "Temp_"User_KepalaDaerah, -ENCRYPTCODE, false);
+                    RegisteredKDs = atoi(ReadLine("Temp_"User_KepalaDaerah, 1));
+
+                    for (int KD = 0; KD < RegisteredKDs; KD++) {
+                        if (strcmp(KD_SignInNIK, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 4))) == 0 && \
+                            strcmp(KD_SignInPassword, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 6))) == 0) {
+
+                                strncpy(KDFullName, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 3)), BUFSIZE07);
+                                strncpy(KDJobTitle, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 8)), BUFSIZE07);
+                                strncpy(KDHeadRegion, ReadLine("Temp_"User_KepalaDaerah, (((10 + 1) * KD) + 9)), BUFSIZE07);
+                                KDFullName[strlen(KDFullName) - 1] = '\0'; KDJobTitle[strlen(KDJobTitle) - 1] = '\0'; KDHeadRegion[strlen(KDHeadRegion) - 1] = '\0';
+
+                                SuccessfullyLoggedIn = true; KDLoggedIn = KD;
+                                EncryptTextFile("Temp_"User_KepalaDaerah, User_KepalaDaerah, ENCRYPTCODE, true);
+                    
+                                ClearScreen();
+                                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: You are now successfully logged in as an: USER.");
+                                puts(ANSI_COLOR_CYAN"... You may proceed to get into the body of the User"ANSI_COLOR_RESET);
+                                puts(ANSI_COLOR_CYAN"    within 3"ANSI_COLOR_RESET);
+                                sleep(1);
+                                ClearScreen();
+                                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: You are now successfully logged in as an: USER.");
+                                puts(ANSI_COLOR_CYAN"... You may proceed to get into the body of the User"ANSI_COLOR_RESET);
+                                puts(ANSI_COLOR_CYAN"    within 3, 2"ANSI_COLOR_RESET);
+                                sleep(1);
+                                ClearScreen();
+                                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: You are now successfully logged in as an: USER.");
+                                puts(ANSI_COLOR_CYAN"... You may proceed to get into the body of the User"ANSI_COLOR_RESET);
+                                puts(ANSI_COLOR_CYAN"    within 3, 2, 1..."ANSI_COLOR_RESET);
+                                sleep(1);
+                                
+                                CountRegists = 1; RSOption = 3; // Just to be sure to avoid the infinite loop after first-time registration.
+                                KDSignIn.FullName[0] = 0; KDSignIn.NIK[0] = 0; KDSignIn.Email[0] = 0; KDSignIn.Password[0] = 0;
+                                KDSignIn.BirthPlaceDate[0] = 0; KDSignIn.JobTitle[0] = 0; KDSignIn.HeadRegion[0] = 0;
+                        }
+                    }
+
+                    if (!SuccessfullyLoggedIn) {
+                        CheckInvalidInput = true;
+                        CountRegists = 1; RSOption = 2;
+                        KDSignIn.FullName[0] = 0; KDSignIn.NIK[0] = 0; KDSignIn.Email[0] = 0; KDSignIn.Password[0] = 0;
+                        KDSignIn.BirthPlaceDate[0] = 0; KDSignIn.JobTitle[0] = 0; KDSignIn.HeadRegion[0] = 0;
+                        EncryptTextFile("Temp_"User_KepalaDaerah, User_KepalaDaerah, ENCRYPTCODE, true);
+                        UserLobbyMenu();
+                    
+                    } else { UserMainMenu(); }
+                }
+            
+            } else if (RSOption == 3) { NULL; }
+            
+            else {
+                CheckInvalidInput = true;
+                UserLobbyMenu();
+            }
         }
     }
 }
@@ -4563,349 +4833,449 @@ void ClientLobbyMenu(void) {
     ClearScreen();
 
     int RegisteredSIs = 0;
-    if (CheckInvalidInput) {
-        if (RSOption == 0) {
-            puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
-            puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
-        } else if (RSOption == 2) {
-            puts(ANSI_COLOR_LIGHTRED"ERROR: Nama pengguna dan/atau kata sandi salah!");
-            puts(ANSI_COLOR_YELLOW"... Silahkan untuk diperiksa kembali (tidak ada batasan pengecekan)!"ANSI_COLOR_RESET);
+    if (!SwitchLanguage) {
+        if (CheckInvalidInput) {
+            if (RSOption == 0) {
+                puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
+                puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
+            } else if (RSOption == 2) {
+                puts(ANSI_COLOR_LIGHTRED"ERROR: Nama pengguna dan/atau kata sandi salah!");
+                puts(ANSI_COLOR_YELLOW"... Silahkan untuk diperiksa kembali (tidak ada batasan pengecekan)!"ANSI_COLOR_RESET);
+            }
+            
+            puts("");
+            AcceptInputOption("> Sebelum itu, ingin melanjutkan? [1: Ya, 0: Tidak]: ", Continuing)
+            if ((bool)Continuing) { CheckInvalidInput = false; ClientLobbyMenu(); }
+            else { CheckInvalidInput = false; HomeMenu(); }
         }
-        
-        puts("");
-        AcceptInputOption("> Sebelum itu, ingin melanjutkan? [1: Ya, 0: Tidak]: ", Continuing)
-        if ((bool)Continuing) { CheckInvalidInput = false; ClientLobbyMenu(); }
-        else { CheckInvalidInput = false; HomeMenu(); }
-    }
 
-    if (RSOption == 0) {
-        puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
-        puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"Client :: Sektor Industri."ANSI_COLOR_RESET);
-
-        puts("");
-        puts("Anda dipersilakan untuk memilih satu dari dua opsi berikut ini... .");
-        puts("[1] Registrasi  (Sign-up)");
-        puts("[2] Masuk       (Sign-in/Login)");
-        puts("[0] Kembali...");
-        AcceptInputOption("> Pilihan Anda: ", RSOption);
-    }
-
-    if (RSOption < 0) {
-        CheckInvalidInput = true;
-        ClientLobbyMenu();
-    } else if (RSOption == 0) { HomeMenu(); }
-    
-    else {
-        if (RSOption == 1) {
-            ClearScreen();
-
+        if (RSOption == 0) {
             puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
             puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"Client :: Sektor Industri."ANSI_COLOR_RESET);
 
             puts("");
-            puts("Silakan untuk memasukkan EMPAT (4) kredensial baru Anda seperti berikut:");
-            if (CountRegists >= 2) printf(ANSI_COLOR_GREEN"... 1. Nama Lengkap:  %s\n"ANSI_COLOR_RESET, SISignIn.FullName);
-            if (CountRegists >= 3) printf(ANSI_COLOR_GREEN"... 2. Nama Industri: %s\n"ANSI_COLOR_RESET, SISignIn.IndustryName);
-            if (CountRegists >= 4) printf(ANSI_COLOR_GREEN"... 3. Nama Pengguna: %s\n"ANSI_COLOR_RESET, SISignIn.Username);
-            if (CountRegists >= 5) { printf(ANSI_COLOR_GREEN"... 4. Kata Sandi:  "); for (size_t i = 0; i < strlen(SISignIn.Password); i++) { printf("*"); } printf("\n"ANSI_COLOR_RESET); }
-            if (CountRegists < 2)  printf(ANSI_COLOR_YELLOW"... 1. Nama Lengkap:  (maks. 128 karakter)\n"ANSI_COLOR_RESET);
-            if (CountRegists < 3)  printf(ANSI_COLOR_YELLOW"... 2. Nama Industri: (maks. 128 karakter)\n"ANSI_COLOR_RESET);
-            if (CountRegists < 4)  printf(ANSI_COLOR_YELLOW"... 3. Nama Pengguna: (maks. 128 karakter)\n"ANSI_COLOR_RESET);
-            if (CountRegists < 5)  printf(ANSI_COLOR_YELLOW"... 4. Kata Sandi:    (8-16 karakter)\n"ANSI_COLOR_RESET);
-            
-            puts("");
-            if (CountRegists == 1) {
-                AcceptInputText("Nama Lengkap: ", SISignIn.FullName);
-                if (strlen(SISignIn.FullName) < 2 || strlen(SISignIn.FullName) > 128) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama lengkap melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    ClientLobbyMenu();
-                } else { CountRegists++; SISignIn.FullName[strlen(SISignIn.FullName) - 1] = '\0'; ClientLobbyMenu(); }
-            
-            } if (CountRegists == 2) {
-                AcceptInputText("Nama Industri: ", SISignIn.IndustryName);
-                if (strlen(SISignIn.IndustryName) < 2 || strlen(SISignIn.IndustryName) > 128) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama industri melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    ClientLobbyMenu();
-                } else { CountRegists++; SISignIn.IndustryName[strlen(SISignIn.IndustryName) - 1] = '\0'; ClientLobbyMenu(); }
-            
-            } if (CountRegists == 3) {
-                AcceptInputText("Nama Pengguna: ", SISignIn.Username);
-                if (strlen(SISignIn.Username) < 2 || strlen(SISignIn.Username) > 128) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama pengguna melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    ClientLobbyMenu();
-                } else { CountRegists++; SISignIn.Username[strlen(SISignIn.Username) - 1] = '\0'; ClientLobbyMenu(); }
-            
-            } if (CountRegists == 4) {
-                AcceptInputText("Kata Sandi: ", SISignIn.Password);
-                if (strlen(SISignIn.Password) < 9 || strlen(SISignIn.Password) > 17) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    ClientLobbyMenu();
-                } else { CountRegists++; SISignIn.Password[strlen(SISignIn.Password) - 1] = '\0'; ClientLobbyMenu(); }
-            
-            }
+            puts("Anda dipersilakan untuk memilih satu dari dua opsi berikut ini... .");
+            puts("[1] Registrasi  (Sign-up)");
+            puts("[2] Masuk       (Sign-in/Login)");
+            puts("[0] Kembali...");
+            AcceptInputOption("> Pilihan Anda: ", RSOption);
+        }
 
-            if (CountRegists == 5) {
-                ClearScreen();
-
-                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Sektor industri baru telah berhasil didaftarkan!");
-                puts(ANSI_COLOR_MAGENTA"INFO: Silakan untuk melanjutkan interaksi berikut dengan masuk ke menu sign-in/login... ."ANSI_COLOR_RESET);
-                
-                puts("");
-                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                system("pause");
-
-                WritePublicSektorIndustri(false);
-
-                CountRegists = 1; RSOption = 2;
-                SISignIn.FullName[0] = 0; SISignIn.IndustryName[0] = 0; SISignIn.Username[0] = 0; SISignIn.Password[0] = 0;
-                ClientLobbyMenu();
-            }
-
-        } else if (RSOption == 2) {
-            if (access(Client_SektorIndustri, F_OK) != 0) {
-                ClearScreen();
-
-                puts(ANSI_COLOR_LIGHTRED"ERROR: Belum terdapat sektor industri yang terdaftarkan!");
-                puts(ANSI_COLOR_YELLOW"... Silahkan untuk masuk ke menu registrasi sektor industri terlebih dahulu!"ANSI_COLOR_RESET);
-
-                puts("");
-                puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                system("pause");
-                
-                CountRegists = 1; RSOption = 1;
-                SISignIn.FullName[0] = 0; SISignIn.IndustryName[0] = 0; SISignIn.Username[0] = 0; SISignIn.Password[0] = 0;
-                ClientLobbyMenu();
-            }
-
-            ClearScreen();
-
-            puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
-            puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"Client :: Sektor Industri."ANSI_COLOR_RESET);
-
-            puts("");
-            puts("Silakan untuk memasukkan DUA (2) kredensial Anda seperti berikut:");
-            if (CountRegists >= 2) printf(ANSI_COLOR_GREEN"... 1. Nama Pengguna: %s\n"ANSI_COLOR_RESET, SISignIn.Username);
-            if (CountRegists >= 3) { printf(ANSI_COLOR_GREEN"... 2. Kata Sandi:    "); for (size_t i = 0; i < strlen(SISignIn.Password); i++) { printf("*"); } printf("\n"ANSI_COLOR_RESET); }
-            if (CountRegists < 2)  printf(ANSI_COLOR_YELLOW"... 1. Nama Pengguna: (wajib 16 digit)\n"ANSI_COLOR_RESET);
-            if (CountRegists < 3)  printf(ANSI_COLOR_YELLOW"... 2. Kata Sandi:    (8-16 karakter)\n"ANSI_COLOR_RESET);
-
-            puts("");
-            if (CountRegists == 1) {
-                AcceptInputText("Nama Pengguna: ", SI_SignInUsername);
-                if (strlen(SI_SignInUsername) < 2 || strlen(SI_SignInUsername) > 128) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama pengguna melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    ClientLobbyMenu();
-                } else { CountRegists++; strncpy(SISignIn.Username, SI_SignInUsername, BUFSIZE07); SISignIn.Username[strlen(SISignIn.Username) - 1] = '\0'; ClientLobbyMenu(); }
-            
-            } if (CountRegists == 2) {
-                AcceptInputText("Kata Sandi: ", SI_SignInPassword);
-                if (strlen(SI_SignInPassword) < 9 || strlen(SI_SignInPassword) > 17) {
-                    puts("");
-                    puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
-                    puts("");
-                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-                    system("pause");
-                    ClientLobbyMenu();
-                } else { CountRegists++; strncpy(SISignIn.Password, SI_SignInPassword, 32); SISignIn.Password[strlen(SISignIn.Password) - 1] = '\0'; ClientLobbyMenu(); }
-            }
-
-            if (CountRegists == 3) {
-                EncryptTextFile(Client_SektorIndustri, "Temp_"Client_SektorIndustri, -ENCRYPTCODE, false);
-                RegisteredSIs = atoi(ReadLine("Temp_"Client_SektorIndustri, 1));
-
-                for (int SI = 0; SI < RegisteredSIs; SI++) {
-                    if (strcmp(SI_SignInUsername, ReadLine("Temp_"Client_SektorIndustri, (((10 + 1) * SI) + 5))) == 0 && \
-                        strcmp(SI_SignInPassword, ReadLine("Temp_"Client_SektorIndustri, (((10 + 1) * SI) + 6))) == 0) {
-
-                            strncpy(SIFullName, ReadLine("Temp_"Client_SektorIndustri, (((10 + 1) * SI) + 3)), BUFSIZE07);
-                            strncpy(SIIndustryName, ReadLine("Temp_"Client_SektorIndustri, (((10 + 1) * SI) + 4)), BUFSIZE07);
-                            SIFullName[strlen(SIFullName) - 1] = '\0'; SIIndustryName[strlen(SIIndustryName) - 1] = '\0';
-
-                            SuccessfullyLoggedIn = true; SILoggedIn = SI;
-                            EncryptTextFile("Temp_"Client_SektorIndustri, Client_SektorIndustri, ENCRYPTCODE, true);
-                
-                            ClearScreen();
-                            puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: CLIENT.");
-                            puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
-                            puts(ANSI_COLOR_CYAN"    dalam 3"ANSI_COLOR_RESET);
-                            sleep(1);
-                            ClearScreen();
-                            puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: CLIENT.");
-                            puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
-                            puts(ANSI_COLOR_CYAN"    dalam 3, 2"ANSI_COLOR_RESET);
-                            sleep(1);
-                            ClearScreen();
-                            puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: CLIENT.");
-                            puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
-                            puts(ANSI_COLOR_CYAN"    dalam 3, 2, 1..."ANSI_COLOR_RESET);
-                            sleep(1);
-                            
-                            CountRegists = 1; RSOption = 3; // Just to be sure to avoid the infinite loop after first-time registration.
-                            SISignIn.FullName[0] = 0; SISignIn.IndustryName[0] = 0; SISignIn.Username[0] = 0; SISignIn.Password[0] = 0;
-                    }
-                }
-
-                if (!SuccessfullyLoggedIn) {
-                    CheckInvalidInput = true;
-                    CountRegists = 1; RSOption = 2;
-                    SISignIn.FullName[0] = 0; SISignIn.IndustryName[0] = 0; SISignIn.Username[0] = 0; SISignIn.Password[0] = 0;
-                    EncryptTextFile("Temp_"Client_SektorIndustri, Client_SektorIndustri, ENCRYPTCODE, true);
-                    ClientLobbyMenu();
-                
-                } else { ClientMainMenu(); }
-            }
-        
-        } else if (RSOption == 3) { NULL; }
-        
-        else {
+        if (RSOption < 0) {
             CheckInvalidInput = true;
             ClientLobbyMenu();
+        } else if (RSOption == 0) { HomeMenu(); }
+        
+        else {
+            if (RSOption == 1) {
+                ClearScreen();
+
+                puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
+                puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"Client :: Sektor Industri."ANSI_COLOR_RESET);
+
+                puts("");
+                puts("Silakan untuk memasukkan EMPAT (4) kredensial baru Anda seperti berikut:");
+                if (CountRegists >= 2) printf(ANSI_COLOR_GREEN"... 1. Nama Lengkap:  %s\n"ANSI_COLOR_RESET, SISignIn.FullName);
+                if (CountRegists >= 3) printf(ANSI_COLOR_GREEN"... 2. Nama Industri: %s\n"ANSI_COLOR_RESET, SISignIn.IndustryName);
+                if (CountRegists >= 4) printf(ANSI_COLOR_GREEN"... 3. Nama Pengguna: %s\n"ANSI_COLOR_RESET, SISignIn.Username);
+                if (CountRegists >= 5) { printf(ANSI_COLOR_GREEN"... 4. Kata Sandi:  "); for (size_t i = 0; i < strlen(SISignIn.Password); i++) { printf("*"); } printf("\n"ANSI_COLOR_RESET); }
+                if (CountRegists < 2)  printf(ANSI_COLOR_YELLOW"... 1. Nama Lengkap:  (maks. 128 karakter)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 3)  printf(ANSI_COLOR_YELLOW"... 2. Nama Industri: (maks. 128 karakter)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 4)  printf(ANSI_COLOR_YELLOW"... 3. Nama Pengguna: (maks. 128 karakter)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 5)  printf(ANSI_COLOR_YELLOW"... 4. Kata Sandi:    (8-16 karakter)\n"ANSI_COLOR_RESET);
+                
+                puts("");
+                if (CountRegists == 1) {
+                    AcceptInputText("Nama Lengkap: ", SISignIn.FullName);
+                    if (strlen(SISignIn.FullName) < 2 || strlen(SISignIn.FullName) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama lengkap melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        ClientLobbyMenu();
+                    } else { CountRegists++; SISignIn.FullName[strlen(SISignIn.FullName) - 1] = '\0'; ClientLobbyMenu(); }
+                
+                } if (CountRegists == 2) {
+                    AcceptInputText("Nama Industri: ", SISignIn.IndustryName);
+                    if (strlen(SISignIn.IndustryName) < 2 || strlen(SISignIn.IndustryName) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama industri melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        ClientLobbyMenu();
+                    } else { CountRegists++; SISignIn.IndustryName[strlen(SISignIn.IndustryName) - 1] = '\0'; ClientLobbyMenu(); }
+                
+                } if (CountRegists == 3) {
+                    AcceptInputText("Nama Pengguna: ", SISignIn.Username);
+                    if (strlen(SISignIn.Username) < 2 || strlen(SISignIn.Username) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama pengguna melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        ClientLobbyMenu();
+                    } else { CountRegists++; SISignIn.Username[strlen(SISignIn.Username) - 1] = '\0'; ClientLobbyMenu(); }
+                
+                } if (CountRegists == 4) {
+                    AcceptInputText("Kata Sandi: ", SISignIn.Password);
+                    if (strlen(SISignIn.Password) < 9 || strlen(SISignIn.Password) > 17) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        ClientLobbyMenu();
+                    } else { CountRegists++; SISignIn.Password[strlen(SISignIn.Password) - 1] = '\0'; ClientLobbyMenu(); }
+                
+                }
+
+                if (CountRegists == 5) {
+                    ClearScreen();
+
+                    puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Sektor industri baru telah berhasil didaftarkan!");
+                    puts(ANSI_COLOR_MAGENTA"INFO: Silakan untuk melanjutkan interaksi berikut dengan masuk ke menu sign-in/login... ."ANSI_COLOR_RESET);
+                    
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause");
+
+                    WritePublicSektorIndustri(false);
+
+                    CountRegists = 1; RSOption = 2;
+                    SISignIn.FullName[0] = 0; SISignIn.IndustryName[0] = 0; SISignIn.Username[0] = 0; SISignIn.Password[0] = 0;
+                    ClientLobbyMenu();
+                }
+
+            } else if (RSOption == 2) {
+                if (access(Client_SektorIndustri, F_OK) != 0) {
+                    ClearScreen();
+
+                    puts(ANSI_COLOR_LIGHTRED"ERROR: Belum terdapat sektor industri yang terdaftarkan!");
+                    puts(ANSI_COLOR_YELLOW"... Silahkan untuk masuk ke menu registrasi sektor industri terlebih dahulu!"ANSI_COLOR_RESET);
+
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause");
+                    
+                    CountRegists = 1; RSOption = 1;
+                    SISignIn.FullName[0] = 0; SISignIn.IndustryName[0] = 0; SISignIn.Username[0] = 0; SISignIn.Password[0] = 0;
+                    ClientLobbyMenu();
+                }
+
+                ClearScreen();
+
+                puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
+                puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"Client :: Sektor Industri."ANSI_COLOR_RESET);
+
+                puts("");
+                puts("Silakan untuk memasukkan DUA (2) kredensial Anda seperti berikut:");
+                if (CountRegists >= 2) printf(ANSI_COLOR_GREEN"... 1. Nama Pengguna: %s\n"ANSI_COLOR_RESET, SISignIn.Username);
+                if (CountRegists >= 3) { printf(ANSI_COLOR_GREEN"... 2. Kata Sandi:    "); for (size_t i = 0; i < strlen(SISignIn.Password); i++) { printf("*"); } printf("\n"ANSI_COLOR_RESET); }
+                if (CountRegists < 2)  printf(ANSI_COLOR_YELLOW"... 1. Nama Pengguna: (wajib 16 digit)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 3)  printf(ANSI_COLOR_YELLOW"... 2. Kata Sandi:    (8-16 karakter)\n"ANSI_COLOR_RESET);
+
+                puts("");
+                if (CountRegists == 1) {
+                    AcceptInputText("Nama Pengguna: ", SI_SignInUsername);
+                    if (strlen(SI_SignInUsername) < 2 || strlen(SI_SignInUsername) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama pengguna melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        ClientLobbyMenu();
+                    } else { CountRegists++; strncpy(SISignIn.Username, SI_SignInUsername, BUFSIZE07); SISignIn.Username[strlen(SISignIn.Username) - 1] = '\0'; ClientLobbyMenu(); }
+                
+                } if (CountRegists == 2) {
+                    AcceptInputText("Kata Sandi: ", SI_SignInPassword);
+                    if (strlen(SI_SignInPassword) < 9 || strlen(SI_SignInPassword) > 17) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        ClientLobbyMenu();
+                    } else { CountRegists++; strncpy(SISignIn.Password, SI_SignInPassword, 32); SISignIn.Password[strlen(SISignIn.Password) - 1] = '\0'; ClientLobbyMenu(); }
+                }
+
+                if (CountRegists == 3) {
+                    EncryptTextFile(Client_SektorIndustri, "Temp_"Client_SektorIndustri, -ENCRYPTCODE, false);
+                    RegisteredSIs = atoi(ReadLine("Temp_"Client_SektorIndustri, 1));
+
+                    for (int SI = 0; SI < RegisteredSIs; SI++) {
+                        if (strcmp(SI_SignInUsername, ReadLine("Temp_"Client_SektorIndustri, (((10 + 1) * SI) + 5))) == 0 && \
+                            strcmp(SI_SignInPassword, ReadLine("Temp_"Client_SektorIndustri, (((10 + 1) * SI) + 6))) == 0) {
+
+                                strncpy(SIFullName, ReadLine("Temp_"Client_SektorIndustri, (((10 + 1) * SI) + 3)), BUFSIZE07);
+                                strncpy(SIIndustryName, ReadLine("Temp_"Client_SektorIndustri, (((10 + 1) * SI) + 4)), BUFSIZE07);
+                                SIFullName[strlen(SIFullName) - 1] = '\0'; SIIndustryName[strlen(SIIndustryName) - 1] = '\0';
+
+                                SuccessfullyLoggedIn = true; SILoggedIn = SI;
+                                EncryptTextFile("Temp_"Client_SektorIndustri, Client_SektorIndustri, ENCRYPTCODE, true);
+                    
+                                ClearScreen();
+                                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: CLIENT.");
+                                puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
+                                puts(ANSI_COLOR_CYAN"    dalam 3"ANSI_COLOR_RESET);
+                                sleep(1);
+                                ClearScreen();
+                                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: CLIENT.");
+                                puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
+                                puts(ANSI_COLOR_CYAN"    dalam 3, 2"ANSI_COLOR_RESET);
+                                sleep(1);
+                                ClearScreen();
+                                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: CLIENT.");
+                                puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
+                                puts(ANSI_COLOR_CYAN"    dalam 3, 2, 1..."ANSI_COLOR_RESET);
+                                sleep(1);
+                                
+                                CountRegists = 1; RSOption = 3; // Just to be sure to avoid the infinite loop after first-time registration.
+                                SISignIn.FullName[0] = 0; SISignIn.IndustryName[0] = 0; SISignIn.Username[0] = 0; SISignIn.Password[0] = 0;
+                        }
+                    }
+
+                    if (!SuccessfullyLoggedIn) {
+                        CheckInvalidInput = true;
+                        CountRegists = 1; RSOption = 2;
+                        SISignIn.FullName[0] = 0; SISignIn.IndustryName[0] = 0; SISignIn.Username[0] = 0; SISignIn.Password[0] = 0;
+                        EncryptTextFile("Temp_"Client_SektorIndustri, Client_SektorIndustri, ENCRYPTCODE, true);
+                        ClientLobbyMenu();
+                    
+                    } else { ClientMainMenu(); }
+                }
+            
+            } else if (RSOption == 3) { NULL; }
+            
+            else {
+                CheckInvalidInput = true;
+                ClientLobbyMenu();
+            }
+        }
+    
+    } else {
+        if (CheckInvalidInput) {
+            if (RSOption == 0) {
+                puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
+                puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
+            } else if (RSOption == 2) {
+                puts(ANSI_COLOR_LIGHTRED"ERROR: Nama pengguna dan/atau kata sandi salah!");
+                puts(ANSI_COLOR_YELLOW"... Silahkan untuk diperiksa kembali (tidak ada batasan pengecekan)!"ANSI_COLOR_RESET);
+            }
+            
+            puts("");
+            AcceptInputOption("> Sebelum itu, ingin melanjutkan? [1: Ya, 0: Tidak]: ", Continuing)
+            if ((bool)Continuing) { CheckInvalidInput = false; ClientLobbyMenu(); }
+            else { CheckInvalidInput = false; HomeMenu(); }
+        }
+
+        if (RSOption == 0) {
+            puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"Client :: Sektor Industri."ANSI_COLOR_RESET);
+
+            puts("");
+            puts("Anda dipersilakan untuk memilih satu dari dua opsi berikut ini... .");
+            puts("[1] Registrasi  (Sign-up)");
+            puts("[2] Masuk       (Sign-in/Login)");
+            puts("[0] Kembali...");
+            AcceptInputOption("> Pilihan Anda: ", RSOption);
+        }
+
+        if (RSOption < 0) {
+            CheckInvalidInput = true;
+            ClientLobbyMenu();
+        } else if (RSOption == 0) { HomeMenu(); }
+        
+        else {
+            if (RSOption == 1) {
+                ClearScreen();
+
+                puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
+                puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"Client :: Sektor Industri."ANSI_COLOR_RESET);
+
+                puts("");
+                puts("Silakan untuk memasukkan EMPAT (4) kredensial baru Anda seperti berikut:");
+                if (CountRegists >= 2) printf(ANSI_COLOR_GREEN"... 1. Nama Lengkap:  %s\n"ANSI_COLOR_RESET, SISignIn.FullName);
+                if (CountRegists >= 3) printf(ANSI_COLOR_GREEN"... 2. Nama Industri: %s\n"ANSI_COLOR_RESET, SISignIn.IndustryName);
+                if (CountRegists >= 4) printf(ANSI_COLOR_GREEN"... 3. Nama Pengguna: %s\n"ANSI_COLOR_RESET, SISignIn.Username);
+                if (CountRegists >= 5) { printf(ANSI_COLOR_GREEN"... 4. Kata Sandi:  "); for (size_t i = 0; i < strlen(SISignIn.Password); i++) { printf("*"); } printf("\n"ANSI_COLOR_RESET); }
+                if (CountRegists < 2)  printf(ANSI_COLOR_YELLOW"... 1. Nama Lengkap:  (maks. 128 karakter)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 3)  printf(ANSI_COLOR_YELLOW"... 2. Nama Industri: (maks. 128 karakter)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 4)  printf(ANSI_COLOR_YELLOW"... 3. Nama Pengguna: (maks. 128 karakter)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 5)  printf(ANSI_COLOR_YELLOW"... 4. Kata Sandi:    (8-16 karakter)\n"ANSI_COLOR_RESET);
+                
+                puts("");
+                if (CountRegists == 1) {
+                    AcceptInputText("Nama Lengkap: ", SISignIn.FullName);
+                    if (strlen(SISignIn.FullName) < 2 || strlen(SISignIn.FullName) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama lengkap melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        ClientLobbyMenu();
+                    } else { CountRegists++; SISignIn.FullName[strlen(SISignIn.FullName) - 1] = '\0'; ClientLobbyMenu(); }
+                
+                } if (CountRegists == 2) {
+                    AcceptInputText("Nama Industri: ", SISignIn.IndustryName);
+                    if (strlen(SISignIn.IndustryName) < 2 || strlen(SISignIn.IndustryName) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama industri melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        ClientLobbyMenu();
+                    } else { CountRegists++; SISignIn.IndustryName[strlen(SISignIn.IndustryName) - 1] = '\0'; ClientLobbyMenu(); }
+                
+                } if (CountRegists == 3) {
+                    AcceptInputText("Nama Pengguna: ", SISignIn.Username);
+                    if (strlen(SISignIn.Username) < 2 || strlen(SISignIn.Username) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama pengguna melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        ClientLobbyMenu();
+                    } else { CountRegists++; SISignIn.Username[strlen(SISignIn.Username) - 1] = '\0'; ClientLobbyMenu(); }
+                
+                } if (CountRegists == 4) {
+                    AcceptInputText("Kata Sandi: ", SISignIn.Password);
+                    if (strlen(SISignIn.Password) < 9 || strlen(SISignIn.Password) > 17) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        ClientLobbyMenu();
+                    } else { CountRegists++; SISignIn.Password[strlen(SISignIn.Password) - 1] = '\0'; ClientLobbyMenu(); }
+                
+                }
+
+                if (CountRegists == 5) {
+                    ClearScreen();
+
+                    puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Sektor industri baru telah berhasil didaftarkan!");
+                    puts(ANSI_COLOR_MAGENTA"INFO: Silakan untuk melanjutkan interaksi berikut dengan masuk ke menu sign-in/login... ."ANSI_COLOR_RESET);
+                    
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause");
+
+                    WritePublicSektorIndustri(false);
+
+                    CountRegists = 1; RSOption = 2;
+                    SISignIn.FullName[0] = 0; SISignIn.IndustryName[0] = 0; SISignIn.Username[0] = 0; SISignIn.Password[0] = 0;
+                    ClientLobbyMenu();
+                }
+
+            } else if (RSOption == 2) {
+                if (access(Client_SektorIndustri, F_OK) != 0) {
+                    ClearScreen();
+
+                    puts(ANSI_COLOR_LIGHTRED"ERROR: Belum terdapat sektor industri yang terdaftarkan!");
+                    puts(ANSI_COLOR_YELLOW"... Silahkan untuk masuk ke menu registrasi sektor industri terlebih dahulu!"ANSI_COLOR_RESET);
+
+                    puts("");
+                    puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                    system("pause");
+                    
+                    CountRegists = 1; RSOption = 1;
+                    SISignIn.FullName[0] = 0; SISignIn.IndustryName[0] = 0; SISignIn.Username[0] = 0; SISignIn.Password[0] = 0;
+                    ClientLobbyMenu();
+                }
+
+                ClearScreen();
+
+                puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
+                puts(ANSI_COLOR_BLUE"Anda berada dalam lobi: " BRIGHTGREEN156"Client :: Sektor Industri."ANSI_COLOR_RESET);
+
+                puts("");
+                puts("Silakan untuk memasukkan DUA (2) kredensial Anda seperti berikut:");
+                if (CountRegists >= 2) printf(ANSI_COLOR_GREEN"... 1. Nama Pengguna: %s\n"ANSI_COLOR_RESET, SISignIn.Username);
+                if (CountRegists >= 3) { printf(ANSI_COLOR_GREEN"... 2. Kata Sandi:    "); for (size_t i = 0; i < strlen(SISignIn.Password); i++) { printf("*"); } printf("\n"ANSI_COLOR_RESET); }
+                if (CountRegists < 2)  printf(ANSI_COLOR_YELLOW"... 1. Nama Pengguna: (wajib 16 digit)\n"ANSI_COLOR_RESET);
+                if (CountRegists < 3)  printf(ANSI_COLOR_YELLOW"... 2. Kata Sandi:    (8-16 karakter)\n"ANSI_COLOR_RESET);
+
+                puts("");
+                if (CountRegists == 1) {
+                    AcceptInputText("Nama Pengguna: ", SI_SignInUsername);
+                    if (strlen(SI_SignInUsername) < 2 || strlen(SI_SignInUsername) > 128) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data nama pengguna melebihi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        ClientLobbyMenu();
+                    } else { CountRegists++; strncpy(SISignIn.Username, SI_SignInUsername, BUFSIZE07); SISignIn.Username[strlen(SISignIn.Username) - 1] = '\0'; ClientLobbyMenu(); }
+                
+                } if (CountRegists == 2) {
+                    AcceptInputText("Kata Sandi: ", SI_SignInPassword);
+                    if (strlen(SI_SignInPassword) < 9 || strlen(SI_SignInPassword) > 17) {
+                        puts("");
+                        puts(ANSI_COLOR_LIGHTRED"ERROR: Data kata sandi belum memenuhi batas yang ditentukan!"ANSI_COLOR_RESET);
+                        puts("");
+                        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+                        system("pause");
+                        ClientLobbyMenu();
+                    } else { CountRegists++; strncpy(SISignIn.Password, SI_SignInPassword, 32); SISignIn.Password[strlen(SISignIn.Password) - 1] = '\0'; ClientLobbyMenu(); }
+                }
+
+                if (CountRegists == 3) {
+                    EncryptTextFile(Client_SektorIndustri, "Temp_"Client_SektorIndustri, -ENCRYPTCODE, false);
+                    RegisteredSIs = atoi(ReadLine("Temp_"Client_SektorIndustri, 1));
+
+                    for (int SI = 0; SI < RegisteredSIs; SI++) {
+                        if (strcmp(SI_SignInUsername, ReadLine("Temp_"Client_SektorIndustri, (((10 + 1) * SI) + 5))) == 0 && \
+                            strcmp(SI_SignInPassword, ReadLine("Temp_"Client_SektorIndustri, (((10 + 1) * SI) + 6))) == 0) {
+
+                                strncpy(SIFullName, ReadLine("Temp_"Client_SektorIndustri, (((10 + 1) * SI) + 3)), BUFSIZE07);
+                                strncpy(SIIndustryName, ReadLine("Temp_"Client_SektorIndustri, (((10 + 1) * SI) + 4)), BUFSIZE07);
+                                SIFullName[strlen(SIFullName) - 1] = '\0'; SIIndustryName[strlen(SIIndustryName) - 1] = '\0';
+
+                                SuccessfullyLoggedIn = true; SILoggedIn = SI;
+                                EncryptTextFile("Temp_"Client_SektorIndustri, Client_SektorIndustri, ENCRYPTCODE, true);
+                    
+                                ClearScreen();
+                                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: CLIENT.");
+                                puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
+                                puts(ANSI_COLOR_CYAN"    dalam 3"ANSI_COLOR_RESET);
+                                sleep(1);
+                                ClearScreen();
+                                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: CLIENT.");
+                                puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
+                                puts(ANSI_COLOR_CYAN"    dalam 3, 2"ANSI_COLOR_RESET);
+                                sleep(1);
+                                ClearScreen();
+                                puts(ANSI_COLOR_LIGHTGREEN"SUCCESS: Anda berhasil masuk dengan status: CLIENT.");
+                                puts(ANSI_COLOR_CYAN"... Dimohon untuk dilanjutkan dengan interaksi berikut..."ANSI_COLOR_RESET);
+                                puts(ANSI_COLOR_CYAN"    dalam 3, 2, 1..."ANSI_COLOR_RESET);
+                                sleep(1);
+                                
+                                CountRegists = 1; RSOption = 3; // Just to be sure to avoid the infinite loop after first-time registration.
+                                SISignIn.FullName[0] = 0; SISignIn.IndustryName[0] = 0; SISignIn.Username[0] = 0; SISignIn.Password[0] = 0;
+                        }
+                    }
+
+                    if (!SuccessfullyLoggedIn) {
+                        CheckInvalidInput = true;
+                        CountRegists = 1; RSOption = 2;
+                        SISignIn.FullName[0] = 0; SISignIn.IndustryName[0] = 0; SISignIn.Username[0] = 0; SISignIn.Password[0] = 0;
+                        EncryptTextFile("Temp_"Client_SektorIndustri, Client_SektorIndustri, ENCRYPTCODE, true);
+                        ClientLobbyMenu();
+                    
+                    } else { ClientMainMenu(); }
+                }
+            
+            } else if (RSOption == 3) { NULL; }
+            
+            else {
+                CheckInvalidInput = true;
+                ClientLobbyMenu();
+            }
         }
     }
 }
-
-// void FAQPage(void) {
-//     ClearScreen();
-//     puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!"ANSI_COLOR_RESET);
-//     puts(ANSI_COLOR_LIGHTBLUE"Anda berada dalam menu: Home Menu :: Tanya Jawab (FAQ)");
-
-//     puts("");
-//     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
-//     puts(ANSI_COLOR_LIGHTYELLOW"Q: Apa saja fitur-fitur yang diperlukan dengan penjelasannya?");
-//     puts("");
-//     puts(ANSI_COLOR_LIGHTGREEN"A: Berikut telah disertakan semua fitur dengan bentuk implementasinya...");
-//     puts(ANSI_COLOR_GREEN"   Apabila masih ada pertanyaan, silakan hubungi saya dengan daftar kontak berikut:");
-//     puts(ANSI_COLOR_GREEN"   ... WHATSAPP:  085829290950 (SELALU AKTIF)");
-//     puts(ANSI_COLOR_GREEN"   ... INSTAGRAM: eintswavex   (AKTIF)");
-//     puts(ANSI_COLOR_GREEN"   ... LINE:      eintswx      (JARANG AKTIF)");
-//     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
-    
-//     /*
-//     puts(BRIGHTGREEN156"[1] Pajak dan Tabungan Negara: "ANSI_COLOR_RESET ANSI_STYLE_ITALIC"Mengatur dan menampilkan informasi mengenai Pajak dan Tabungan Negara."ANSI_COLOR_RESET);
-//     puts(BRIGHTPINK219"[2] Data Kepala Daerah dan Perekonomiannya: "ANSI_COLOR_RESET ANSI_STYLE_ITALIC"Menampilkan informasi Kepala Daerah beserta data perekonomian tiap daerahnya."ANSI_COLOR_RESET);
-//     puts(BRIGHTPINK219"[3] Data Sektor Industri dan Penghasilannya: "ANSI_COLOR_RESET ANSI_STYLE_ITALIC"Menampilkan informasi Sektor Industri beserta beserta data penghasilannya."ANSI_COLOR_RESET);
-//     puts(BRIGHTBLUE159"[4] Pendistribusian Bantuan Dana: "ANSI_COLOR_RESET ANSI_STYLE_ITALIC"Mengatur pendistribusian bantuan dana ke masing-masing Kepala Daerah."ANSI_COLOR_RESET);
-//     puts(BRIGHTBLUE159"[5] Pengaturan Kerja Sama dengan Kepala Daerah: "ANSI_COLOR_RESET ANSI_STYLE_ITALIC"Mengatur kegiatan kerja sama yang tengah diajukan oleh Kepala Daerah."ANSI_COLOR_RESET);
-//     puts(BRIGHTBLUE159"[6] Distribusi Perdagangan Internasional: "ANSI_COLOR_RESET ANSI_STYLE_ITALIC"Mengatur distribusi barang skala internasional setelah pengajuan sebelumnya."ANSI_COLOR_RESET);
-//     */
-
-//     puts("");
-//     puts("(ADMIN) Fitur Kemenkeu:");
-//     puts("A. Menu Sign-In Admin/Kemenkeu");
-//     puts("1) Login: Pengguna dapat masuk sebagai admin (Kemenkeu) tanpa perlu mendaftar.");
-//     puts("          (nama pengguna dan kata sandi ditetapkan sendiri oleh perekayasa)");
-//     puts("");
-//     puts("B. Menu Utama Kemenkeu");
-//     puts(BRIGHTGREEN156"1) Pajak dan Tabungan Negara: Mengatur dan menampilkan informasi mengenai Pajak dan Tabungan Negara."ANSI_COLOR_RESET);
-//     puts("Pengaturan pajak diperlukan untuk proses investasi yang dilakukan baik dari pihak kepala daerah agar dapat menjadi nilai tambah bagi negara (dalam konsep aritmatika sosial berupa keuntungan), yang akan disimpan keuntungannya pada bagian \"Tabungan Negara\" berikut ini. Tabungan negara dapat dilihat dari total banyaknya pendapatan hasil investasi yang dilakukan dalam bentuk keuntungan yang didapat.");
-//     puts("> BANTUAN: Fitur ini memengaruhi bagian-bagian berikut: \"(ADMIN) Fitur 5 dan 6\".");
-//     puts("");
-//     puts(BRIGHTPINK219"2) Data Kepala Wilayah dan Perekonomiannya: Menampilkan informasi Kepala Daerah beserta data perekonomian tiap daerahnya."ANSI_COLOR_RESET);
-//     puts("Informasi ini hanya didapat ketika ada pihak ketiga yang mendaftarkan diri sebagai kepala daerah dan dapat diimplementasikan sistem pengurutan data (bebas menggunakan pendekatan apapun) dan pencarian data agar lebih memudahkan pihak admin untuk mencari data mengenai pihak tertentu. Informasi yang ditampilkan hanya memuat data pribadi masing-masing kepala daerah saja.");
-//     puts("> BANTUAN: Lihat pada \"(USER) Fitur Kepala Daerah\", fitur \"A. Menu Sign-Up dan Sign-In Kepala Daerah\", bagian \"1) Registrasi\".");
-//     puts("");
-//     puts(BRIGHTPINK219"3) Data Sektor Industri dan Penghasilannya: Menampilkan informasi Sektor Industri beserta beserta data penghasilannya."ANSI_COLOR_RESET);
-//     puts("Informasi ini hanya didapat ketika ada pihak ketiga yang mendaftarkan diri sebagai perwakilan sektor industri dan dapat diimplementasikan sistem pengurutan data (bebas menggunakan pendekatan apapun) dan pencarian data agar lebih memudahkan pihak admin untuk mencari data mengenai pihak tertentu. Informasi yang ditampilkan hanya memuat data personil dari masing-masing sektor industri.");
-//     puts("> BANTUAN: Lihat pada \"(CLIENT) Fitur Sektor Industri\", fitur \"A. Menu Sign-Up dan Sign-In Sektor Industri\", bagian \"1) Registrasi\".");
-//     puts("");
-//     puts(BRIGHTBLUE159"4) Pendistribusian Bantuan Dana: Mengatur pendistribusian bantuan dana ke masing-masing Kepala Daerah."ANSI_COLOR_RESET);
-//     puts("Pihak admin dapat melakukan pendistribusian dana (difokuskan dalam rupa nominal angka bilangan bulat positif saja) dan dianulirkan terhadap pihak kepala daerah yang mau kita berikan pendanaannya secara instant, HANYA JIKA Kepala Daerah yang bersangkutan tengah dalam proses/status permintaan dana. Namun jika tidak, maka Kemenkeu tidak akan memberikan bantuan dana kepada siapapun.");
-//     puts("");
-//     puts(BRIGHTBLUE159"5) Pengaturan Kerja Sama dengan Kepala Daerah: Mengatur kegiatan kerja sama yang tengah diajukan oleh Kepala Daerah."ANSI_COLOR_RESET);
-//     puts("Pihak Kemenkeu dapat mengelola kerja sama dari Kepala Daerah yang bersangkutan (apabila ada Kepala Daerah yang tengah mengajukan hasil belanjanya dari Sektor Industri sebelumnya), untuk dikelola dengan cara menerima belanjaannya yang membuat tabungan negara berkurang sebesar harga beli produk (dikenai Pajak Negara), ataupun menolaknya (namun penolakan ini tidak permanen, jadi bisa diterima kembali kapan saja).");
-//     puts("> BANTUAN: Lihat pada \"(USER) Fitur Kepala Daerah\", fitur \"B. Menu Utama Kepala Daerah\", bagian \"3) Distribusi Pemerintah Pusat\".");
-//     puts("");
-//     puts(BRIGHTBLUE159"6) Distribusi Perdagangan Internasional: Mengatur distribusi barang skala internasional setelah pengajuan sebelumnya."ANSI_COLOR_RESET);
-//     puts("Pihak Kemenkeu dapat menerima pengajuan distribusi ini (dengan tampilan menu dari asal kepala daerah, asal sektor industri, dan barang yang hendak didistribusikan), untuk dijual ke sektor perdagangan luar negeri (anggapannya) agar bisa diambil keuntungannya oleh negara yang dikenai pajak. Jadi, untuk penjualannya bersifat instant dan langsung masuk ke dalam tabungan negara, hingga tidak perlu ada pihak dari sektor perdagangan luar negeri nya yang perlu memantau kegiatan jual-beli ini lebih lanjut. Hasil penjualan yang didapat beserta draft-nya disimpan dalam perekonomian negara.");
-//     puts("> BANTUAN: Lihat pada \"(ADMIN) Fitur 5\".");
-    
-//     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
-    
-//     puts("(USER) Fitur Kepala Daerah:");
-//     puts("A. Menu Sign-Up dan Sign-In Kepala Daerah");
-//     puts("1) Registrasi: Pendaftaran sebagai kepala daerah memerlukan TUJUH (7) informasi sebagai berikut:");
-//     puts("   - Nama Lengkap         (BEBAS INPUT, dalam jangkauan 1-128 karakter)");
-//     puts("   - NIK                  (WAJIB 16 DIGIT)");
-//     puts("   - E-mail               (BEBAS INPUT, dengan catatan tanda `@` dan `.` HARUS ADA, minimal satu masing-masingnya)");
-//     puts("   - Kata Sandi           (WAJIB 8-16 KARAKTER)");
-//     puts("   - Tempat/Tanggal Lahir (BEBAS INPUT)");
-//     puts("   - Jabatan              (WAJIB MEMILIH antara TIGA golongan berikut, yaitu: Gubernur, Bupati, Wali Kota");
-//     puts("   - Daerah Perwakilan    (BEBAS INPUT)");
-//     puts("2) Login: Untuk dapat masuk sebagai kepala daerah yang telah ter-registrasikan memerlukan DUA (2) informasi sebagai berikut:");
-//     puts("   - NIK                  (WAJIB 16 DIGIT)");
-//     puts("   - Kata Sandi           (WAJIB 8-16 KARAKTER)");
-    
-//     puts("");
-//     puts("B. Menu Utama Kepala Daerah");
-//     puts("1) [VIEW] Alur Perekonomian Dana Daerah: Melihat data pemasukkan serta pengeluaran dana di daerah tersebut.");
-//     puts("Pihak dari kepala daerah dapat melihat pemasukkan dan pengeluaran dana berupa data pada daerah yang di-ayomikan olehnya, dan fitur ini dapat diimplementasikan algoritma pengurutan (bebas menggunakan pendekatan yang diinginkan) ataupun pencarian guna memudahkan pihak dari kepala daerah mencari informasi yang dibutuhkan.");
-//     puts("2) [EDIT & VIEW] Pengajuan Dana Bantuan dari Pemerintah Pusat: Mengajukan permintaan bantuan dana tambahan kepada pihak Kemenkeu.");
-//     puts("Pihak dari kepala daerah dapat mengajukan dana bantuan kepada pihak Kemenkeu dengan melihat status persetujuannya terlebih dahulu. Jika telah dikonfirmasi oleh pihak Kemenkeu, maka pihak Kemenkeu akan segera mengirimkan bantuan dananya kepada kepala daerah yang membutuhkan dana tersebut secara instant, namun hal ini juga dapat dilakukan secara iniatif dari pihak Kemenkeu-nya sendiri tanpa perlu pengajuan dari kepala daerah tertentu.");
-//     puts("> BANTUAN: Lihat pada \"(ADMIN) Fitur Kemenkeu\", fitur \"B. Menu Utama Kemenkeu\", bagian \"5) [EDIT] Pendistribusian Pendapatan atau Bantuan Dana\".");
-//     puts("");
-//     puts("3) [EDIT & VIEW] Distribusi Pemerintah Pusat: Mengatur proses pendistribusian produksi industri terhadap pihak Kemenkeu.");
-//     puts("Pihak dari kepala daerah dapat mengajukan dana bantuan dari pihak Kemenkeu dengan melihat status persetujuannya terlebih dahulu. Selain itu, pihak kepala daerah juga dapat melakukan pendistribusian hasil produksi kerja sama dengan pihak sektor industri kepada pihak Kemenkeu dengan cara langsung memberikan data lengkapnya dalam sesi input yang kemudian akan menunggu hasil konfirmasi dari pihak Kemenkeu. Jika dikonfirmasi, maka kedua belah pihak akan mendapat keuntungannya yang sudah dibagi rata secara otomatis setelah diperdagangkan oleh pihak Kemenkeu.");
-//     puts("> BANTUAN: Lihat pada \"(ADMIN) Fitur Kemenkeu\", fitur \"B. Menu Utama Kemenkeu\", bagian \"6) [EDIT] Distribusi Perdagangan Internasional\".");
-//     puts("");
-//     puts("4) [EDIT & VIEW] Pengaturan Kerja Sama dengan Sektor Industri: Mengatur proses kerja sama dengan sektor industri positif.");
-//     puts("Pihak dari kepala daerah dapat mengajukan kerja sama dengan pihak industri untuk dapat saling menguntungkan satu sama lain dan harus ada persetujuannya terlebih dahulu dari sektor industri tersebut sebelum dilakukannya kerja sama. Kerja sama dengan pihak industri tidak dibatasi oleh daerah, jadi fokuskan hanya pada kegiatan kerja sama dan nominal yang didapat sebagai hasil keuntungannya.");
-//     puts("> BANTUAN: Lihat pada \"(USER TIPE 2) Fitur Sektor Industri\", fitur \"B. Menu Utama Sektor Industri\", bagian \"3) [EDIT & VIEW] Pengaturan Kerja Sama dengan Kepala Daerah\".");
-//     puts("");
-//     puts("Contoh penerapan dari poin 4) di atas:");
-//     puts("Pihak kepala daerah hendak sektor industri cokelat dan telah disetujui oleh pihak industri. Sektor industri menanyakan berapa banyak cokelat yang hendak didistribusikan kepada daerah tersebut selama stok nya masih ada, dan kepala daerah menyampaikan banyaknya dalam angka bilangan bulat positif. Pihak dari kepala daerah mendapatkan cokelatnya yang dapat didistribusikan kepada pihak Kemenkeu untuk dijual dan mendapat pendapatan lebih, dan dari pihak sektor industri positif mendapat keuntungan berupa nominal uang. Sebagai informasi, kegiatan kerja sama yang dilakukan dapat disimpan dalam bentuk nota ataupun tidak, karena hal ini bersifat tidak wajib.");
-    
-//     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
-    
-//     puts("(CLIENT) Fitur Sektor Industri:");
-//     puts("A. Menu Sign-Up dan Sign-In Sektor Industri");
-//     puts("1) Registrasi: Untuk melakukan registrasi, diperlukan perwakilan seorang diri dari sektor industri yang memiliki EMPAT (4) informasi berikut, yaitu:");
-//     puts("   - Nama Lengkap (perwakilan dari sektor industri yang hendak didaftarkan)");
-//     puts("   - Nama Pengguna (singkatnya, username dari pendaftar untuk keperluan login sebagai data penting pertama)");
-//     puts("   - Nama Sektor Industri (nama industri yang diwakilkan)");
-//     puts("   - Kata Sandi (wajib minimal 8 karakter dan untuk keperluan login sebagai data penting kedua)");
-//     puts("2) Login: Untuk melakukan login, diperlukan perwakilan seorang diri dari sektor industri yang memiliki DUA (2) informasi berikut, yaitu:");
-//     puts("   - Nama Pengguna (singkatnya, username dari pendaftar)");
-//     puts("   - Kata Sandi (wajib minimal 8 karakter)");
-    
-//     puts("");
-//     puts("B. Menu Utama Sektor Industri");
-//     puts("1) [VIEW] Pendapatan Sektor Industri: Menampilkan pendapatan total dari hasil produksi industri.");
-//     puts("Sederhananya, pihak industri dapat melihat total pendapatan yang diterima dari hasil kerja sama dengan kepala daerah yang telah diakumulasikan.");
-//     puts("2) [EDIT & VIEW] Pengaturan Produksi: Memampukan perwakilan dari industri untuk mencatat banyak produksi terhadap suatu produk.");
-//     puts("Produk yang dihasilkan bersifat (bebas menurut pemakai, diusahakan untuk dilogikakan dengan nama industrinya), hingga dalam sesi fitur ini diperlihatkan tampilan produk-produk dan banyak dari masing-masingnya serta harga per produksi (bisa per item atau sejenisnya), juga apabila diinginkan maka dapat diimplementasikan fitur algoritma pengurutan/pencarian data agar lebih memudahkan pihak industri dalam mengatur produk-produknya. Jika ingin menambahkan produk baru, maka diperlukan konfirmasi terlebih dahulu, lalu tinggal di-inputkan saja nama produk yang diproduksi dan banyak produksinya serta harga per produksi. Jika ingin mengubah atau menambahkan jumlah produk terhadap produk yang masih terdata, maka cukup tinggal input biasa nama produk, penambahan banyak produk, serta harga terbarunya.");
-//     puts("3) [EDIT & VIEW] Pengaturan Kerja Sama dengan Kepala Daerah: Mengatur proses kerja sama dari permintaan kepala daerah tertentu.");
-//     puts("Pihak dari sektor industri dapat mengajukan kerja sama dengan pihak kepala daerah untuk dapat saling menguntungkan satu sama lain dan harus ada persetujuannya terlebih dahulu dari sektor industri tersebut sebelum dilakukannya kerja sama. Kerja sama dengan pihak kepala daerah tidak dibatasi oleh daerah tempat ia menjabat, jadi fokuskan hanya pada kegiatan kerja sama dan nominal yang didapat sebagai hasil keuntungannya.");
-//     puts("> BANTUAN: Lihat pada \"(USER TIPE 1) Fitur Kepala Daerah\", fitur \"B. Menu Utama Kepala Daerah\", bagian \"4) [EDIT & VIEW] Pengaturan Kerja Sama dengan Sektor Industri\".");
-//     puts("");
-//     puts("Contoh penerapan dari poin 3) di atas:");
-//     puts("Pihak sektor industri mengajukan kerja sama dalam distribusi cokelat dengan kuantitas (dalam angka bilangan bulat positif) yang telah ditetapkan kepada pihak kepala daerah. Setelah mendapat persetujuan dari pihak kepala daerah, maka kepala daerah akan LANGSUNG menerima distribusi hasil produksi dari pihak industri tersebut dan kepada pihak industri diuntungkan dalam jumlah nominal uang yang setara dengan harga total distribusi tersebut.");
-
-//     puts(ANSI_COLOR_LIGHTWHITE"===================================================================================================="ANSI_COLOR_RESET);
-
-//     puts("");
-//     puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-//     system("pause"); HomeMenu();
-// }
 
 void AboutDWakandaPage(void) {
     ClearScreen();
@@ -4929,33 +5299,64 @@ void HomeMenu(void) {
     ClearScreen();
 
     int AUCOption = 0; RSOption = 0;
-    if (CheckInvalidInput) {
-        puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
-        puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
-        CheckInvalidInput = false;
+    if (!SwitchLanguage) {
+        if (CheckInvalidInput) {
+            puts(ANSI_COLOR_LIGHTRED"ERROR: Input yang diterima tidaklah valid!");
+            puts(ANSI_COLOR_YELLOW"... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!"ANSI_COLOR_RESET);
+            CheckInvalidInput = false;
+            
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
+            system("pause"); HomeMenu();
+        }
+
+        puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!");
+        puts(ANSI_COLOR_LIGHTBLUE"Anda berada dalam menu: Home Menu"ANSI_COLOR_RESET);
         
         puts("");
-        puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(tekan tombol [ENTER] untuk melanjutkan...)"ANSI_COLOR_RESET);
-        system("pause"); HomeMenu();
+        puts(ANSI_COLOR_LIGHTWHITE"::       Anda dipersilahkan untuk memilih SATU dari TIGA opsi berikut ini!       ::");
+        puts(ANSI_COLOR_WHITE"::   Pertama, pastikan dan pahamilah dahulu peran dari siapa Anda ingin masuk!   ::");
+        puts(ANSI_COLOR_WHITE":: Deskripsi dan peran tugas beliau dapat Anda baca pada menu: Tentang D'Wakanda ::");
+
+        puts("");
+        puts(BRIGHTGREEN156"[1] Admin  :: Kementerian Keuangan");
+        puts(BRIGHTBLUE159"[2] User   :: Kepala Daerah");
+        puts(BRIGHTPURPLE218"[3] Client :: Sektor Industri");
+
+        puts("");
+        (!SwitchLanguage) ? puts(BRIGHTRED216"[8] Ganti Bahasa (Bahasa Indonesia >> English)") : puts(BRIGHTRED216"[8] Switch Language (English >> Bahasa Indonesia)");
+        puts(BRIGHTMAGENTA211"[9] Tentang D'Wakanda"ANSI_COLOR_RESET);
+        AcceptInputOption("> Pilihan Anda: ", AUCOption);
+    
+    } else {
+        if (CheckInvalidInput) {
+            puts(ANSI_COLOR_LIGHTRED"ERROR: The given input is invalid!");
+            puts(ANSI_COLOR_YELLOW"... Please reconsider to be giving an input based on the given options!"ANSI_COLOR_RESET);
+            CheckInvalidInput = false;
+            
+            puts("");
+            puts(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"(press [ENTER] button to continue...)"ANSI_COLOR_RESET);
+            system("pause"); HomeMenu();
+        }
+
+        puts(ANSI_COLOR_LIGHTMAGENTA"Welcome to the application: D'Wakanda!");
+        puts(ANSI_COLOR_LIGHTBLUE"You're now in the menu of: Home Menu"ANSI_COLOR_RESET);
+        
+        puts("");
+        puts(ANSI_COLOR_LIGHTWHITE"::     You're now obliged to choose either ONE of these THREE options below!     ::");
+        puts(ANSI_COLOR_WHITE"::   First, please re-assure and understand about WHO you wanted to logged in!   ::");
+        puts(ANSI_COLOR_WHITE":: Job and descriptions of ONE's chosen identity can be seen at: About D'Wakanda ::");
+
+        puts("");
+        puts(BRIGHTGREEN156"[1] Admin  :: Ministry of Finance");
+        puts(BRIGHTBLUE159"[2] User   :: Head District");
+        puts(BRIGHTPURPLE218"[3] Client :: Sector Industry");
+
+        puts("");
+        (!SwitchLanguage) ? puts(BRIGHTRED216"[8] Ganti Bahasa (Bahasa Indonesia >> English)") : puts(BRIGHTRED216"[8] Switch Language (English >> Bahasa Indonesia)");
+        puts(BRIGHTMAGENTA211"[9] About D'Wakanda"ANSI_COLOR_RESET);
+        AcceptInputOption("> Your option: ", AUCOption);
     }
-
-    puts(ANSI_COLOR_LIGHTMAGENTA"Selamat Datang di aplikasi: D'Wakanda!");
-    puts(ANSI_COLOR_LIGHTBLUE"Anda berada dalam menu: Home Menu"ANSI_COLOR_RESET);
-
-    puts("");
-    puts(ANSI_COLOR_LIGHTWHITE"::    Anda dipersilakan untuk memilih SATU dari TIGA opsi berikut ini!    ::");
-    puts(ANSI_COLOR_WHITE"::  Pastikan Anda ingin masuk sebagai siapa, dan pahamilah peran beliau!  ::");
-    puts(ANSI_COLOR_WHITE":: Deskripsi dan peran tugas dapat Anda baca pada menu: Tentang D'Wakanda ::");
-
-    puts("");
-    puts(BRIGHTGREEN156"[1] Admin  :: Kementerian Keuangan");
-    puts(BRIGHTBLUE159"[2] User   :: Kepala Daerah");
-    puts(BRIGHTPURPLE218"[3] Client :: Sektor Industri");
-
-    puts("");
-    // puts(BRIGHTRED216"[8] F.A.Q.: Tanya Jawab (Frequently Ask Questions)");
-    puts(BRIGHTMAGENTA211"[9] Tentang D'Wakanda"ANSI_COLOR_RESET);
-    AcceptInputOption("> Pilihan Anda: ", AUCOption);
 
     if (AUCOption <= 0) {
         CheckInvalidInput = true;
@@ -4964,11 +5365,12 @@ void HomeMenu(void) {
         CheckInvalidInput = false;
 
         switch (AUCOption) {
-            case 1:  { AdminLobbyMenu();            } break;
-            case 2:  { UserLobbyMenu();             } break;
-            case 3:  { ClientLobbyMenu();           } break;
-            // case 8:  { FAQPage();                   } break;
-            case 9:  { AboutDWakandaPage();         } break;
+            case 1:  { AdminLobbyMenu();                     } break;
+            case 2:  { UserLobbyMenu();                      } break;
+            case 3:  { ClientLobbyMenu();                    } break;
+            case 8:  { if (!SwitchLanguage) { SwitchLanguage = true; } else { SwitchLanguage = false; }
+                        HomeMenu(); } break;
+            case 9:  { AboutDWakandaPage();                  } break;
             default: { CheckInvalidInput = true; HomeMenu(); } break;
         }
     }
@@ -5000,7 +5402,7 @@ int main(void) {
     // DecryptTextFile("KerangjangKemenkeu.txt", true, ENCRYPTCODE, NULL); puts("");
     // DecryptTextFile("KerangjangKepalaDaerah.txt", true, ENCRYPTCODE, NULL); puts("");
 
-    EncryptTextFile("e.txt", AdminCartStore_Keranjang, ENCRYPTCODE, false);
+    // EncryptTextFile("e.txt", AdminCartStore_Keranjang, ENCRYPTCODE, false);
     // EncryptTextFile("b.txt", "KD - Stevannie.txt", ENCRYPTCODE, false);
     // EncryptTextFile("c.txt", User_KepalaDaerah, ENCRYPTCODE, false);
     // EncryptTextFile("nnn copy.txt", "KD - Nue copy.txt", ENCRYPTCODE, false);
@@ -5012,6 +5414,7 @@ int main(void) {
     // DecryptTextFile("KD - Nue.txt", true, ENCRYPTCODE, NULL);
     // DecryptTextFile("KD - Stevannie.txt", true, ENCRYPTCODE, NULL);
     // DecryptTextFile("SektorIndustri.txt", true, ENCRYPTCODE, NULL);
+    DecryptTextFile("Kemenkeu.txt", true, ENCRYPTCODE, NULL);
 
     // printf("%d\n", CountFDBuffer("contoh_hasil_enkripsi.txt"));
 
