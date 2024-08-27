@@ -390,7 +390,7 @@ void WritePrivateKemenkeu() {
     Kemenkeu KepalaWakanda = {
                                 .Username = "D'Wakanda",
                                 .Password = "Kemenkeu2024",
-                                .StateTaxes = "00.00",
+                                .StateTaxes = "00,00",
                                 .StateSavings = "1000000000000000",
                                 .Status = 1 // NOTE: UNUSED!
                             };
@@ -401,12 +401,12 @@ void WritePrivateKemenkeu() {
         if (Admin == NULL) {
             fprintf(stderr, "ERROR: Tidak dapat menuliskan data admin Kemenkeu ke dalam file.\n");
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause");
             HomeMenu();
         }
 
-        fprintf(Admin, "%s\n%s\n%s\n%s\n%d :: UNUSED\n", KepalaWakanda.Username, KepalaWakanda.Password, KepalaWakanda.StateTaxes, KepalaWakanda.StateSavings, KepalaWakanda.Status);        
+        fprintf(Admin, "%s\n%s\n%s\n%s\n//// %d :: UNUSED\n", KepalaWakanda.Username, KepalaWakanda.Password, KepalaWakanda.StateTaxes, KepalaWakanda.StateSavings, KepalaWakanda.Status);        
         fclose(Admin);
     }
 }
@@ -426,7 +426,7 @@ void WritePublicKepalaDaerah(void) {
         if (User == NULL) {
             fprintf(stderr, "ERROR: Tidak dapat menuliskan data pengguna Kepala Daerah ke dalam file.\n");
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause");
             HomeMenu();
         }
@@ -439,7 +439,7 @@ void WritePublicKepalaDaerah(void) {
         fprintf(User, "%s\n", KDSignIn.BirthPlaceDate);
         fprintf(User, "%s\n", KDSignIn.JobTitle);
         fprintf(User, "%s\n", KDSignIn.HeadRegion);
-        fprintf(User, "0\n0\n0\n"); // 0 [1]: Admin fundraising status, 0 [2]: UNUSED, 0 [3]: Client approval status.
+        fprintf(User, "0\n//// 0 :: UNUSED!\n0\n"); // 0 [1]: Admin fundraising status, 0 [2]: UNUSED, 0 [3]: Client approval status.
         
         fclose(User);
 
@@ -458,7 +458,7 @@ void WritePublicKepalaDaerah(void) {
         fprintf(User, "%s\n", KDSignIn.BirthPlaceDate);
         fprintf(User, "%s\n", KDSignIn.JobTitle);
         fprintf(User, "%s\n", KDSignIn.HeadRegion);
-        fprintf(User, "0\n0\n0\n"); // 0 [1]: Admin fundraising status, 0 [2]: UNUSED, 0 [3]: Client approval status.
+        fprintf(User, "0\n//// 0 :: UNUSED!\n0\n"); // 0 [1]: Admin fundraising status, 0 [2]: UNUSED, 0 [3]: Client approval status.
 
         fclose(User);
     }
@@ -483,7 +483,7 @@ void WritePublicSektorIndustri() {
         if (Client == NULL) {
             fprintf(stderr, "ERROR: Tidak dapat menuliskan data pengguna Sektor Industri ke dalam file.\n");
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause");
             HomeMenu();
         }
@@ -493,7 +493,7 @@ void WritePublicSektorIndustri() {
         fprintf(Client, "%s\n", SISignIn.IndustryName);
         fprintf(Client, "%s\n", SISignIn.Username);
         fprintf(Client, "%s\n", SISignIn.Password);
-        fprintf(Client, "0\n");
+        fprintf(Client, "//// 0 :: UNUSED!\n"); // 0 [1]: UNUSED.
         for (int _ = 0; _ < 5; _++) { fprintf(Client, "-, -, -\n"); }
         
         fclose(Client);
@@ -510,7 +510,7 @@ void WritePublicSektorIndustri() {
         fprintf(Client, "%s\n", SISignIn.IndustryName);
         fprintf(Client, "%s\n", SISignIn.Username);
         fprintf(Client, "%s\n", SISignIn.Password);
-        fprintf(Client, "0\n");
+        fprintf(Client, "//// 0 :: UNUSED!\n"); // 0 [1]: UNUSED.
         for (int _ = 0; _ < 5; _++) { fprintf(Client, "-, -, -\n"); }
 
         fclose(Client);
@@ -573,24 +573,24 @@ void AdminMainMenu(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         AdminMainMenu();
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
+    puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
 
     puts("");
-    puts(  "~ Apa yang ingin Anda kerjakan pada kesempatan kali ini? ~");
-    puts("[1] Pajak dan Tabungan Negara: " "Mengatur dan menampilkan informasi mengenai Pajak dan Tabungan Negara.");
-    puts("[2] Data Kepala Daerah dan Perekonomiannya: " "Menampilkan informasi Kepala Daerah beserta data perekonomian tiap daerahnya.");
-    puts("[3] Data Sektor Industri dan Penghasilannya: " "Menampilkan informasi Sektor Industri beserta beserta data penghasilannya.");
-    puts("[4] Pendistribusian Bantuan Dana: " "Mengatur pendistribusian bantuan dana ke masing-masing Kepala Daerah.");
-    puts("[5] Pengaturan Kerja Sama dengan Kepala Daerah: " "Mengatur kegiatan kerja sama yang tengah diajukan oleh Kepala Daerah.");
-    puts("[6] Distribusi Perdagangan Internasional: " "Mengatur distribusi barang skala internasional setelah pengajuan sebelumnya.");
-    puts( "[0] Keluar... (Log Out)");
+    puts("~ Apa yang ingin Anda kerjakan pada kesempatan kali ini? ~");
+    puts("[1] Pengaturan Pajak dan Tabungan Negara");
+    puts("[2] Lihat Data Kepala Daerah dan Perekonomiannya");
+    puts("[3] Lihat Data Sektor Industri dan Penghasilannya");
+    puts("[4] Pendistribusian Bantuan Dana kepada Kepala Daerah");
+    puts("[5] Pengaturan Kerja Sama dengan Kepala Daerah");
+    puts("[6] Distribusi Perdagangan Skala Internasional");
+    puts("[0] Keluar... (Log Out)");
 
     puts("");
     AcceptInputOption("> Pilihan Anda: ", AMMOption)
@@ -622,27 +622,27 @@ void AMMFeature01(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         AMMFeature01();
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
-    puts("\nMenu: [1] Pajak dan Tabungan Negara");
+    puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
+    puts("\nMenu: [1] Pengaturan Pajak dan Tabungan Negara");
 
     puts("");
     puts("Berikut adalah hasil laporan Pajak dan Keuangan Negara:");
     puts("====================================================================================================");
     printf(":: Pajak Negara    (~%%): %.02f%%\n", atof(StateProfile.StateTaxes));
     if (MAX_ADMIN_SAVINGS - atoll(StateProfile.StateSavings) > 0LL)
-         { printf(":: Tabungan Negara (Rp): Rp%'lld,00 >> " "(-Rp%'lld,00)\n", atoll(StateProfile.StateSavings), MAX_ADMIN_SAVINGS - atoll(StateProfile.StateSavings)); }
-    else { printf(":: Tabungan Negara (Rp): Rp%'lld,00 >> " "(+Rp%'lld,00)\n", atoll(StateProfile.StateSavings), atoll(StateProfile.StateSavings) - MAX_ADMIN_SAVINGS); }
+         { printf(":: Tabungan Negara (Rp): Rp%'lld,00 >> (-Rp%'lld,00)\n", atoll(StateProfile.StateSavings), MAX_ADMIN_SAVINGS - atoll(StateProfile.StateSavings)); }
+    else { printf(":: Tabungan Negara (Rp): Rp%'lld,00 >> (+Rp%'lld,00)\n", atoll(StateProfile.StateSavings), atoll(StateProfile.StateSavings) - MAX_ADMIN_SAVINGS); }
     puts("====================================================================================================");
 
     puts("");
-    puts( "~ Apakah Anda ingin melakukan perubahan? ~");
+    puts("~ Apakah Anda ingin melakukan perubahan? ~");
     puts("[1] Ubah besar Pajak Negara (%)");
     puts("[2] Lihat alur Perekonomian Negara (Rp)");
     puts("[0] Kembali...");
@@ -656,7 +656,7 @@ void AMMFeature01(void) {
         if (NewST < 0.0f || NewST > 100.0f) {
             puts("ERROR: Persentase Pajak Negara harus berada dalam jangkauan 0.0% hingga 100.0%!");
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause");
             AMMFeature01();
         }
@@ -666,22 +666,22 @@ void AMMFeature01(void) {
 
         puts("Pembaruan Pajak Negara telah berhasil!");
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         AMMFeature01();
     
     } else if (Options == 2) {
         ClearScreen();
         puts("Selamat Datang di aplikasi: D'Wakanda!");
-        puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
-        puts("\nMenu: [1] Pajak dan Tabungan Negara");
+        puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
+        puts("\nMenu: [1] Pengaturan Pajak dan Tabungan Negara");
 
         puts("");
         puts("Berikut adalah hasil laporan Keuangan Negara secara keseluruhan:");
         puts("====================================================================================================");
         if (MAX_ADMIN_SAVINGS - atoll(StateProfile.StateSavings) > 0LL)
-             { printf(":: Tabungan Negara (Rp): Rp%'lld,00 >> " "(-Rp%'lld,00)\n", atoll(StateProfile.StateSavings), MAX_ADMIN_SAVINGS - atoll(StateProfile.StateSavings)); }
-        else { printf(":: Tabungan Negara (Rp): Rp%'lld,00 >> " "(+Rp%'lld,00)\n", atoll(StateProfile.StateSavings), atoll(StateProfile.StateSavings) - MAX_ADMIN_SAVINGS); }
+             { printf(":: Tabungan Negara (Rp): Rp%'lld,00 >> (-Rp%'lld,00)\n", atoll(StateProfile.StateSavings), MAX_ADMIN_SAVINGS - atoll(StateProfile.StateSavings)); }
+        else { printf(":: Tabungan Negara (Rp): Rp%'lld,00 >> (+Rp%'lld,00)\n", atoll(StateProfile.StateSavings), atoll(StateProfile.StateSavings) - MAX_ADMIN_SAVINGS); }
         
         puts("");
         puts("Pemasukkan (Incomes):");
@@ -691,7 +691,7 @@ void AMMFeature01(void) {
         puts("====================================================================================================");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); AMMFeature01();
 
     } else if (Options == 0) { AdminMainMenu(); }
@@ -710,15 +710,15 @@ void AMMFeature02(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         AMMFeature02();
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
-    puts("\nMenu: [2] Data Perekonomian dan Kepala Daerah");
+    puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
+    puts("\nMenu: [2] Lihat Data Kepala Daerah dan Perekonomiannya");
 
     if (access(User_KepalaDaerah, F_OK) != 0) {
         puts("");
@@ -730,7 +730,7 @@ void AMMFeature02(void) {
         puts("Mohon maaf, saat ini belum ada Kepala Daerah yang mendaftar...");
         puts("... Silakan untuk ditunggu konfirmasi lanjutannya dan Anda dapat memantau data ini secara berkala..." );
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); AdminMainMenu();
     }
 
@@ -759,15 +759,15 @@ void AMMFeature02(void) {
 
     puts("");
     puts("Sertakan penomoran Kepala Daerah di atas untuk melihat data perekonomian daerah lebih lanjut!");
-    puts( "(jika tidak, ketik angka 0 untuk kembali ke menu utama Kemenkeu)");
+    puts("(jika tidak, ketik angka 0 untuk kembali ke menu utama Kemenkeu)");
     AcceptInputOption("> Lihat data Kepala Daerah: ", PeekKD);
 
     if (PeekKD == 0) { AdminMainMenu(); }
     else if (PeekKD > 0 && PeekKD <= (MaxKD + 1)) {
         ClearScreen();
         puts("Selamat Datang di aplikasi: D'Wakanda!");
-        puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
-        puts("\nMenu: [2] Data Perekonomian dan Kepala Daerah");
+        puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
+        puts("\nMenu: [2] Lihat Data Kepala Daerah dan Perekonomiannya");
 
         PeekKD--;
         strcpy(KDList.FullName, ReadLine(User_KepalaDaerah, ((OFFSET_HD + 1) * PeekKD) + HD_FULLNAME));
@@ -795,8 +795,8 @@ void AMMFeature02(void) {
         puts("");
         puts("====================================================================================================");
         if (MAX_USER_SAVINGS - atoll(TotalSavings) > 0LL)
-             { printf(":: Dana Perekonomian Total Daerah: Rp%'lld,00 >> " "(-Rp%'lld,00)\n", atoll(TotalSavings), MAX_USER_SAVINGS - atoll(TotalSavings)); }
-        else { printf(":: Dana Perekonomian Total Daerah: Rp%'lld,00 >> " "(+Rp%'lld,00)\n", atoll(TotalSavings), atoll(TotalSavings) - MAX_USER_SAVINGS); }
+             { printf(":: Dana Perekonomian Total Daerah: Rp%'lld,00 >> (-Rp%'lld,00)\n", atoll(TotalSavings), MAX_USER_SAVINGS - atoll(TotalSavings)); }
+        else { printf(":: Dana Perekonomian Total Daerah: Rp%'lld,00 >> (+Rp%'lld,00)\n", atoll(TotalSavings), atoll(TotalSavings) - MAX_USER_SAVINGS); }
 
         puts("");
         puts("Pemasukkan (Incomes): ");
@@ -806,7 +806,7 @@ void AMMFeature02(void) {
         puts("====================================================================================================");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         AMMFeature02();
     
@@ -825,15 +825,15 @@ void AMMFeature03(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         AMMFeature03();
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
-    puts("\nMenu: [3] Data Sektor Industri");
+    puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
+    puts("\nMenu: [3] Lihat Data Sektor Industri dan Penghasilannya");
 
     if (access(Client_SektorIndustri, F_OK) != 0) {
         puts("");
@@ -845,7 +845,7 @@ void AMMFeature03(void) {
         puts("Mohon maaf, saat ini belum ada Sektor Industri yang mendaftar...");
         puts("... Silakan untuk ditunggu konfirmasi lanjutannya dan Anda dapat memantau data ini secara berkala..." );
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); AdminMainMenu();
     }
     
@@ -873,15 +873,15 @@ void AMMFeature03(void) {
 
     puts("");
     puts("Sertakan penomoran Sektor Industri di atas untuk melihat data perekonomian daerah lebih lanjut!");
-    puts( "(jika tidak, ketik angka 0 untuk kembali ke menu utama Kemenkeu)");
+    puts("(jika tidak, ketik angka 0 untuk kembali ke menu utama Kemenkeu)");
     AcceptInputOption("> Lihat data Sektor Industri: ", PeekSI);
 
     if (PeekSI == 0) { AdminMainMenu(); }
     else if (PeekSI > 0 && PeekSI <= (MaxSI + 1)) {
         ClearScreen();
         puts("Selamat Datang di aplikasi: D'Wakanda!");
-        puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
-        puts("\nMenu: [3] Data Sektor Industri");
+        puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
+        puts("\nMenu: [3] Lihat Data Sektor Industri dan Penghasilannya");
 
         PeekSI--;
         strcpy(SIList.FullName, ReadLine(Client_SektorIndustri, ((OFFSET_SI + 1) * PeekSI) + SI_FULLNAME));
@@ -909,7 +909,7 @@ void AMMFeature03(void) {
         puts("====================================================================================================");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         AMMFeature03();
     
@@ -933,15 +933,15 @@ void AMMFeature04(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         AMMFeature04();
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
-    puts("\nMenu: [4] Pendistribusian Bantuan Dana");
+    puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
+    puts("\nMenu: [4] Pendistribusian Bantuan Dana kepada Kepala Daerah");
 
     if (access(User_KepalaDaerah, F_OK) != 0) {
         puts("");
@@ -953,7 +953,7 @@ void AMMFeature04(void) {
         puts("Mohon maaf, saat ini belum ada Kepala Daerah yang mendaftar...");
         puts("... Silakan untuk ditunggu konfirmasi lanjutannya dan Anda dapat memantau data ini secara berkala..." );
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); AdminMainMenu();
     }
 
@@ -974,9 +974,9 @@ void AMMFeature04(void) {
 
         RecentStatus = atoi(ReadLine(User_KepalaDaerah, ((OFFSET_HD + 1) * KD) + HD_AID_FUNDS_STATUS));
         if      (RecentStatus == 0)  { puts("... Status Permintaan: -"); }
-        else if (RecentStatus == 1)  { puts("... Status Permintaan: " "SEDANG DIPROSES"); }
-        else if (RecentStatus == 2)  { puts("... Status Permintaan: " "PENGAJUAN DITERIMA"); }
-        else if (RecentStatus == -1) { puts("... Status Permintaan: " "PENGAJUAN DITOLAK"); }
+        else if (RecentStatus == 1)  { puts("... Status Permintaan: SEDANG DIPROSES"); }
+        else if (RecentStatus == 2)  { puts("... Status Permintaan: PENGAJUAN DITERIMA"); }
+        else if (RecentStatus == -1) { puts("... Status Permintaan: PENGAJUAN DITOLAK"); }
 
         StatusList[KD] = RecentStatus;
         MaxKD++;
@@ -992,22 +992,22 @@ void AMMFeature04(void) {
         puts("Mohon maaf, saat ini belum ada Kepala Daerah yang hendak mengajukan bantuan dana kepada Anda...");
         puts("... Silakan untuk ditunggu konfirmasi lanjutannya dan Anda dapat memantau data ini secara berkala..." );
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); AdminMainMenu();
     }
 
     puts("");
     puts("Kepada siapa dari pelbagai data Kepala Daerah di atas untuk Anda berikan bantuan dana?");
-    puts( "(kondisi input sesuai penomoran dari masing-masing Kepala Daerah)");
-    puts( "(jika ingin kembali ke menu sebelumnya, ketik 0 pada input di bawah)");
+    puts("(kondisi input sesuai penomoran dari masing-masing Kepala Daerah)");
+    puts("(jika ingin kembali ke menu sebelumnya, ketik 0 pada input di bawah)");
     AcceptInputOption("> Pilihan Anda: ", PeekKD);
 
     if (PeekKD > 0 && PeekKD <= AvailableKDs) {
         ClearScreen();
         
         puts("Selamat Datang di aplikasi: D'Wakanda!");
-        puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
-        puts("\nMenu: [4] Pendistribusian Bantuan Dana");
+        puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
+        puts("\nMenu: [4] Pendistribusian Bantuan Dana kepada Kepala Daerah");
 
         AvailableKDs = atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA));
 
@@ -1030,9 +1030,9 @@ void AMMFeature04(void) {
 
                 RecentStatus = atoi(ReadLine(User_KepalaDaerah, ((OFFSET_HD + 1) * KD) + HD_AID_FUNDS_STATUS));
                 if      (RecentStatus == 0)  { puts("... Status Permintaan: -"); }
-                else if (RecentStatus == 1)  { puts("... Status Permintaan: " "SEDANG DIPROSES"); }
-                else if (RecentStatus == 2)  { puts("... Status Permintaan: " "PENGAJUAN DITERIMA"); }
-                else if (RecentStatus == -1) { puts("... Status Permintaan: " "PENGAJUAN DITOLAK"); }
+                else if (RecentStatus == 1)  { puts("... Status Permintaan: SEDANG DIPROSES"); }
+                else if (RecentStatus == 2)  { puts("... Status Permintaan: PENGAJUAN DITERIMA"); }
+                else if (RecentStatus == -1) { puts("... Status Permintaan: PENGAJUAN DITOLAK"); }
                 
                 printf(">>> Total Dana Daerah (saat ini): Rp%'lld.00\n", atoll(ReadLine(KDFileName, 1)));
             
@@ -1042,9 +1042,9 @@ void AMMFeature04(void) {
 
                 RecentStatus = atoi(ReadLine(User_KepalaDaerah, ((OFFSET_HD + 1) * KD) + HD_AID_FUNDS_STATUS));
                 if      (RecentStatus == 0)  { puts("... Status Permintaan: -"); }
-                else if (RecentStatus == 1)  { puts("... Status Permintaan: " "SEDANG DIPROSES"); }
-                else if (RecentStatus == 2)  { puts("... Status Permintaan: " "PENGAJUAN DITERIMA"); }
-                else if (RecentStatus == -1) { puts("... Status Permintaan: " "PENGAJUAN DITOLAK"); }
+                else if (RecentStatus == 1)  { puts("... Status Permintaan: SEDANG DIPROSES"); }
+                else if (RecentStatus == 2)  { puts("... Status Permintaan: PENGAJUAN DITERIMA"); }
+                else if (RecentStatus == -1) { puts("... Status Permintaan: PENGAJUAN DITOLAK"); }
             }
 
             StatusList[KD] = RecentStatus;
@@ -1055,31 +1055,31 @@ void AMMFeature04(void) {
         if (StatusList[PeekKD - 1] == 0) {
             
             puts("Sepertinya untuk Kepala Daerah yang bersangkutan saat ini TIDAK dalam masa pengajuan permintaan bantuan dana...");
-            puts("Dipersilakan untuk melakukan re-load dan memilih Kepala Daerah lain yang tengah tertulis: " "SEDANG DIPROSES!");
+            puts("Dipersilakan untuk melakukan re-load dan memilih Kepala Daerah lain yang tengah tertulis: SEDANG DIPROSES!");
             
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause"); AMMFeature04();
 
         } else if (StatusList[PeekKD - 1] == 2) {
             puts("Anda telah MENYETUJUI permintaan bantuan dana dari ajuan Kepala Daerah yang bersengakutan sebelumnya...");
-            puts("Dipersilakan untuk melakukan re-load dan memilih Kepala Daerah lain yang tengah tertulis: " "SEDANG DIPROSES!");
+            puts("Dipersilakan untuk melakukan re-load dan memilih Kepala Daerah lain yang tengah tertulis: SEDANG DIPROSES!");
             
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause"); AMMFeature04();
 
         } else if (StatusList[PeekKD - 1] == -1) {
             puts("Anda telah MENOLAK permintaan bantuan dana dari ajuan Kepala Daerah yang bersengakutan sebelumnya...");
-            puts("Dipersilakan untuk melakukan re-load dan memilih Kepala Daerah lain yang tengah tertulis: " "SEDANG DIPROSES!");
+            puts("Dipersilakan untuk melakukan re-load dan memilih Kepala Daerah lain yang tengah tertulis: SEDANG DIPROSES!");
             
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause"); AMMFeature04();
         
         } else if (StatusList[PeekKD - 1] == 1) {
             puts("Saat ini Kepala Daerah yang bersangkutan tengah dalam masa pemrosesan dana bantuan dari pihak Anda.");
-            puts( "... Apakah Anda yakin untuk menerima pengajuan dari beliau, atau harus menolaknya?");
+            puts("... Apakah Anda yakin untuk menerima pengajuan dari beliau, atau harus menolaknya?");
             puts("... Perhatikan bahwa hal ini akan mengurangi nominal tabungan negara, jadi harap dipastikan terlebih dahulu!");
             
             puts("");
@@ -1091,8 +1091,8 @@ void AMMFeature04(void) {
                     ClearScreen();
             
                     puts("Selamat Datang di aplikasi: D'Wakanda!");
-                    puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
-                    puts("\nMenu: [4] Pendistribusian Bantuan Dana");
+                    puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
+                    puts("\nMenu: [4] Pendistribusian Bantuan Dana kepada Kepala Daerah");
 
                     AvailableKDs = atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA));
                     OverWriteStringAtLine(User_KepalaDaerah, "2", 0, ((OFFSET_HD + 1) * (PeekKD - 1)) + HD_AID_FUNDS_STATUS);
@@ -1117,9 +1117,9 @@ void AMMFeature04(void) {
                             
                             RecentStatus = atoi(ReadLine(User_KepalaDaerah, ((OFFSET_HD + 1) * KD) + HD_AID_FUNDS_STATUS));
                             if      (RecentStatus == 0)  { puts("... Status Permintaan: -"); }
-                            else if (RecentStatus == 1)  { puts("... Status Permintaan: " "SEDANG DIPROSES"); }
-                            else if (RecentStatus == 2)  { puts("... Status Permintaan: " "PENGAJUAN DITERIMA"); }
-                            else if (RecentStatus == -1) { puts("... Status Permintaan: " "PENGAJUAN DITOLAK"); }
+                            else if (RecentStatus == 1)  { puts("... Status Permintaan: SEDANG DIPROSES"); }
+                            else if (RecentStatus == 2)  { puts("... Status Permintaan: PENGAJUAN DITERIMA"); }
+                            else if (RecentStatus == -1) { puts("... Status Permintaan: PENGAJUAN DITOLAK"); }
                         
                         } else {
                             printf("[%03d] Nama Lengkap: %s\n", (KD + 1), KDList.FullName);
@@ -1127,9 +1127,9 @@ void AMMFeature04(void) {
 
                             RecentStatus = atoi(ReadLine(User_KepalaDaerah, ((OFFSET_HD + 1) * KD) + HD_AID_FUNDS_STATUS));
                             if      (RecentStatus == 0)  { puts("... Status Permintaan: -"); }
-                            else if (RecentStatus == 1)  { puts("... Status Permintaan: " "SEDANG DIPROSES"); }
-                            else if (RecentStatus == 2)  { puts("... Status Permintaan: " "PENGAJUAN DITERIMA"); }
-                            else if (RecentStatus == -1) { puts("... Status Permintaan: " "PENGAJUAN DITOLAK"); }
+                            else if (RecentStatus == 1)  { puts("... Status Permintaan: SEDANG DIPROSES"); }
+                            else if (RecentStatus == 2)  { puts("... Status Permintaan: PENGAJUAN DITERIMA"); }
+                            else if (RecentStatus == -1) { puts("... Status Permintaan: PENGAJUAN DITOLAK"); }
                         }
 
                         StatusList[KD] = RecentStatus;
@@ -1160,12 +1160,12 @@ void AMMFeature04(void) {
                         fclose(AccessAdmin);
 
                         puts("");
-                        printf( "... Tabungan Negara saat ini: Rp%'lld.00\n", atoll(WriteString01_A));
+                        printf("... Tabungan Negara saat ini: Rp%'lld.00\n", atoll(WriteString01_A));
                         if (atoll(WriteString01_A) < 1000000000) { puts("... Mohon perhatikan tabungan negara berikut dikarenakan agar tidak berhutang!"); }
                         else                                     { puts("... Saat ini tabungan negara masih aman, tingkatkan terus kinerja Anda!"); }
                         puts("Pemberian sumbangan dana tambahan bagi Kepala Daerah yang bersangkutan telah berhasil!");
                         puts("");
-                        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                         system("pause"); AMMFeature04();
                 
                     } else {
@@ -1175,7 +1175,7 @@ void AMMFeature04(void) {
                         puts("WARNING: Kesalahan input nominal ditemukan! Nominal yang diberikan tidaklah memenuhi syarat...");
                         puts("... Demi keamanan data, mohon dilakukan penyetelan ulang dari awal pilihan!");
                         puts("");
-                        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                         system("pause");
                     }
                 }
@@ -1183,8 +1183,8 @@ void AMMFeature04(void) {
                 ClearScreen();
         
                 puts("Selamat Datang di aplikasi: D'Wakanda!");
-                puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
-                puts("\nMenu: [4] Pendistribusian Bantuan Dana");
+                puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
+                puts("\nMenu: [4] Pendistribusian Bantuan Dana kepada Kepala Daerah");
 
                 AvailableKDs = atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA));
                 OverWriteStringAtLine(User_KepalaDaerah, "-1", 0, ((OFFSET_HD + 1) * (PeekKD - 1)) + HD_AID_FUNDS_STATUS);
@@ -1205,9 +1205,9 @@ void AMMFeature04(void) {
 
                         RecentStatus = atoi(ReadLine(User_KepalaDaerah, ((OFFSET_HD + 1) * KD) + HD_AID_FUNDS_STATUS));
                         if      (RecentStatus == 0)  { puts("... Status Permintaan: -"); }
-                        else if (RecentStatus == 1)  { puts("... Status Permintaan: " "SEDANG DIPROSES"); }
-                        else if (RecentStatus == 2)  { puts("... Status Permintaan: " "PENGAJUAN DITERIMA"); }
-                        else if (RecentStatus == -1) { puts("... Status Permintaan: " "PENGAJUAN DITOLAK"); }
+                        else if (RecentStatus == 1)  { puts("... Status Permintaan: SEDANG DIPROSES"); }
+                        else if (RecentStatus == 2)  { puts("... Status Permintaan: PENGAJUAN DITERIMA"); }
+                        else if (RecentStatus == -1) { puts("... Status Permintaan: PENGAJUAN DITOLAK"); }
                     
                     } else {
                         printf("[%03d] Nama Lengkap: %s\n", (KD + 1), KDList.FullName);
@@ -1215,9 +1215,9 @@ void AMMFeature04(void) {
 
                         RecentStatus = atoi(ReadLine(User_KepalaDaerah, ((OFFSET_HD + 1) * KD) + HD_AID_FUNDS_STATUS));
                         if      (RecentStatus == 0)  { puts("... Status Permintaan: -"); }
-                        else if (RecentStatus == 1)  { puts("... Status Permintaan: " "SEDANG DIPROSES"); }
-                        else if (RecentStatus == 2)  { puts("... Status Permintaan: " "PENGAJUAN DITERIMA"); }
-                        else if (RecentStatus == -1) { puts("... Status Permintaan: " "PENGAJUAN DITOLAK"); }
+                        else if (RecentStatus == 1)  { puts("... Status Permintaan: SEDANG DIPROSES"); }
+                        else if (RecentStatus == 2)  { puts("... Status Permintaan: PENGAJUAN DITERIMA"); }
+                        else if (RecentStatus == -1) { puts("... Status Permintaan: PENGAJUAN DITOLAK"); }
                     }
 
                     StatusList[KD] = RecentStatus;
@@ -1228,7 +1228,7 @@ void AMMFeature04(void) {
                 puts("Anda telah memilih untuk MENOLAK pengajuan permintaan dana bantuan dari Kepala Daerah yang bersangkutan!");
                 puts("... Dipersilakan untuk kembali ke menu sebelumnya tanpa modifikasi pengguna...");
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause"); AMMFeature04();
             
             } else { CheckInvalidInput = true; AMMFeature04(); }
@@ -1236,7 +1236,7 @@ void AMMFeature04(void) {
 
     } else if (PeekKD == 0) {
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         AdminMainMenu();
 
@@ -1262,18 +1262,25 @@ void AMMFeature05(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         AMMFeature05();
     }
 
+    /*
+        This "while (true) {...}" method is used to be able to make the user
+        traverse around the sub-menu here, so it wouldn't be that much
+        necessary to cover the mistakes choosing the given options
+        wrongdoingly by going to the main menu and then restart the
+        process of asserting inputs from the very beginning.
+    */
     while (true) {
         MaxReq = 0;
 
         ClearScreen();
         puts("Selamat Datang di aplikasi: D'Wakanda!");
-        puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
+        puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
         puts("\nMenu: [5] Pengaturan Kerja Sama dengan Kepala Daerah");
 
         AvailableReqs = atoi(ReadLine(UserCartStore_Keranjang, TOTAL_DATA));
@@ -1295,11 +1302,13 @@ void AMMFeature05(void) {
                 strtok_r(DisplayKDJobTitle, ",", &DisplayKDHeadRegion); DisplayKDHeadRegion = TrimWhiteSpaces(DisplayKDHeadRegion);
                 strcpy(DisplaySIFullName, CartInfo.Accepter);
                 strtok_r(DisplaySIFullName, ",", &DisplaySIIndustryName); DisplaySIIndustryName = TrimWhiteSpaces(DisplaySIIndustryName);
-                MaxReq++; AllLinkedRequests[REQ] = MaxReq;
+
+                MaxReq++;
+                AllLinkedRequests[REQ] = MaxReq;
 
                 printf("[%03d] Nama Lengkap: %s\n", MaxReq, DisplayKDFullName);
                 printf("... Jabatan/Daerah: %s %s\n", DisplayKDJobTitle, DisplayKDHeadRegion);
-                puts("... Status Pengajuan: " "SEDANG DIPROSES");
+                puts("... Status Pengajuan: SEDANG DIPROSES");
 
                 strcpy(DisplayProductName, ReadLine(UserCartStore_Keranjang, ((OFFSET_CS + 1) * REQ) + CS_BOUGHT_PRODUCT));
                 DisplayProductName[strlen(DisplayProductName) - 1] = '\0';
@@ -1324,21 +1333,21 @@ void AMMFeature05(void) {
             puts("...        Silakan untuk ditunggu dan diperhatikan menu ini secara berkala...");
 
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause"); AdminMainMenu();
         }
 
         puts("");
-        printf("Saat ini, tersedia %d PESANAN dari Kepala Daerah yang siap untuk didistribusikan kepada Anda. " "TERIMA AJUAN sekarang?\n", MaxReq);
+        printf("Saat ini, tersedia %d PESANAN dari Kepala Daerah yang siap untuk didistribusikan kepada Anda. TERIMA AJUAN sekarang?\n", MaxReq);
         puts("... Kondisi penomoran data pesanan di atas disesuaikan untuk sesi input ini...");
-        puts( "(untuk membatalkan, ketik 0 untuk kembali ke menu sebelumnya)");
+        puts("(untuk membatalkan, ketik 0 untuk kembali ke menu sebelumnya)");
         AcceptInputOption("> Pilihan Anda: ", PeekReq);
 
         if (PeekReq > 0 && PeekReq <= MaxReq) {
             ClearScreen();
 
             puts("Selamat Datang di aplikasi: D'Wakanda!");
-            puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
+            puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
             puts("\nMenu: [5] Pengaturan Kerja Sama dengan Kepala Daerah");
             
             for (size_t i = 0; i < sizeof(AllLinkedRequests)/sizeof(AllLinkedRequests[0]); i++) {
@@ -1364,7 +1373,7 @@ void AMMFeature05(void) {
             if (CartInfo.Status == 2) {
                 printf("[%03d] Nama Lengkap: %s\n", (GetReq + 1), DisplayKDFullName);
                 printf("... Jabatan/Daerah: %s %s\n", DisplayKDJobTitle, DisplayKDHeadRegion);
-                puts("... Status Pengajuan: " "SEDANG DIPROSES");
+                puts("... Status Pengajuan: SEDANG DIPROSES");
 
                 strcpy(DisplayProductName, ReadLine(UserCartStore_Keranjang, ((OFFSET_CS + 1) * AllRequestsID[GetReq]) + CS_BOUGHT_PRODUCT));
                 DisplayProductName[strlen(DisplayProductName) - 1] = '\0';
@@ -1378,24 +1387,24 @@ void AMMFeature05(void) {
             
             puts("");
             puts("Berikut adalah besar pengeluaran yang Anda keluarkan apabila pihak Anda menerima ajuan distribusi Kepala Daerah yang bersangkutan:");
-            printf("Harga Total Pesanan: Rp%'lld.00 " "(+%0.2f%%) " ">> " "Rp%'lld.00\n", atoll(DisplayProductPrice), atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES)), (long long int)round(atoll(DisplayProductPrice) + (atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f))));
+            printf("Harga Total Pesanan: Rp%'lld.00 (+%0.2f%%) >> Rp%'lld.00\n", atoll(DisplayProductPrice), atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES)), (long long int)round(atoll(DisplayProductPrice) + (atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f))));
             puts("... CATATAN: Perolehan keuntungan didapat dari besar persentase Pajak Negara yang diatur Kemenkeu!");
             puts("...          Pengeluaran tersebut akan menjadi pemasukkan bagi Kepala Daerah yang bersangkutan...");
 
             puts("");
-            puts("Setelah melihat data di atas, Anda berhak untuk MENGELOLA permintaan distribusi ini dari Kepala Daerah tersebut. " "Kelola SEKARANG?");
+            puts("Setelah melihat data di atas, Anda berhak untuk MENGELOLA permintaan distribusi ini dari Kepala Daerah tersebut. Kelola SEKARANG?");
             puts("... Apabila Anda MENOLAK pengajuan dari yang bersangkutan, Anda masih dapat MENERIMA-nya kembali di lain waktu...");
             
             puts("");
-            puts( "(ketik Y atau y jika hendak MENERIMA, dan N atau n apabila MENOLAK)");
-            puts( "(jika ingin kembali ke menu sebelumnya, ketik Q atau q)");
+            puts("(ketik Y atau y jika hendak MENERIMA, dan N atau n apabila MENOLAK)");
+            puts("(jika ingin kembali ke menu sebelumnya, ketik Q atau q)");
             AcceptCharInput("> Pilihan Anda: ", ConfirmRequest);
 
             if (ConfirmRequest == 'Y' || ConfirmRequest == 'y') {
                 ClearScreen();
 
                 puts("Selamat Datang di aplikasi: D'Wakanda!");
-                puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
+                puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
                 puts("\nMenu: [5] Pengaturan Kerja Sama dengan Kepala Daerah");
 
                 puts("");
@@ -1405,7 +1414,7 @@ void AMMFeature05(void) {
                 if (CartInfo.Status == 2 && strstr(CartInfo.Requester, DisplayKDFullName) != NULL && strstr(CartInfo.Requester, DisplayKDJobTitle) != NULL && strstr(CartInfo.Requester, DisplayKDHeadRegion) != NULL) {
                     printf("[%03d] Nama Lengkap: %s\n", (GetReq + 1), DisplayKDFullName);
                     printf("... Jabatan/Daerah: %s %s\n", DisplayKDJobTitle, DisplayKDHeadRegion);
-                    puts("... Status Pengajuan: " "PENGAJUAN DITERIMA");
+                    puts("... Status Pengajuan: PENGAJUAN DITERIMA");
 
                     strcpy(DisplayProductName, ReadLine(UserCartStore_Keranjang, ((OFFSET_CS + 1) * AllRequestsID[GetReq]) + CS_BOUGHT_PRODUCT));
                     DisplayProductName[strlen(DisplayProductName) - 1] = '\0';
@@ -1466,7 +1475,7 @@ void AMMFeature05(void) {
                 
                 puts("");
                 puts("Berikut adalah besar pengeluaran yang Anda keluarkan dari persetujuan distribusinya:");
-                printf("Besar/Nilai Pengeluaran Anda: Rp%'lld.00 " "<< (+Rp%'lld.00)\n", atoll(DisplayProductPrice) + (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f)), (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f)));
+                printf("Besar/Nilai Pengeluaran Anda: Rp%'lld.00 << (+Rp%'lld.00)\n", atoll(DisplayProductPrice) + (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f)), (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f)));
                 puts("... CATATAN: Besar pengeluaran di atas akan menimbulkan efek pada Tabungan Negara Anda, jadi mohon untuk dipantau secara berkala!");
                 puts("...          Pesanan distribusi yang sudah Anda konfirmasi TIDAK DAPAT Anda batalkan kembali...");
 
@@ -1476,14 +1485,14 @@ void AMMFeature05(void) {
                 puts(":: Kini Anda siap untuk mendistribusikan produk pesanan tersebut ke skala INTERNASIONAL!");
 
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause"); AMMFeature05();
             
             } else if (ConfirmRequest == 'N' || ConfirmRequest == 'n') {
                 ClearScreen();
 
                 puts("Selamat Datang di aplikasi: D'Wakanda!");
-                puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
+                puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
                 puts("\nMenu: [5] Pengaturan Kerja Sama dengan Kepala Daerah");
 
                 puts("");
@@ -1493,7 +1502,7 @@ void AMMFeature05(void) {
                 if (CartInfo.Status == 2 && strstr(CartInfo.Requester, DisplayKDFullName) != NULL && strstr(CartInfo.Requester, DisplayKDJobTitle) != NULL && strstr(CartInfo.Requester, DisplayKDHeadRegion) != NULL) {
                     printf("[%03d] Nama Lengkap: %s\n", (GetReq + 1), DisplayKDFullName);
                     printf("... Jabatan/Daerah: %s %s\n", DisplayKDJobTitle, DisplayKDHeadRegion);
-                    puts("... Status Pengajuan: " "PENGAJUAN DITOLAK");
+                    puts("... Status Pengajuan: PENGAJUAN DITOLAK");
 
                     strcpy(DisplayProductName, ReadLine(UserCartStore_Keranjang, ((OFFSET_CS + 1) * AllRequestsID[GetReq]) + CS_BOUGHT_PRODUCT));
                     DisplayProductName[strlen(DisplayProductName) - 1] = '\0';
@@ -1511,22 +1520,22 @@ void AMMFeature05(void) {
                 puts(":: Namun jangan khawatir, karena Anda masih dapat MENERIMA pengajuannya kembali di lain waktu!");
 
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause"); AMMFeature05();
             
             } else if (ConfirmRequest == 'Q' || ConfirmRequest == 'q') {
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause");
             } else {
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause");
             }
         
         } else if (PeekReq == 0) {
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause"); AdminMainMenu();
         } else { CheckInvalidInput = true; AMMFeature05(); }
     }
@@ -1550,15 +1559,15 @@ void AMMFeature06(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         AMMFeature06();
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
-    puts("\nMenu: [6] Distribusi Perdagangan Internasional");
+    puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
+    puts("\nMenu: [6] Distribusi Perdagangan Skala Internasional");
 
     AvailableReqs = atoi(ReadLine(AdminCartStore_Keranjang, TOTAL_DATA));
 
@@ -1579,18 +1588,14 @@ void AMMFeature06(void) {
         strcpy(DisplaySIFullName, CartInfo.Accepter);
         strtok_r(DisplaySIFullName, ",", &DisplaySIIndustryName); DisplaySIIndustryName = TrimWhiteSpaces(DisplaySIIndustryName);
 
-        if      (CartInfo.Status == 0) puts("STATUS REVIEW: ""BELUM DILIHAT");
-        else if (CartInfo.Status == 1) puts("STATUS REVIEW: ""TELAH DILIHAT");
-
-        puts("");
-        printf("[%03d] Perwakilan Kepala Daaerah: Yth. %s, %s %s\n", MaxReq, DisplayKDFullName, DisplayKDJobTitle, DisplayKDHeadRegion);
-
         strcpy(DisplayProductName, CartInfo.ProductInDemand);
         DisplayProductName[strlen(DisplayProductName) - 1] = '\0';
         strtok_r(DisplayProductName, ",", &DisplayProductStock); DisplayProductStock = TrimWhiteSpaces(DisplayProductStock);
         strtok_r(DisplayProductStock, ",", &DisplayProductPrice); DisplayProductPrice = TrimWhiteSpaces(DisplayProductPrice);
         
+        printf("[%03d] Perwakilan Kepala Daaerah: Yth. %s, %s %s\n", MaxReq, DisplayKDFullName, DisplayKDJobTitle, DisplayKDHeadRegion);
         printf("Perwakilan Sektor Industri: Yth %s, Direktur %s.\n", DisplaySIFullName, DisplaySIIndustryName);
+        puts("");
         printf("Daftar Pesanan:\n... 1. Nama Pesanan Produk: %s\n... 2. Stok Pesanan Produk: %s\n... 3. Harga Total Pesanan Produk: Rp%'lld.00\n", DisplayProductName, DisplayProductStock, atoll(DisplayProductPrice));
 
         puts("====================================================================================================");        
@@ -1601,26 +1606,26 @@ void AMMFeature06(void) {
         puts("====================================================================================================");
 
         puts("");
-        puts("PERHATIAN: Saat ini Anda belumm menerima daftar keranjang dari Kepala Daerah yang mengajukannya!");
+        puts("PERHATIAN: Saat ini Anda belum menerima daftar keranjang dari Kepala Daerah yang mengajukannya!");
         puts("...        Silakan untuk ditunggu dan diperhatikan menu ini secara berkala...");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); AdminMainMenu();
     }
 
     puts("");
-    printf("Saat ini, tersedia %d produk di keranjang Anda. " "DISTRIBUSIKAN SKALA INTERNASIONAL sekarang?\n", MaxReq);
+    printf("Saat ini, tersedia %d produk di keranjang Anda. DISTRIBUSIKAN SKALA INTERNASIONAL sekarang?\n", MaxReq);
     puts("... Kondisi penomoran data pesanan di atas disesuaikan untuk sesi input ini...");
-    puts( "(untuk membatalkan, ketik 0 untuk kembali ke menu sebelumnya)");
+    puts("(untuk membatalkan, ketik 0 untuk kembali ke menu sebelumnya)");
     AcceptInputOption("> Pilihan Anda: ", PeekReq);
 
     if (PeekReq > 0 && PeekReq <= MaxReq) {
         ClearScreen();
 
         puts("Selamat Datang di aplikasi: D'Wakanda!");
-        puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
-        puts("\nMenu: [6] Distribusi Perdagangan Internasional");
+        puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
+        puts("\nMenu: [6] Distribusi Perdagangan Skala Internasional");
         
         strcpy(CartInfo.Requester, ReadLine(AdminCartStore_Keranjang, ((OFFSET_CS + 1) * (PeekReq - 1)) + CS_HD_IDENTITY));
         strcpy(CartInfo.Accepter, ReadLine(AdminCartStore_Keranjang, ((OFFSET_CS + 1) * (PeekReq - 1)) + CS_CS_IDENTITY));
@@ -1654,24 +1659,24 @@ void AMMFeature06(void) {
 
         puts("");
         puts("Berikut adalah besar pendapatan yang Anda keluarkan apabila pihak Anda mendistribusikan produk yang bersangkutan:");
-        printf("Harga Total Pesanan: Rp%'lld.00 " "(+%0.2f%%) " ">> " "Rp%'lld.00\n", atoll(DisplayProductPrice), atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES)), (long long int)round(atoll(DisplayProductPrice) + (atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f))));
+        printf("Harga Total Pesanan: Rp%'lld.00 (+%0.2f%%) >> Rp%'lld.00\n", atoll(DisplayProductPrice), atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES)), (long long int)round(atoll(DisplayProductPrice) + (atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f))));
         puts("... CATATAN: Perolehan keuntungan didapat dari besar persentase Pajak Negara yang diatur Anda sendiri!");
 
         puts("");
-        puts("Setelah melihat data di atas, Anda berhak untuk MENGELOLA distribusi produk tersebut. " "Kelola SEKARANG?");
+        puts("Setelah melihat data di atas, Anda berhak untuk MENGELOLA distribusi produk tersebut. Kelola SEKARANG?");
         puts("... Apabila Anda belum ingin mendistribusikanya dalam skala internasional, Anda dapat melakukannya di lain waktu...");
         
         puts("");
-        puts( "(ketik Y atau y jika hendak MENERIMA)");
-        puts( "(jika ingin kembali ke menu sebelumnya, ketik Q atau q)");
+        puts("(ketik Y atau y jika hendak MENERIMA)");
+        puts("(jika ingin kembali ke menu sebelumnya, ketik Q atau q)");
         AcceptCharInput("> Pilihan Anda: ", ConfirmRequest);
 
         if (ConfirmRequest == 'Y' || ConfirmRequest == 'y') {
             ClearScreen();
 
             puts("Selamat Datang di aplikasi: D'Wakanda!");
-            puts("Anda tengah masuk sebagai: "  "Admin :: Kementerian Keuangan.");
-            puts("\nMenu: [6] Distribusi Perdagangan Internasional");
+            puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
+            puts("\nMenu: [6] Distribusi Perdagangan Skala Internasional");
 
             puts("");
             puts("Berikut adalah daftar keranjang barang produksi yang telah SIAP didistribusikan ke skala internasional:");
@@ -1726,7 +1731,7 @@ void AMMFeature06(void) {
             
             puts("");
             puts("Berikut adalah besar pendapatan yang Anda terima dari persetujuan distribusinya:");
-            printf("Besar/Nilai Pendapatan Anda: Rp%'lld.00 " "<< (+Rp%'lld.00)\n", atoll(DisplayProductPrice) + (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f)), (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f)));
+            printf("Besar/Nilai Pendapatan Anda: Rp%'lld.00 << (+Rp%'lld.00)\n", atoll(DisplayProductPrice) + (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f)), (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f)));
             puts("... CATATAN: Besar pendapatan di atas akan menimbulkan efek pada Tabungan Negara Anda, jadi mohon untuk dipantau secara berkala!");
             puts("...          Pesanan distribusi yang sudah Anda konfirmasi TIDAK DAPAT Anda batalkan kembali...");
 
@@ -1735,18 +1740,18 @@ void AMMFeature06(void) {
             puts(":: Selamat, Anda telah mendistribusikan barang produksi yang bersangkutan ke skala internasional...");
 
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause"); AMMFeature06();
         
         } else if (ConfirmRequest == 'Q' || ConfirmRequest == 'q') {
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause"); AMMFeature06();
         } else { CheckInvalidInput = true; AMMFeature06(); }
     
     } else if (PeekReq == 0) {
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); AdminMainMenu();
     } else { CheckInvalidInput = true; AMMFeature06(); }
 }
@@ -1760,23 +1765,23 @@ void UserMainMenu(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         AdminMainMenu();
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-    printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+    puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+    printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
 
     puts("");
-    puts(  "~ Apa yang ingin Anda kerjakan pada kesempatan kali ini? ~");
-    puts("[1] Alur Perekonomian Dana Daerah: "  "Menampilkan data pemasukkan serta pengeluaran dana di daerah tersebut.");
-    puts("[2] Pengajuan Dana Bantuan dari Pemerintah Pusat: "  "Mengajukan permintaan bantuan dana tambahan kepada pihak Kemenkeu.");
-    puts("[3] Distribusi Pemerintah Pusat: "  "Mengajukan proses pendistribusian produksi industri terhadap pihak Kemenkeu.");
-    puts("[4] Pengaturan Kerja Sama dengan Sektor Industri: "  "Mengajukan proses kerja sama dengan pihak sektor industri (Client)");
-    puts( "[0] Keluar...");
+    puts("~ Apa yang ingin Anda kerjakan pada kesempatan kali ini? ~");
+    puts("[1] Lihat Alur Perekonomian Dana Daerah");
+    puts("[2] Pengajuan Dana Bantuan dari Kementerian Keuangan");
+    puts("[3] Distribusi Perdagangan kepada Kementerian Keuangan");
+    puts("[4] Pengaturan Kerja Sama dengan Sektor Industri");
+    puts("[0] Keluar... (Log Out)");
 
     puts("");
     puts("Anda dipersilakan untuk memilih dari EMPAT (4) opsi di atas... .");
@@ -1801,9 +1806,9 @@ void UMMFeature01(void) {
 
     ClearScreen();
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-    printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
-    puts("\nMenu: [1] Alur Perekonomian Dana Daerah");
+    puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+    printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+    puts("\nMenu: [1] Lihat Alur Perekonomian Dana Daerah");
 
     snprintf(CurrentFileKD, sizeof(CurrentFileKD) + 12, "KD - %s.txt", KDFullName);
 
@@ -1816,8 +1821,8 @@ void UMMFeature01(void) {
     puts("Berikut adalah data akumulasi perekonomian dana daerah dari yang bersangkutan:");
     puts("====================================================================================================");
     if (MAX_USER_SAVINGS - atoll(TotalSavings) > 0LL)
-         { printf(":: Dana Perekonomian Total Daerah: Rp%'lld,00 >> " "(-Rp%'lld,00)\n", atoll(TotalSavings), MAX_USER_SAVINGS - atoll(TotalSavings)); }
-    else { printf(":: Dana Perekonomian Total Daerah: Rp%'lld,00 >> " "(+Rp%'lld,00)\n", atoll(TotalSavings), atoll(TotalSavings) - MAX_USER_SAVINGS); }
+         { printf(":: Dana Perekonomian Total Daerah: Rp%'lld,00 >> (-Rp%'lld,00)\n", atoll(TotalSavings), MAX_USER_SAVINGS - atoll(TotalSavings)); }
+    else { printf(":: Dana Perekonomian Total Daerah: Rp%'lld,00 >> (+Rp%'lld,00)\n", atoll(TotalSavings), atoll(TotalSavings) - MAX_USER_SAVINGS); }
 
     puts("");
     puts("Pemasukkan (Incomes): ");
@@ -1827,7 +1832,7 @@ void UMMFeature01(void) {
     puts("====================================================================================================");
 
     puts("");
-    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
     system("pause");
     UserMainMenu();
 }
@@ -1842,16 +1847,16 @@ void UMMFeature02(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         UMMFeature02();
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-    printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
-    puts("\nMenu: [2] Pengajuan Dana Bantuan dari Pemerintah Pusat");
+    puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+    printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+    puts("\nMenu: [2] Pengajuan Dana Bantuan dari Kementerian Keuangan");
 
     RecentStatus = atoi(ReadLine(User_KepalaDaerah, ((OFFSET_HD + 1) * KDLoggedIn) + HD_AID_FUNDS_STATUS));
     
@@ -1859,25 +1864,25 @@ void UMMFeature02(void) {
     puts("====================================================================================================");
     puts("Berikut adalah status permintaan bantuan dana Anda saat ini:");
     if      (RecentStatus == 0)  { puts(":: Status Permintaan: -"); }
-    else if (RecentStatus == 1)  { puts(":: Status Permintaan: " "SEDANG DIPROSES"); }
-    else if (RecentStatus == 2)  { puts(":: Status Permintaan: " "PENGAJUAN DITERIMA"); puts(":: Anda dapat melihat nominal pemberian dari Kemenkeu pada menu Alur Perekonomian Daerah Anda... "); }
-    else if (RecentStatus == -1) { puts(":: Status Permintaan: " "PENGAJUAN DITOLAK"); }
+    else if (RecentStatus == 1)  { puts(":: Status Permintaan: SEDANG DIPROSES"); }
+    else if (RecentStatus == 2)  { puts(":: Status Permintaan: PENGAJUAN DITERIMA"); puts(":: Anda dapat melihat nominal pemberian dari Kemenkeu pada menu Alur Perekonomian Daerah Anda... "); }
+    else if (RecentStatus == -1) { puts(":: Status Permintaan: PENGAJUAN DITOLAK"); }
     puts("====================================================================================================");
 
     puts("");
     if (RecentStatus == 0 || RecentStatus == 2 || RecentStatus == -1) {
         puts("Ajukan permintaan bantuan dana kepada pihak Kemenkeu?");
-        puts( "(ketik Y atau y jika hendak mengajukan)");
-        puts( "(ketik Q atau q untuk keluar...)");
+        puts("(ketik Y atau y jika hendak mengajukan)");
+        puts("(ketik Q atau q untuk keluar...)");
         AcceptCharInput("> Pilihan Anda: ", OpenRequest);
         
         if (OpenRequest == 'Y' || OpenRequest == 'y') {
             ClearScreen();
 
             puts("Selamat Datang di aplikasi: D'Wakanda!");
-            puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-            printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
-            puts("\nMenu: [2] Pengajuan Dana Bantuan dari Pemerintah Pusat");
+            puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+            printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+            puts("\nMenu: [2] Pengajuan Dana Bantuan dari Kementerian Keuangan");
 
             OverWriteStringAtLine(User_KepalaDaerah, "1", 0, ((OFFSET_HD + 1) * KDLoggedIn) + HD_AID_FUNDS_STATUS);
             RecentStatus = atoi(ReadLine(User_KepalaDaerah, ((OFFSET_HD + 1) * KDLoggedIn) + HD_AID_FUNDS_STATUS));
@@ -1886,21 +1891,21 @@ void UMMFeature02(void) {
             puts("====================================================================================================");
             puts("Berikut adalah status permintaan bantuan dana Anda saat ini:");
             if      (RecentStatus == 0)  { puts(":: Status Permintaan: -"); }
-            else if (RecentStatus == 1)  { puts(":: Status Permintaan: " "SEDANG DIPROSES"); }
-            else if (RecentStatus == 2)  { puts(":: Status Permintaan: " "PENGAJUAN DITERIMA"); puts(":: Anda dapat melihat nominal pemberian dari Kemenkeu pada menu Alur Perekonomian Daerah Anda... "); }
-            else if (RecentStatus == -1) { puts(":: Status Permintaan: " "PENGAJUAN DITOLAK"); }
+            else if (RecentStatus == 1)  { puts(":: Status Permintaan: SEDANG DIPROSES"); }
+            else if (RecentStatus == 2)  { puts(":: Status Permintaan: PENGAJUAN DITERIMA"); puts(":: Anda dapat melihat nominal pemberian dari Kemenkeu pada menu Alur Perekonomian Daerah Anda... "); }
+            else if (RecentStatus == -1) { puts(":: Status Permintaan: PENGAJUAN DITOLAK"); }
             puts("====================================================================================================");
             
             puts("");
             puts("Pengajuan permintaan bantuan dana telah berhasil!");
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause");
             UMMFeature02();
             
         } else if (OpenRequest == 'Q' || OpenRequest == 'q') {            
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause");
             UserMainMenu();
         } else { CheckInvalidInput = true; UMMFeature02(); }
@@ -1910,7 +1915,7 @@ void UMMFeature02(void) {
         puts("Harap untuk menunggu hasil keputusan dari pihak Kemenkeu mengenai pengajuan bantuan dana Anda...");
         
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         UserMainMenu();
     }
@@ -1930,16 +1935,16 @@ void UMMFeature03(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         UMMFeature03();
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-    printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
-    puts("\nMenu: [3] Distribusi Pemerintah Pusat");
+    puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+    printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+    puts("\nMenu: [3] Distribusi kepada Kementerian Keuangan");
 
     AvailableConfirms = atoi(ReadLine(AdminCartStore_Keranjang, TOTAL_DATA));
 
@@ -1950,7 +1955,7 @@ void UMMFeature03(void) {
                 OverWriteStringAtLine(AdminCartStore_Keranjang, "1", 0, ((OFFSET_CS + 1) * ACC) + CS_SELLING_STATUS);
                 
                 puts("====================================================================================================");
-                puts("Status Pengajuan: " "PENGAJUAN DITERIMA");
+                puts("Status Pengajuan: PENGAJUAN DITERIMA");
                 puts(":: Selamat, pengajuan distribusi produk Anda telah diterima oleh Kemenkeu!");
                 puts(":: Berikut informasi produk yang bersangkutan... Semangat berbisnis!");
 
@@ -1971,7 +1976,7 @@ void UMMFeature03(void) {
     } if (MaxConfirms > 0) {
         puts("====================================================================================================");
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); UMMFeature03();
     }
 
@@ -1993,7 +1998,7 @@ void UMMFeature03(void) {
 
             printf("[%03d] Nama Lengkap: %s\n", (MaxReq), KDFullName);
             printf("... Jabatan/Daerah: %s %s\n", KDJobTitle, KDHeadRegion);
-            puts("... Status Pengajuan: " "SIAP DIDISTRIBUSIKAN");
+            puts("... Status Pengajuan: SIAP DIDISTRIBUSIKAN");
 
             strcpy(DisplayProductName, ReadLine(UserCartStore_Keranjang, ((OFFSET_CS + 1) * REQ) + CS_BOUGHT_PRODUCT));
             DisplayProductName[strlen(DisplayProductName) - 1] = '\0';
@@ -2010,7 +2015,7 @@ void UMMFeature03(void) {
 
             printf("[%03d] Nama Lengkap: %s\n", (MaxReq), KDFullName);
             printf("... Jabatan/Daerah: %s %s\n", KDJobTitle, KDHeadRegion);
-            puts("... Status Pengajuan: " "SEDANG DIPROSES");
+            puts("... Status Pengajuan: SEDANG DIPROSES");
 
             strcpy(DisplayProductName, ReadLine(UserCartStore_Keranjang, ((OFFSET_CS + 1) * REQ) + CS_BOUGHT_PRODUCT));
             DisplayProductName[strlen(DisplayProductName) - 1] = '\0';
@@ -2034,23 +2039,23 @@ void UMMFeature03(void) {
         puts("...        Anda diperkenankan untuk memesan produk dari Sektor Industri terlebih dahulu...");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); UserMainMenu();
     }
 
     puts("");
-    printf("Saat ini, tersedia %d PESANAN Anda yang siap untuk didistribusikan kepada Kemenkeu. " "Distribusikan sekarang?\n", MaxReq);
+    printf("Saat ini, tersedia %d PESANAN Anda yang siap untuk didistribusikan kepada Kemenkeu. Distribusikan sekarang?\n", MaxReq);
     puts("... Kondisi penomoran data pesanan di atas disesuaikan untuk sesi input ini...");
-    puts( "(untuk membatalkan, ketik 0 untuk kembali ke menu sebelumnya)");
+    puts("(untuk membatalkan, ketik 0 untuk kembali ke menu sebelumnya)");
     AcceptInputOption("> Pilihan Anda: ", PeekReq);
 
     if (PeekReq > 0 && PeekReq <= MaxReq) {
         ClearScreen();
 
         puts("Selamat Datang di aplikasi: D'Wakanda!");
-        puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-        printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
-        puts("\nMenu: [3] Distribusi Pemerintah Pusat");
+        puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+        printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+        puts("\nMenu: [3] Distribusi kepada Kementerian Keuangan");
         
         for (size_t i = 0; i < sizeof(AllLinkedRequests)/sizeof(AllLinkedRequests[0]); i++) {
             if (AllLinkedRequests[i] != PeekReq) { GetReq++; }
@@ -2069,7 +2074,7 @@ void UMMFeature03(void) {
         if (CartInfo.Status == 1 && strstr(CartInfo.Requester, KDFullName) != NULL && strstr(CartInfo.Requester, KDJobTitle) != NULL && strstr(CartInfo.Requester, KDHeadRegion) != NULL) {
             printf("[%03d] Nama Lengkap: %s\n", (GetReq + 1), KDFullName);
             printf("... Jabatan/Daerah: %s %s\n", KDJobTitle, KDHeadRegion);
-            puts("... Status Pengajuan: " "SIAP DIDISTRIBUSIKAN");
+            puts("... Status Pengajuan: SIAP DIDISTRIBUSIKAN");
 
             strcpy(DisplayProductName, ReadLine(UserCartStore_Keranjang, ((OFFSET_CS + 1) * AllRequestsID[GetReq]) + CS_BOUGHT_PRODUCT));
             DisplayProductName[strlen(DisplayProductName) - 1] = '\0';
@@ -2082,7 +2087,7 @@ void UMMFeature03(void) {
         } else if (CartInfo.Status == 2 && strstr(CartInfo.Requester, KDFullName) != NULL && strstr(CartInfo.Requester, KDJobTitle) != NULL && strstr(CartInfo.Requester, KDHeadRegion) != NULL) {
             printf("[%03d] Nama Lengkap: %s\n", (GetReq + 1), KDFullName);
             printf("... Jabatan/Daerah: %s %s\n", KDJobTitle, KDHeadRegion);
-            puts("... Status Pengajuan: " "SEDANG DIPROSES");
+            puts("... Status Pengajuan: SEDANG DIPROSES");
 
             strcpy(DisplayProductName, ReadLine(UserCartStore_Keranjang, ((OFFSET_CS + 1) * AllRequestsID[GetReq]) + CS_BOUGHT_PRODUCT));
             DisplayProductName[strlen(DisplayProductName) - 1] = '\0';
@@ -2100,18 +2105,18 @@ void UMMFeature03(void) {
             puts(":: Harap untuk menunggu informasi lebih lanjut dari pihak Kemenkeu mengenai pengajuan Anda berikut ini!");
             
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause"); UMMFeature03();
         }
         
         puts("");
         puts("Berikut adalah hasil pendapatan yang Anda terima apabila pihak Kemenkeu menerima ajuan distribusi Anda:");
-        printf("... Harga Total: Rp%'lld.00 " "(+%0.2f%%) " ">> " "Rp%'lld.00\n", atoll(DisplayProductPrice), atof(ReadLine(Admin_Kemenkeu, MF_STATE_SAVINGS)), (long long int)round(atoll(DisplayProductPrice) + (atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_SAVINGS))/100.0f))));
+        printf("... Harga Total: Rp%'lld.00 (+%0.2f%%) >> Rp%'lld.00\n", atoll(DisplayProductPrice), atof(ReadLine(Admin_Kemenkeu, MF_STATE_SAVINGS)), (long long int)round(atoll(DisplayProductPrice) + (atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_SAVINGS))/100.0f))));
         puts("... CATATAN: Perolehan keuntungan didapat dari besar persentase Pajak Negara yang diatur Kemenkeu!");
 
         puts("");
-        puts("Setelah melihat data di atas, Anda berhak untuk MENGAJUKAN permintaan distribusi ini ke Kemenkeu. " "Ajukan SEKARANG?");
-        puts( "(ketik Y atau y jika setuju, dan N atau n jika tidak setuju)");
+        puts("Setelah melihat data di atas, Anda berhak untuk MENGAJUKAN permintaan distribusi ini ke Kemenkeu. Ajukan SEKARANG?");
+        puts("(ketik Y atau y jika setuju, dan N atau n jika tidak setuju)");
         puts("(jika ingin kembali ke menu sebelumnya, ketik Q atau q)");
         AcceptCharInput("> Pilihan Anda: ", ConfirmRequest);
 
@@ -2119,9 +2124,9 @@ void UMMFeature03(void) {
             ClearScreen();
 
             puts("Selamat Datang di aplikasi: D'Wakanda!");
-            puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-            printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
-            puts("\nMenu: [3] Distribusi Pemerintah Pusat");
+            puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+            printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+            puts("\nMenu: [3] Distribusi kepada Kementerian Keuangan");
 
             puts("");
             puts("Berikut adalah data keranjang pesanan Anda yang siap didistribusikan kepada Kemenkeu:");
@@ -2135,7 +2140,7 @@ void UMMFeature03(void) {
             if (CartInfo.Status == 1 && strstr(CartInfo.Requester, KDFullName) != NULL && strstr(CartInfo.Requester, KDJobTitle) != NULL && strstr(CartInfo.Requester, KDHeadRegion) != NULL) {
                 printf("[%03d] Nama Lengkap: %s\n", (GetReq + 1), KDFullName);
                 printf("... Jabatan/Daerah: %s %s\n", KDJobTitle, KDHeadRegion);
-                puts("... Status Pengajuan: " "SEDANG DIPROSES");
+                puts("... Status Pengajuan: SEDANG DIPROSES");
 
                 strcpy(DisplayProductName, ReadLine(UserCartStore_Keranjang, ((OFFSET_CS + 1) * AllRequestsID[GetReq]) + CS_BOUGHT_PRODUCT));
                 DisplayProductName[strlen(DisplayProductName) - 1] = '\0';
@@ -2150,30 +2155,30 @@ void UMMFeature03(void) {
             
             puts("");
             puts("Berikut adalah hasil pendapatan yang Anda terima apabila pihak Kemenkeu menerima ajuan distribusi Anda:");
-            printf("... Pendapatan Penjualan Anda (sementara): Rp%'lld.00 " "<< (+Rp%'lld.00)\n", atoll(DisplayProductPrice) + (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f)), (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f)));
+            printf("... Pendapatan Penjualan Anda (sementara): Rp%'lld.00 << (+Rp%'lld.00)\n", atoll(DisplayProductPrice) + (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f)), (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_TAXES))/100.0f)));
             puts("... CATATAN: Anda baru HANYA MENDAPATKAN penghasilan di atas apabila Kemenkeu telah MENYETUJUINYA terlebih dahulu!");
             puts("...          Sebagai informasi, Anda dapat MEMBATALKAN pengajuan ini secara sepihak dari Anda sendiri setelahnya...");
 
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause"); UMMFeature03();
         
         } else if (ConfirmRequest == 'N' || ConfirmRequest == 'n') {
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause"); UMMFeature03();
         } else if   (ConfirmRequest == 'Q' || ConfirmRequest == 'q') {
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause"); UserMainMenu();
         } else { puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause");
         }
     
     } else if (PeekReq == 0) {
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); UserMainMenu();
     } else { CheckInvalidInput = true; UMMFeature03(); }
 }
@@ -2196,15 +2201,15 @@ void UMMFeature04(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         UMMFeature04();
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-    printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+    puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+    printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
     puts("\nMenu: [4] Pengaturan Kerja Sama dengan Sektor Industri");
 
     KDRequestStatus = atoi(ReadLine(User_KepalaDaerah, ((OFFSET_HD + 1) * KDLoggedIn) + HD_SI_BOUGHT_PRODUCT_STATUS));
@@ -2216,7 +2221,7 @@ void UMMFeature04(void) {
         puts(":: Perhatikan bahwa tindakan tersebut TIDAK DAPAT Anda batalkan kembali, jadi mohon untuk ditunggu konfirmasinya!");
         
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); UserMainMenu();
 
     } else if (KDRequestStatus == 2) {
@@ -2227,7 +2232,7 @@ void UMMFeature04(void) {
         puts(":: Saat ini Anda dapat memesan barang produksi Sektor Industri kembali, jadi silakan untuk di-refresh kembali!");
         
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); UMMFeature04();
 
     } else if (KDRequestStatus == -1) {
@@ -2263,7 +2268,7 @@ void UMMFeature04(void) {
         puts(":: Saat ini Anda dapat memesan barang produksi Sektor Industri kembali, jadi silakan untuk di-refresh kembali!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); UMMFeature04();
     }
     
@@ -2292,13 +2297,13 @@ void UMMFeature04(void) {
         puts("... dan dimohon untuk dinantikan dan dipantau menu ini secara berkala...");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); UserMainMenu();
     }
 
     puts("");
     puts("Sertakan penomoran Sektor Industri di atas untuk melihat data Sektor Industri yang bersangkutan dengan lebih detail!");
-    puts( "(jika tidak, ketik angka 0 untuk kembali ke menu utama Kepala Daerah)");
+    puts("(jika tidak, ketik angka 0 untuk kembali ke menu utama Kepala Daerah)");
     AcceptInputOption("> Lihat data Sektor Industri: ", PeekSI);
 
     if (PeekSI > 0 && PeekSI < (MaxSI + 1)) {
@@ -2306,8 +2311,8 @@ void UMMFeature04(void) {
             if (RecentStatus == 0) {
                 ClearScreen();
                 puts("Selamat Datang di aplikasi: D'Wakanda!");
-                puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-                printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+                puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+                printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
                 puts("\nMenu: [4] Pengaturan Kerja Sama dengan Sektor Industri");
                         
                 puts("");
@@ -2323,17 +2328,17 @@ void UMMFeature04(void) {
                 puts("====================================================================================================");
 
                 puts("");
-                puts("Mohon maaf, tapi saat ini Sektor Industri yang bersangkutan sedang " "TIDAK menerima " "pengajuan kerja sama dengan Kepala Daerah!");
+                puts("Mohon maaf, tapi saat ini Sektor Industri yang bersangkutan sedang TIDAK menerima pengajuan kerja sama dengan Kepala Daerah!");
                 puts("... Silakan untuk memilih Sektor Industri lainnya...");
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause"); UMMFeature04();
             }
 
             ClearScreen();
             puts("Selamat Datang di aplikasi: D'Wakanda!");
-            puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-            printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+            puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+            printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
             puts("\nMenu: [4] Pengaturan Kerja Sama dengan Sektor Industri");
                     
             puts("");
@@ -2369,7 +2374,7 @@ void UMMFeature04(void) {
 
             puts("");
             puts("Sertakan penomoran produk ID antara 1 sampai 5 seperti yang tertera di atas!");
-            puts( "(jika tidak, ketik angka 0 untuk kembali ke menu sebelumnya)");
+            puts("(jika tidak, ketik angka 0 untuk kembali ke menu sebelumnya)");
             AcceptInputOption("> [1][2][3][4][5] Ajukan Pembelian Produk: ", PeekStockID);
 
             if (PeekStockID > 0 && PeekStockID <= MaxStocks) {
@@ -2378,8 +2383,8 @@ void UMMFeature04(void) {
                         ClearScreen();
 
                         puts("Selamat Datang di aplikasi: D'Wakanda!");
-                        puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-                        printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+                        puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+                        printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
                         puts("\nMenu: [4] Pengaturan Kerja Sama dengan Sektor Industri");
                                 
                         puts("");
@@ -2424,7 +2429,7 @@ void UMMFeature04(void) {
                             puts("Silakan untuk memilih produk lainnya yang masih tersedia...");
                             
                             puts("");
-                            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                             system("pause"); break;
                         }
 
@@ -2445,7 +2450,7 @@ void UMMFeature04(void) {
                             puts("WARNING: Sesuai dengan penjelasan di atas, nilai stok produk yang dipesan HARUS >= 1!");
                             puts("Demi keamaan, harap untuk diulang kembali dan dimohon untuk DIPERHATIKAN perintah yang diminta!");
                             puts("");
-                            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                             system("pause");
 
                         } else {
@@ -2456,8 +2461,8 @@ void UMMFeature04(void) {
 
                             ClearScreen();
                             puts("Selamat Datang di aplikasi: D'Wakanda!");
-                            puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-                            printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+                            puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+                            printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
                             puts("\nMenu: [4] Pengaturan Kerja Sama dengan Sektor Industri");
 
                             puts("");
@@ -2499,11 +2504,11 @@ void UMMFeature04(void) {
                             puts("");
                             puts("Apakah Anda sudah yakin dengan banyak stok yang telah Anda pesan?");
                             printf("... Stok produk saat ini dan setelahnya:\n... ... %lld >> %lld\n", atoll(DisplayProductStock), atoll(DisplayProductStock) - atoll(NewProductStock));
-                            printf("... Saldo perekonomian Anda saat ini dan setelahnya:\n... ... Rp%'lld.00 >> " "Rp%'lld.00 " "(-Rp%'lld.00)\n", atoll(BeforeSavings), atoll(AfterSavings), atoll(BeforeSavings) - atoll(AfterSavings));
+                            printf("... Saldo perekonomian Anda saat ini dan setelahnya:\n... ... Rp%'lld.00 >> Rp%'lld.00 (-Rp%'lld.00)\n", atoll(BeforeSavings), atoll(AfterSavings), atoll(BeforeSavings) - atoll(AfterSavings));
                             
                             puts("");
-                            puts( "(ketik Y atau y apabila sudah yakin, dan N atau n jika ingin dipastikan kembali)");
-                            puts( "(ketik X atau x untuk kembali ke pemilihan produk, dan Q atau q untuk memilih kembali dari awal mula)");
+                            puts("(ketik Y atau y apabila sudah yakin, dan N atau n jika ingin dipastikan kembali)");
+                            puts("(ketik X atau x untuk kembali ke pemilihan produk, dan Q atau q untuk memilih kembali dari awal mula)");
                             AcceptCharInput("> Pilihan Anda: ", ConfirmStockInput);
 
                             if (ConfirmStockInput == 'Y' || ConfirmStockInput == 'y') {
@@ -2517,8 +2522,8 @@ void UMMFeature04(void) {
 
                                 ClearScreen();
                                 puts("Selamat Datang di aplikasi: D'Wakanda!");
-                                puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-                                printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+                                puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+                                printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
                                 puts("\nMenu: [4] Pengaturan Kerja Sama dengan Sektor Industri");
 
                                 puts("");
@@ -2533,21 +2538,21 @@ void UMMFeature04(void) {
                                 printf("... 1. Nama Produk: %s\n... 2. Stok Pesanan: %s\n... 3. Harga Total: Rp%'lld.00\n", DisplayProductName, NewProductStock, (atoll(DisplayProductPrice) * atoll(NewProductStock)));
 
                                 puts("");
-                                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                                 system("pause"); UMMFeature04();
                             }
                             
                             else if (ConfirmStockInput == 'N' || ConfirmStockInput == 'n') {
                                 puts("");
-                                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                                 system("pause");
                             } else if (ConfirmStockInput == 'X' || ConfirmStockInput == 'x') {
                                 puts("");
-                                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                                 system("pause"); break;
                             } else if (ConfirmStockInput == 'Q' || ConfirmStockInput == 'q') {
                                 puts("");
-                                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                                 system("pause"); UMMFeature04();
                             }
                         }
@@ -2556,8 +2561,8 @@ void UMMFeature04(void) {
                         ClearScreen();
 
                         puts("Selamat Datang di aplikasi: D'Wakanda!");
-                        puts("Anda tengah masuk sebagai: "  "User :: Kepala Daerah.");
-                        printf( "... Profil Kepala Daerah: " "%s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
+                        puts("Anda tengah masuk sebagai: User :: Kepala Daerah.");
+                        printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
                         puts("\nMenu: [4] Pengaturan Kerja Sama dengan Sektor Industri");
                                 
                         puts("");
@@ -2603,20 +2608,20 @@ void UMMFeature04(void) {
                         puts("Mohon maaf, untuk saat ini slot produk hasil Sektor Industri yang bersangkutan MASIH kosong...");
                         puts("... Silakan untuk memilih produk lainnya hasil produksi dari yang bersangkutan!");
                         puts("");
-                        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                         system("pause"); break;
                     }
                 }
 
             } else if (PeekStockID == 0) {
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause"); UMMFeature04();
             } else { CheckInvalidInput = true; UMMFeature04();  }
         }
     } else if (PeekSI == 0) {
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); UserMainMenu();
     } else { CheckInvalidInput = true; UMMFeature04();  }
 }
@@ -2630,22 +2635,22 @@ void ClientMainMenu(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         ClientMainMenu();
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "Client :: Sektor Industri.");
-    printf( "... Profil Sektor Industri: " "%s, %s.\n", SIFullName, SIIndustryName);
+    puts("Anda tengah masuk sebagai: Client :: Sektor Industri.");
+    printf("... Profil Sektor Industri: %s, %s.\n", SIFullName, SIIndustryName);
 
     puts("");
-    puts(  "~ Apa yang ingin Anda kerjakan pada kesempatan kali ini? ~");
-    puts("[1] Pendapatan Sektor Industri: "  "Menampilkan pendapatan total dari hasil produksi industri.");
-    puts("[2] Pengaturan Produksi: "  "Memampukan perwakilan dari industri untuk mencatat banyak produksi terhadap suatu produk.");
-    puts("[3] Pengaturan Kerja Sama dengan Kepala Daerah: "  "Mengatur proses kerja sama dari permintaan kepala daerah tertentu.");
-    puts( "[0] Keluar...");
+    puts("~ Apa yang ingin Anda kerjakan pada kesempatan kali ini? ~");
+    puts("[1] Lihat Pendapatan Sektor Industri");
+    puts("[2] Pengaturan Barang Produksi");
+    puts("[3] Pengaturan Kerja Sama dengan Kepala Daerah");
+    puts("[0] Keluar... (Log Out)");
 
     puts("");
     puts("Anda dipersilakan untuk memilih dari TIGA (3) opsi di atas... .");
@@ -2668,9 +2673,9 @@ void CMMFeature01(void) {
     
     ClearScreen();
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "Client :: Sektor Industri.");
-    printf( "... Profil Sektor Industri: " "%s, %s.\n", SIFullName, SIIndustryName);
-    puts("\nMenu: [1] Alur Perekonomian Dana Daerah");
+    puts("Anda tengah masuk sebagai: Client :: Sektor Industri.");
+    printf("... Profil Sektor Industri: %s, %s.\n", SIFullName, SIIndustryName);
+    puts("\nMenu: [1] Lihat Pendapatan Sektor Industri");
 
     snprintf(CurrentFileSI, sizeof(CurrentFileSI) + 12, "SI - %s.txt", SIFullName);
     snprintf(SISSPositive, sizeof(SISSPositive) + 21, "%s > [+]", CurrentFileSI);
@@ -2688,7 +2693,7 @@ void CMMFeature01(void) {
     puts("====================================================================================================");
 
     puts("");
-    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
     system("pause");
     ClientMainMenu();
 }
@@ -2707,16 +2712,16 @@ void CMMFeature02(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         CMMFeature02();
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "Client :: Sektor Industri.");
-    printf( "... Profil Sektor Industri: " "%s, %s.\n", SIFullName, SIIndustryName);
-    puts("\nMenu: [2] Pengaturan Produksi");
+    puts("Anda tengah masuk sebagai: Client :: Sektor Industri.");
+    printf("... Profil Sektor Industri: %s, %s.\n", SIFullName, SIIndustryName);
+    puts("\nMenu: [2] Pengaturan Barang Produksi");
 
     puts("");
     puts("====================================================================================================");
@@ -2743,22 +2748,22 @@ void CMMFeature02(void) {
 
     puts("");
     if (AvailableStocks >= 0 && AvailableStocks < 3) {
-        printf("Tersedia " "%d " "dari " "%d " "stok produk industri seperti pada di atas.\n", AvailableStocks, MaxStocks);
+        printf("Tersedia %d dari %d stok produk industri seperti pada di atas.\n", AvailableStocks, MaxStocks);
         puts("... TAMBAHKAN produk hasil industri baru?\n");
-        puts( "(ketik angka bebas dari [1] hingga [5] untuk dilakukan pengisian data produk baru)");
+        puts("(ketik angka bebas dari [1] hingga [5] untuk dilakukan pengisian data produk baru)");
 
     } else if (AvailableStocks >= 3 && AvailableStocks < 5) {
-        printf("Tersedia " "%d " "dari " "%d " "stok produk industri seperti pada di atas.\n", AvailableStocks, MaxStocks);
+        printf("Tersedia %d dari %d stok produk industri seperti pada di atas.\n", AvailableStocks, MaxStocks);
         puts("... TAMBAHKAN produk hasil industri baru atau PERBAHARUI data produk yang sudah ada?\n");
-        puts( "(ketik angka penomoran yang sesuai dengan yang telah berlaku seperti di atas)");
+        puts("(ketik angka penomoran yang sesuai dengan yang telah berlaku seperti di atas)");
     
     } else if (AvailableStocks == 5) {
-        printf("Tersedia " "%d " "dari " "%d " "stok produk industri seperti pada di atas.\n", AvailableStocks, MaxStocks);
+        printf("Tersedia %d dari %d stok produk industri seperti pada di atas.\n", AvailableStocks, MaxStocks);
         puts("... HAPUSKAN produk hasil industri lama atau PERBAHARUI data produk yang sudah ada?\n");
-        puts( "(ketik angka penomoran yang sesuai dengan yang telah berlaku seperti di atas)");
+        puts("(ketik angka penomoran yang sesuai dengan yang telah berlaku seperti di atas)");
     }
 
-    puts( "(jika tidak, silakan ketik [0] untuk kembali ke menu sebelumnya)");
+    puts("(jika tidak, silakan ketik [0] untuk kembali ke menu sebelumnya)");
     AcceptInputOption("> Pilihan Anda: ", PeekStockID);
 
     if (PeekStockID > 0 && PeekStockID < 6) {
@@ -2766,9 +2771,9 @@ void CMMFeature02(void) {
             ClearScreen();
 
             puts("Selamat Datang di aplikasi: D'Wakanda!");
-            puts("Anda tengah masuk sebagai: "  "Client :: Sektor Industri.");
-            printf( "... Profil Sektor Industri: " "%s, %s.\n", SIFullName, SIIndustryName);
-            puts("\nMenu: [2] Pengaturan Produksi");
+            puts("Anda tengah masuk sebagai: Client :: Sektor Industri.");
+            printf("... Profil Sektor Industri: %s, %s.\n", SIFullName, SIIndustryName);
+            puts("\nMenu: [2] Pengaturan Barang Produksi");
 
             puts("");
             puts("====================================================================================================");
@@ -2822,7 +2827,7 @@ void CMMFeature02(void) {
                     puts("Penghapusan data produk yang bersangkutan TELAH BERHASIL!");
                     
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause"); CMMFeature02();
                 
                 } else if (strlen(NewProductName) > 1 && strchr(NewProductName, '-')) {
@@ -2832,7 +2837,7 @@ void CMMFeature02(void) {
                     puts(":: Anda akan dibawa kembali ke pengisian data produk industri...");
                     
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
 
                 } else if (strcmp(NewProductName, "-") != 0 && strcmp(NewProductStock, "-") != 0 && strcmp(NewProductPrice, "-") != 0) {
@@ -2857,7 +2862,7 @@ void CMMFeature02(void) {
                     puts("Data produk industri yang bersangkutan telah diperbaharui!");
                     
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     CMMFeature02();
                 
@@ -2868,7 +2873,7 @@ void CMMFeature02(void) {
                     puts(":: Anda akan dibawa kembali ke pengisian data produk industri...");
                     
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                 }
 
@@ -2892,7 +2897,7 @@ void CMMFeature02(void) {
                     puts(":: Anda akan dibawa kembali ke pengisian data produk industri...");
                     
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
 
                 } else if ((strcmp(NewProductName, "-") == 0 && strcmp(NewProductStock, "-") == 0 && strcmp(NewProductPrice, "-") == 0)) {
@@ -2902,7 +2907,7 @@ void CMMFeature02(void) {
                     puts(":: Anda akan dibawa kembali ke pengisian data produk industri...");
                     
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                  
                 } else if (strlen(NewProductName) > 1 && strchr(NewProductName, '-')) {
@@ -2912,7 +2917,7 @@ void CMMFeature02(void) {
                     puts(":: Anda akan dibawa kembali ke pengisian data produk industri...");
                     
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
 
                 } else { 
@@ -2932,7 +2937,7 @@ void CMMFeature02(void) {
                     puts("");
                     puts("Data produk industri BARU telah ditambahkan!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     CMMFeature02();
                 }
@@ -2941,7 +2946,7 @@ void CMMFeature02(void) {
 
     } else if (PeekStockID == 0) {
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); ClientMainMenu();
     } else { CheckInvalidInput = true; CMMFeature02(); }
 }
@@ -2964,15 +2969,15 @@ void CMMFeature03(void) {
         puts("... Silahkan untuk dikondisikan kembali pilihan yang telah tersedia!");
 
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause");
         CheckInvalidInput = false;
         CMMFeature03();
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda tengah masuk sebagai: "  "Client :: Sektor Industri.");
-    printf( "... Profil Sektor Industri: " "%s, %s.\n", SIFullName, SIIndustryName);
+    puts("Anda tengah masuk sebagai: Client :: Sektor Industri.");
+    printf("... Profil Sektor Industri: %s, %s.\n", SIFullName, SIIndustryName);
     puts("\nMenu: [3] Pengaturan Kerja Sama dengan Kepala Daerah");
 
     AvailableKDs = atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA));
@@ -3004,9 +3009,9 @@ void CMMFeature03(void) {
                     printf("... Jabatan/Daerah: %s %s\n", KDList.JobTitle, KDList.HeadRegion);
 
                     if      (RecentStatus == 0)  { puts("... Status Permintaan: -"); }
-                    else if (RecentStatus == 1)  { puts("... Status Permintaan: " "SEDANG DIPROSES"); }
-                    else if (RecentStatus == 2)  { puts("... Status Permintaan: " "PENGAJUAN DITERIMA"); }
-                    else if (RecentStatus == -1) { puts("... Status Permintaan: " "PENGAJUAN DITOLAK"); }
+                    else if (RecentStatus == 1)  { puts("... Status Permintaan: SEDANG DIPROSES"); }
+                    else if (RecentStatus == 2)  { puts("... Status Permintaan: PENGAJUAN DITERIMA"); }
+                    else if (RecentStatus == -1) { puts("... Status Permintaan: PENGAJUAN DITOLAK"); }
                     
                     strcpy(DisplayKDRequests[REQ], Belanja.Requester);
 
@@ -3014,8 +3019,8 @@ void CMMFeature03(void) {
                     printf("[%03d] Nama Lengkap: %s\n", (REQ + 1), KDList.FullName);
                     printf("... Jabatan/Daerah: %s %s\n", KDList.JobTitle, KDList.HeadRegion);
 
-                    if      (Belanja.Status == 1)  { puts("... Status Permintaan: " "PENGAJUAN DITERIMA"); }
-                    else if (Belanja.Status == -1) { puts("... Status Permintaan: " "PENGAJUAN DITOLAK"); }
+                    if      (Belanja.Status == 1)  { puts("... Status Permintaan: PENGAJUAN DITERIMA"); }
+                    else if (Belanja.Status == -1) { puts("... Status Permintaan: PENGAJUAN DITOLAK"); }
 
                     strcpy(DisplayKDRequests[REQ], Belanja.Requester);
                 
@@ -3030,16 +3035,16 @@ void CMMFeature03(void) {
     if (MaxReq > 0) {
         puts("");
         puts("Kepada siapa pengajuan kerja sama dari Kepala Daerah pada data di atas yang ingin Anda KELOLA lebih lanjut?");
-        puts( "(kondisi input disesuaikan sesuai penomoran Kepala Daerah di atas)");
-        puts( "(jika ingin kembali ke menu sebelumnya, ketik 0 pada input di bawah)");
+        puts("(kondisi input disesuaikan sesuai penomoran Kepala Daerah di atas)");
+        puts("(jika ingin kembali ke menu sebelumnya, ketik 0 pada input di bawah)");
         AcceptInputOption("> Pilihan Anda: ", PeekKD);
 
         if (PeekKD > 0 && PeekKD <= AvailableReqs) {
             ClearScreen();
             
             puts("Selamat Datang di aplikasi: D'Wakanda!");
-            puts("Anda tengah masuk sebagai: "  "Client :: Sektor Industri.");
-            printf( "... Profil Sektor Industri: " "%s, %s.\n", SIFullName, SIIndustryName);
+            puts("Anda tengah masuk sebagai: Client :: Sektor Industri.");
+            printf("... Profil Sektor Industri: %s, %s.\n", SIFullName, SIIndustryName);
             puts("\nMenu: [3] Pengaturan Kerja Sama dengan Kepala Daerah");
 
             AvailableKDs = atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA));
@@ -3060,9 +3065,9 @@ void CMMFeature03(void) {
                     printf("... Jabatan/Daerah: %s %s\n", KDList.JobTitle, KDList.HeadRegion);
 
                     RecentStatus = atoi(ReadLine(UserCartStore_Keranjang, ((OFFSET_CS + 1) * (PeekKD - 1)) + CS_SELLING_STATUS));
-                    if      (RecentStatus == 0)  { puts("... Status Permintaan: " "SEDANG DIPROSES"); }
-                    else if (RecentStatus == 1)  { puts("... Status Permintaan: " "PENGAJUAN DITERIMA"); }
-                    else if (RecentStatus == -1) { puts("... Status Permintaan: " "PENGAJUAN DITOLAK"); }
+                    if      (RecentStatus == 0)  { puts("... Status Permintaan: SEDANG DIPROSES"); }
+                    else if (RecentStatus == 1)  { puts("... Status Permintaan: PENGAJUAN DITERIMA"); }
+                    else if (RecentStatus == -1) { puts("... Status Permintaan: PENGAJUAN DITOLAK"); }
 
                     strcpy(DisplayProductName, ReadLine(UserCartStore_Keranjang, ((OFFSET_CS + 1) * (PeekKD - 1)) + CS_BOUGHT_PRODUCT));
                     DisplayProductName[strlen(DisplayProductName) - 1] = '\0';
@@ -3096,7 +3101,7 @@ void CMMFeature03(void) {
                 puts(":: Anda dapat menunggu ajakan pengajuan kembali darinya pada saat-saat berikutnya!");
                 
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause"); CMMFeature03();
 
             } else if (RecentStatus == -1) {
@@ -3106,11 +3111,11 @@ void CMMFeature03(void) {
                 puts(":: Anda dapat menunggu ajakan pengajuan kembali darinya pada saat-saat berikutnya!");
                 
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause"); CMMFeature03();
             
             } else if (RecentStatus == 0) {
-                puts("==================================================" "==================================================");
+                puts("====================================================================================================");
                 puts("Produk Sektor Industri yang bersangkutan:");
 
                 printf("... Nama Produk: %s\n", ProductName);
@@ -3127,26 +3132,26 @@ void CMMFeature03(void) {
                 puts("... Anda akan di bawa kembali ke menu sebelumnya...");
                 
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause"); CMMFeature03();
             }
 
             puts("");
             puts("Saat ini Kepala Daerah yang bersangkutan tengah dalam masa pemrosesan pengajuan kerja sama dari pihak Anda.");
-            puts( "... Berdasarkan pemesanan yang dibuatnya di atas, apakah Anda yakin untuk MENERIMA pengajuan dari beliau, atau harus MENOLAKNYA?");
+            puts("... Berdasarkan pemesanan yang dibuatnya di atas, apakah Anda yakin untuk MENERIMA pengajuan dari beliau, atau harus MENOLAKNYA?");
             puts("... Tidak akan ada pengeluaran yang dihasilkan selama proses ini berlangsung!");
             
             puts("");
-            puts( "(sertakan Y atau y untuk menyetujui pengajuan, dan N atau n untuk menolak pengajuan)");
-            puts( "(sertakan Q atau q untuk kembali ke menu sebelumnya)");
+            puts("(sertakan Y atau y untuk menyetujui pengajuan, dan N atau n untuk menolak pengajuan)");
+            puts("(sertakan Q atau q untuk kembali ke menu sebelumnya)");
             AcceptCharInput("> Pilihan Anda: ", UpdateStatus);
 
             if (UpdateStatus == 'Y' || UpdateStatus == 'y') {
                 ClearScreen();
 
                 puts("Selamat Datang di aplikasi: D'Wakanda!");
-                puts("Anda tengah masuk sebagai: "  "Client :: Sektor Industri.");
-                printf( "... Profil Sektor Industri: " "%s, %s.\n", SIFullName, SIIndustryName);
+                puts("Anda tengah masuk sebagai: Client :: Sektor Industri.");
+                printf("... Profil Sektor Industri: %s, %s.\n", SIFullName, SIIndustryName);
                 puts("\nMenu: [3] Pengaturan Kerja Sama dengan Kepala Daerah");
 
                 OverWriteStringAtLine(User_KepalaDaerah, "2", 0, ((OFFSET_HD + 1) * SaveKDID) + HD_SI_BOUGHT_PRODUCT_STATUS);
@@ -3183,15 +3188,15 @@ void CMMFeature03(void) {
                 puts(":: Anda dapat menunggu ajakan pengajuan kembali darinya pada saat-saat berikutnya!");
                 
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause"); CMMFeature03();
 
             } else if (UpdateStatus == 'N' || UpdateStatus == 'n') {
                 ClearScreen();
 
                 puts("Selamat Datang di aplikasi: D'Wakanda!");
-                puts("Anda tengah masuk sebagai: "  "Client :: Sektor Industri.");
-                printf( "... Profil Sektor Industri: " "%s, %s.\n", SIFullName, SIIndustryName);
+                puts("Anda tengah masuk sebagai: Client :: Sektor Industri.");
+                printf("... Profil Sektor Industri: %s, %s.\n", SIFullName, SIIndustryName);
                 puts("\nMenu: [3] Pengaturan Kerja Sama dengan Kepala Daerah");
 
                 OverWriteStringAtLine(User_KepalaDaerah, "-1", 0, ((OFFSET_HD + 1) * SaveKDID) + HD_SI_BOUGHT_PRODUCT_STATUS);
@@ -3203,18 +3208,18 @@ void CMMFeature03(void) {
                 puts(":: Anda dapat menunggu ajakan pengajuan kembali darinya pada saat-saat berikutnya!");
                 
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause"); CMMFeature03();
             
             } else if (UpdateStatus == 'Q' || UpdateStatus == 'q') {
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause"); CMMFeature03();
             }
 
         } else if (PeekKD == 0) {
             puts("");
-            puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+            puts("(tekan tombol [ENTER] untuk melanjutkan...)");
             system("pause");
             ClientMainMenu();
 
@@ -3226,7 +3231,7 @@ void CMMFeature03(void) {
         puts("... Anda dapat menunggu dan/atau memantau secara berkala apakah ada pemesanan yang dilakukan ke depannya!");
         puts("... Dipersilakan untuk kembali ke menu semula...");
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); ClientMainMenu();
     }
 }
@@ -3245,7 +3250,7 @@ void AdminLobbyMenu(void) {
     }
 
     puts("Selamat Datang di aplikasi: D'Wakanda!");
-    puts("Anda berada dalam lobi: " "Admin :: Kementerian Keuangan.");
+    puts("Anda berada dalam lobi: Admin :: Kementerian Keuangan.");
 
     puts("");
     puts("Silakan untuk memasukkan DUA (2) kredensial Anda seperti berikut:");
@@ -3288,7 +3293,7 @@ void UserLobbyMenu(void) {
 
     if (RSOption == 0) {
         puts("Selamat Datang di aplikasi: D'Wakanda!");
-        puts("Anda berada dalam lobi: " "User :: Kepala Daerah.");
+        puts("Anda berada dalam lobi: User :: Kepala Daerah.");
 
         puts("");
         puts("Anda dipersilakan untuk memilih satu dari dua opsi berikut ini... .");
@@ -3308,7 +3313,7 @@ void UserLobbyMenu(void) {
             ClearScreen();
 
             puts("Selamat Datang di aplikasi: D'Wakanda!");
-            puts("Anda berada dalam lobi: " "User :: Kepala Daerah.");
+            puts("Anda berada dalam lobi: User :: Kepala Daerah.");
 
             puts("");
             puts("Silakan untuk memasukkan TUJUH (7) kredensial baru Anda seperti berikut:");
@@ -3334,7 +3339,7 @@ void UserLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data nama lengkap melebihi batas yang ditentukan!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; KDSignIn.FullName[strlen(KDSignIn.FullName) - 1] = '\0'; UserLobbyMenu(); }
@@ -3345,7 +3350,7 @@ void UserLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data NIK belum memenuhi batas yang ditentukan!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; KDSignIn.NIK[strlen(KDSignIn.NIK) - 1] = '\0'; UserLobbyMenu(); }
@@ -3356,7 +3361,7 @@ void UserLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data e-mail belum sesuai dengan sintaks yang ditentukan!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; KDSignIn.Email[strlen(KDSignIn.Email) - 1] = '\0'; UserLobbyMenu(); }
@@ -3367,7 +3372,7 @@ void UserLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data kata sandi belum memenuhi batas yang ditentukan!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; KDSignIn.Password[strlen(KDSignIn.Password) - 1] = '\0'; UserLobbyMenu(); }
@@ -3378,7 +3383,7 @@ void UserLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data tempat/tanggal lahir belum memenuhi kriteria yang diminta!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; KDSignIn.BirthPlaceDate[strlen(KDSignIn.BirthPlaceDate) - 1] = '\0'; UserLobbyMenu(); }
@@ -3389,7 +3394,7 @@ void UserLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data golongan jabatan belum sesuai dengan pilihan yang tersedia!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     UserLobbyMenu();
                 } else { 
@@ -3403,7 +3408,7 @@ void UserLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data kepala wilayah/daerah terlalu singkat/panjang!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; KDSignIn.HeadRegion[strlen(KDSignIn.HeadRegion) - 1] = '\0'; UserLobbyMenu(); }    
@@ -3416,7 +3421,7 @@ void UserLobbyMenu(void) {
                 puts("INFO: Silakan untuk melanjutkan interaksi berikut dengan masuk ke menu sign-in/login... .");
                 
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause");
 
                 WritePublicKepalaDaerah();
@@ -3435,7 +3440,7 @@ void UserLobbyMenu(void) {
                 puts("... Silahkan untuk masuk ke menu registrasi kepala daerah terlebih dahulu!");
 
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause");
                 
                 CountRegists = 1; RSOption = 1;
@@ -3446,7 +3451,7 @@ void UserLobbyMenu(void) {
 
             ClearScreen();
             puts("Selamat Datang di aplikasi: D'Wakanda!");
-            puts("Anda berada dalam lobi: " "User :: Kepala Daerah.");
+            puts("Anda berada dalam lobi: User :: Kepala Daerah.");
 
             puts("");
             puts("Silakan untuk memasukkan DUA (2) kredensial Anda seperti berikut:");
@@ -3462,7 +3467,7 @@ void UserLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data NIK belum memenuhi batas yang ditentukan!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; strncpy(KDSignIn.NIK, KD_SignInNIK, 32); KDSignIn.NIK[strlen(KDSignIn.NIK) - 1] = '\0'; UserLobbyMenu(); }
@@ -3473,7 +3478,7 @@ void UserLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data kata sandi belum memenuhi batas yang ditentukan!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     UserLobbyMenu();
                 } else { CountRegists++; strncpy(KDSignIn.Password, KD_SignInPassword, 32); KDSignIn.Password[strlen(KDSignIn.Password) - 1] = '\0'; UserLobbyMenu(); }
@@ -3539,7 +3544,7 @@ void ClientLobbyMenu(void) {
 
     if (RSOption == 0) {
         puts("Selamat Datang di aplikasi: D'Wakanda!");
-        puts("Anda berada dalam lobi: " "Client :: Sektor Industri.");
+        puts("Anda berada dalam lobi: Client :: Sektor Industri.");
 
         puts("");
         puts("Anda dipersilakan untuk memilih satu dari dua opsi berikut ini... .");
@@ -3559,7 +3564,7 @@ void ClientLobbyMenu(void) {
             ClearScreen();
 
             puts("Selamat Datang di aplikasi: D'Wakanda!");
-            puts("Anda berada dalam lobi: " "Client :: Sektor Industri.");
+            puts("Anda berada dalam lobi: Client :: Sektor Industri.");
 
             puts("");
             puts("Silakan untuk memasukkan EMPAT (4) kredensial baru Anda seperti berikut:");
@@ -3579,7 +3584,7 @@ void ClientLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data nama lengkap melebihi batas yang ditentukan!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     ClientLobbyMenu();
                 } else { CountRegists++; SISignIn.FullName[strlen(SISignIn.FullName) - 1] = '\0'; ClientLobbyMenu(); }
@@ -3590,7 +3595,7 @@ void ClientLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data nama industri melebihi batas yang ditentukan!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     ClientLobbyMenu();
                 } else { CountRegists++; SISignIn.IndustryName[strlen(SISignIn.IndustryName) - 1] = '\0'; ClientLobbyMenu(); }
@@ -3601,7 +3606,7 @@ void ClientLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data nama pengguna melebihi batas yang ditentukan!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     ClientLobbyMenu();
                 } else { CountRegists++; SISignIn.Username[strlen(SISignIn.Username) - 1] = '\0'; ClientLobbyMenu(); }
@@ -3612,7 +3617,7 @@ void ClientLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data kata sandi belum memenuhi batas yang ditentukan!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     ClientLobbyMenu();
                 } else { CountRegists++; SISignIn.Password[strlen(SISignIn.Password) - 1] = '\0'; ClientLobbyMenu(); }
@@ -3625,7 +3630,7 @@ void ClientLobbyMenu(void) {
                 puts("INFO: Silakan untuk melanjutkan interaksi berikut dengan masuk ke menu sign-in/login... .");
                 
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause");
 
                 WritePublicSektorIndustri(false);
@@ -3643,7 +3648,7 @@ void ClientLobbyMenu(void) {
                 puts("... Silahkan untuk masuk ke menu registrasi sektor industri terlebih dahulu!");
 
                 puts("");
-                puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                 system("pause");
                 
                 CountRegists = 1; RSOption = 1;
@@ -3653,7 +3658,7 @@ void ClientLobbyMenu(void) {
 
             ClearScreen();
             puts("Selamat Datang di aplikasi: D'Wakanda!");
-            puts("Anda berada dalam lobi: " "Client :: Sektor Industri.");
+            puts("Anda berada dalam lobi: Client :: Sektor Industri.");
 
             puts("");
             puts("Silakan untuk memasukkan DUA (2) kredensial Anda seperti berikut:");
@@ -3669,7 +3674,7 @@ void ClientLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data nama pengguna melebihi batas yang ditentukan!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     ClientLobbyMenu();
                 } else { CountRegists++; strncpy(SISignIn.Username, SI_SignInUsername, BUFSIZE07); SISignIn.Username[strlen(SISignIn.Username) - 1] = '\0'; ClientLobbyMenu(); }
@@ -3680,7 +3685,7 @@ void ClientLobbyMenu(void) {
                     puts("");
                     puts("ERROR: Data kata sandi belum memenuhi batas yang ditentukan!");
                     puts("");
-                    puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+                    puts("(tekan tombol [ENTER] untuk melanjutkan...)");
                     system("pause");
                     ClientLobbyMenu();
                 } else { CountRegists++; strncpy(SISignIn.Password, SI_SignInPassword, 32); SISignIn.Password[strlen(SISignIn.Password) - 1] = '\0'; ClientLobbyMenu(); }
@@ -3732,7 +3737,7 @@ void HomeMenu(void) {
         CheckInvalidInput = false;
         
         puts("");
-        puts( "(tekan tombol [ENTER] untuk melanjutkan...)");
+        puts("(tekan tombol [ENTER] untuk melanjutkan...)");
         system("pause"); HomeMenu();
     }
 
