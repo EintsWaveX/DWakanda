@@ -38,9 +38,9 @@ Usage:  Used to only be a constant file namings.
 
 /*
 DEFINE::CONSTANT_DATA_FILE_IDS
-Usage:  Used to identified each files data per line accordingly.
+Usage:  Used to identified each files data per LINE accordingly.
 */
-#define TOTAL_DATA 1
+#define AVAILABLE_DATA 1
 
 // <-------------------------------------------------->
 // Global constants for: ADMIN - Ministry of Finance
@@ -50,11 +50,11 @@ Usage:  Used to identified each files data per line accordingly.
 #define MF_PASSWORD                     2
 #define MF_STATE_TAXES                  3
 #define MF_STATE_SAVINGS                4
-#define MF_OPEN_STATUS                  5 // NOTE: UNUSED!
+#define __MF_OPEN_STATUS                5 // NOTE: UNUSED!
 
 // <-------------------------------------------------->
 // Global constants for: USER - Head District
-// OFFSET: 3 (-2 for the TOTAL_DATA and NEW_LINE)
+// OFFSET: 3 (-2 for the AVAILABLE_DATA and NEW_LINE)
 // <-------------------------------------------------->
 #define OFFSET_HD                       10
 #define HD_FULLNAME                     3
@@ -70,14 +70,14 @@ Usage:  Used to identified each files data per line accordingly.
 
 // <-------------------------------------------------->
 // Global constants for: CLIENT - Sector Industry
-// OFFSET: 3 (-2 for the TOTAL_DATA and NEW_LINE)
+// OFFSET: 3 (-2 for the AVAILABLE_DATA and NEW_LINE)
 // <-------------------------------------------------->
 #define OFFSET_SI                       10
 #define SI_FULLNAME                     3
 #define SI_INDUSTRY_NAME                4
 #define SI_USERNAME                     5
 #define SI_PASSWORD                     6
-#define SI_OPEN_STATUS                  7 // NOTE: UNUSED!
+#define __SI_OPEN_STATUS                7 // NOTE: UNUSED!
 #define SI_PRODUCT_NO_1                 8
 #define SI_PRODUCT_NO_2                 9
 #define SI_PRODUCT_NO_3                 10
@@ -89,7 +89,7 @@ Usage:  Used to identified each files data per line accordingly.
 // APPLIED TO:
 //         ... 1. ADMIN - Ministry of Finance
 //         ... 2. USER  - Head District
-// OFFSET: 3 (-2 for the TOTAL_DATA and NEW_LINE)
+// OFFSET: 3 (-2 for the AVAILABLE_DATA and NEW_LINE)
 // <-------------------------------------------------->
 #define OFFSET_CS                       4
 #define CS_HD_IDENTITY                  3
@@ -444,10 +444,10 @@ void WritePublicKepalaDaerah(void) {
         fclose(User);
 
     } else {
-        RegisteredKDs = atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA));
+        RegisteredKDs = atoi(ReadLine(User_KepalaDaerah, AVAILABLE_DATA));
         RegisteredKDs++;
         snprintf(WrittenRegisteredKDs, sizeof(WrittenRegisteredKDs), "%d", RegisteredKDs);
-        OverWriteStringAtLine(User_KepalaDaerah, WrittenRegisteredKDs, 0, TOTAL_DATA);
+        OverWriteStringAtLine(User_KepalaDaerah, WrittenRegisteredKDs, 0, AVAILABLE_DATA);
 
         User = fopen(User_KepalaDaerah, "a");
         fprintf(User, "\n");
@@ -499,10 +499,10 @@ void WritePublicSektorIndustri() {
         fclose(Client);
 
     } else {
-        RegisteredSIs = atoi(ReadLine(Client_SektorIndustri, TOTAL_DATA));
+        RegisteredSIs = atoi(ReadLine(Client_SektorIndustri, AVAILABLE_DATA));
         RegisteredSIs++;
         snprintf(WrittenRegisteredSIs, sizeof(WrittenRegisteredSIs), "%d", RegisteredSIs);
-        OverWriteStringAtLine(Client_SektorIndustri, WrittenRegisteredSIs, 0, TOTAL_DATA);
+        OverWriteStringAtLine(Client_SektorIndustri, WrittenRegisteredSIs, 0, AVAILABLE_DATA);
 
         Client = fopen(Client_SektorIndustri, "a");
         fprintf(Client, "\n");
@@ -534,8 +534,8 @@ void WritePrivateKeranjang(bool WriteForAdmin, bool AddNewCart) {
             if (AddNewCart) {
                 char NewStoredCart[BUFSIZE07] = { 0 };
 
-                snprintf(NewStoredCart, sizeof(NewStoredCart), "%d", atoi(ReadLine(AdminCartStore_Keranjang, TOTAL_DATA)) + 1);
-                OverWriteStringAtLine(AdminCartStore_Keranjang, NewStoredCart, 0, TOTAL_DATA);
+                snprintf(NewStoredCart, sizeof(NewStoredCart), "%d", atoi(ReadLine(AdminCartStore_Keranjang, AVAILABLE_DATA)) + 1);
+                OverWriteStringAtLine(AdminCartStore_Keranjang, NewStoredCart, 0, AVAILABLE_DATA);
                 
                 AdminCart = fopen(AdminCartStore_Keranjang, "a");
                 fprintf(AdminCart, "\n%s\n%s\n%s\n%d\n", Belanja.Requester, Belanja.Accepter, Belanja.ProductInDemand, Belanja.Status);
@@ -553,8 +553,8 @@ void WritePrivateKeranjang(bool WriteForAdmin, bool AddNewCart) {
             if (AddNewCart) {
                 char NewStoredCart[BUFSIZE07] = { 0 };
 
-                snprintf(NewStoredCart, sizeof(NewStoredCart), "%d", atoi(ReadLine(UserCartStore_Keranjang, TOTAL_DATA)) + 1);
-                OverWriteStringAtLine(UserCartStore_Keranjang, NewStoredCart, 0, TOTAL_DATA);
+                snprintf(NewStoredCart, sizeof(NewStoredCart), "%d", atoi(ReadLine(UserCartStore_Keranjang, AVAILABLE_DATA)) + 1);
+                OverWriteStringAtLine(UserCartStore_Keranjang, NewStoredCart, 0, AVAILABLE_DATA);
                 
                 UserCart = fopen(UserCartStore_Keranjang, "a");
                 fprintf(UserCart, "\n%s\n%s\n%s\n%d\n", Belanja.Requester, Belanja.Accepter, Belanja.ProductInDemand, Belanja.Status);
@@ -609,7 +609,7 @@ void AdminMainMenu(void) {
 
 void AMMFeature01(void) {
     Kemenkeu StateProfile = { 0 };
-    char NewWrittenST[8] = { 0 };
+    char NewWrittenST[BUFSIZE07] = { 0 };
     float NewST = 0.0f;
     int Options = 0;
 
@@ -738,7 +738,7 @@ void AMMFeature02(void) {
     puts("Berikut adalah data dari seluruh Kepala Daerah yang terdaftarkan...");
 
     printf("====================================================================================================");
-    for (int KD = 0; KD < atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA)); KD++) {
+    for (int KD = 0; KD < atoi(ReadLine(User_KepalaDaerah, AVAILABLE_DATA)); KD++) {
         MaxKD++;
 
         strcpy(KDList.FullName, ReadLine(User_KepalaDaerah, ((OFFSET_HD + 1) * KD) + HD_FULLNAME));
@@ -747,7 +747,7 @@ void AMMFeature02(void) {
         KDList.FullName[strlen(KDList.FullName) - 1] = '\0'; KDList.JobTitle[strlen(KDList.JobTitle) - 1] = '\0'; KDList.HeadRegion[strlen(KDList.HeadRegion) - 1] = '\0';
 
         snprintf(CurrentFileKD, sizeof(CurrentFileKD) + 16, "KD - %s.txt", KDList.FullName);
-        strcpy(KDShownSavings, ReadLine(CurrentFileKD, TOTAL_DATA));
+        strcpy(KDShownSavings, ReadLine(CurrentFileKD, AVAILABLE_DATA));
         KDShownSavings[strlen(KDShownSavings) - 1] = '\0';
 
         puts("");
@@ -787,7 +787,7 @@ void AMMFeature02(void) {
         printf(":: NIK/E-mail: %s/%s\n", KDList.NIK, KDList.Email);
         printf(":: Tempat/Tanggal Lahir: %s\n", KDList.BirthPlaceDate);
 
-        strcpy(TotalSavings, ReadLine(CurrentFileKD, TOTAL_DATA));
+        strcpy(TotalSavings, ReadLine(CurrentFileKD, AVAILABLE_DATA));
         TotalSavings[strlen(TotalSavings) - 1] = '\0';
         snprintf(KDSSPositive, sizeof(KDSSPositive) + 9, "%s > [+]", CurrentFileKD);
         snprintf(KDSSNegative, sizeof(KDSSNegative) + 9, "%s > [-]", CurrentFileKD);
@@ -853,7 +853,7 @@ void AMMFeature03(void) {
     puts("Berikut adalah data dari seluruh Sektor Industri yang terdaftarkan...");
 
     printf("====================================================================================================");
-    for (int SI = 0; SI < atoi(ReadLine(Client_SektorIndustri, TOTAL_DATA)); SI++) {
+    for (int SI = 0; SI < atoi(ReadLine(Client_SektorIndustri, AVAILABLE_DATA)); SI++) {
         MaxSI++;
 
         strcpy(SIList.FullName, ReadLine(Client_SektorIndustri, ((OFFSET_SI + 1) * SI) + SI_FULLNAME));
@@ -861,7 +861,7 @@ void AMMFeature03(void) {
         SIList.FullName[strlen(SIList.FullName) - 1] = '\0'; SIList.IndustryName[strlen(SIList.IndustryName) - 1] = '\0';
 
         snprintf(CurrentFileSI, sizeof(CurrentFileSI) + 16, "SI - %s.txt", SIList.FullName);
-        strcpy(SIShownSavings, ReadLine(CurrentFileSI, TOTAL_DATA));
+        strcpy(SIShownSavings, ReadLine(CurrentFileSI, AVAILABLE_DATA));
         SIShownSavings[strlen(SIShownSavings) - 1] = '\0';
 
         puts("");
@@ -896,7 +896,7 @@ void AMMFeature03(void) {
         printf("Yth. Sektor Industri, a.n.: %s, Direktur %s\n", SIList.FullName, SIList.IndustryName);
         printf(":: Kode Klien: %s\n", SIList.Username);
 
-        strcpy(TotalSavings, ReadLine(CurrentFileSI, TOTAL_DATA));
+        strcpy(TotalSavings, ReadLine(CurrentFileSI, AVAILABLE_DATA));
         TotalSavings[strlen(TotalSavings) - 1] = '\0';
         snprintf(SISSPositive, sizeof(SISSPositive) + 9, "%s > [+]", CurrentFileSI);
 
@@ -957,7 +957,7 @@ void AMMFeature04(void) {
         system("pause"); AdminMainMenu();
     }
 
-    AvailableKDs = atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA));
+    AvailableKDs = atoi(ReadLine(User_KepalaDaerah, AVAILABLE_DATA));
     
     puts("");
     puts("Berikut adalah data permintaan distribusi dana dari Kepala Daerah...");
@@ -1009,7 +1009,7 @@ void AMMFeature04(void) {
         puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
         puts("\nMenu: [4] Pendistribusian Bantuan Dana kepada Kepala Daerah");
 
-        AvailableKDs = atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA));
+        AvailableKDs = atoi(ReadLine(User_KepalaDaerah, AVAILABLE_DATA));
 
         puts("");
         puts("Berikut adalah data permintaan distribusi dana dari Kepala Daerah...");
@@ -1094,7 +1094,7 @@ void AMMFeature04(void) {
                     puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
                     puts("\nMenu: [4] Pendistribusian Bantuan Dana kepada Kepala Daerah");
 
-                    AvailableKDs = atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA));
+                    AvailableKDs = atoi(ReadLine(User_KepalaDaerah, AVAILABLE_DATA));
                     OverWriteStringAtLine(User_KepalaDaerah, "2", 0, ((OFFSET_HD + 1) * (PeekKD - 1)) + HD_AID_FUNDS_STATUS);
 
                     puts("");
@@ -1113,7 +1113,7 @@ void AMMFeature04(void) {
 
                             printf("[%03d] Nama Lengkap: %s\n", (KD + 1), KDList.FullName);
                             printf("... Jabatan/Daerah: %s %s\n", KDList.JobTitle, KDList.HeadRegion);
-                            printf("... Total Dana Daerah (saat ini): Rp%'lld.00\n", atoll(ReadLine(KDFileName, TOTAL_DATA)));
+                            printf("... Total Dana Daerah (saat ini): Rp%'lld.00\n", atoll(ReadLine(KDFileName, AVAILABLE_DATA)));
                             
                             RecentStatus = atoi(ReadLine(User_KepalaDaerah, ((OFFSET_HD + 1) * KD) + HD_AID_FUNDS_STATUS));
                             if      (RecentStatus == 0)  { puts("... Status Permintaan: -"); }
@@ -1149,8 +1149,8 @@ void AMMFeature04(void) {
                         FILE *CurrentKD = fopen(KDFileName, "a");
                         fprintf(CurrentKD, "[+] Rp%'lld.00: Bantuan Dana dari Kemenkeu\n", (long long int)GivenNomina);
                         fclose(CurrentKD);
-                        snprintf(WriteString03_U, sizeof(WriteString03_U), "%lld", atoll(ReadLine(KDFileName, TOTAL_DATA)) + GivenNomina);
-                        OverWriteStringAtLine(KDFileName, WriteString03_U, 0, TOTAL_DATA);
+                        snprintf(WriteString03_U, sizeof(WriteString03_U), "%lld", atoll(ReadLine(KDFileName, AVAILABLE_DATA)) + GivenNomina);
+                        OverWriteStringAtLine(KDFileName, WriteString03_U, 0, AVAILABLE_DATA);
 
                         strcpy(WriteString01_A, ReadLine(Admin_Kemenkeu, MF_STATE_SAVINGS));
                         WriteString01_A[strlen(WriteString01_A) - 1] = '\0';
@@ -1186,7 +1186,7 @@ void AMMFeature04(void) {
                 puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
                 puts("\nMenu: [4] Pendistribusian Bantuan Dana kepada Kepala Daerah");
 
-                AvailableKDs = atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA));
+                AvailableKDs = atoi(ReadLine(User_KepalaDaerah, AVAILABLE_DATA));
                 OverWriteStringAtLine(User_KepalaDaerah, "-1", 0, ((OFFSET_HD + 1) * (PeekKD - 1)) + HD_AID_FUNDS_STATUS);
 
                 puts("");
@@ -1283,7 +1283,7 @@ void AMMFeature05(void) {
         puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
         puts("\nMenu: [5] Pengaturan Kerja Sama dengan Kepala Daerah");
 
-        AvailableReqs = atoi(ReadLine(UserCartStore_Keranjang, TOTAL_DATA));
+        AvailableReqs = atoi(ReadLine(UserCartStore_Keranjang, AVAILABLE_DATA));
 
         puts("");
         puts("Berikut adalah data pengajuan distribusi barang produksi dari Kepala Daerah kepada Anda:");
@@ -1441,10 +1441,10 @@ void AMMFeature05(void) {
                 AccessKD = fopen(CurrentFileKD, "a");
                 fprintf(AccessKD, "[+] Rp%'lld.00: Distribusi produk (%s: %s) item, dari Yth. %s, Direktur %s, kepada Kemenkeu\n", atoll(DisplayProductPrice) + (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_SAVINGS))/100.0f)), DisplayProductName, DisplayProductStock, DisplaySIFullName, DisplaySIIndustryName);
                 fclose(AccessKD);
-                snprintf(WriteNewSavings, sizeof(WriteNewSavings), "%lld", atoll(ReadLine(CurrentFileKD, TOTAL_DATA)) + (atoll(DisplayProductPrice) + (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_SAVINGS))/100.0f))));
-                OverWriteStringAtLine(CurrentFileKD, WriteNewSavings, 0, TOTAL_DATA);
+                snprintf(WriteNewSavings, sizeof(WriteNewSavings), "%lld", atoll(ReadLine(CurrentFileKD, AVAILABLE_DATA)) + (atoll(DisplayProductPrice) + (long long int)round(atoll(DisplayProductPrice) * (atof(ReadLine(Admin_Kemenkeu, MF_STATE_SAVINGS))/100.0f))));
+                OverWriteStringAtLine(CurrentFileKD, WriteNewSavings, 0, AVAILABLE_DATA);
 
-                AvailableReqs = atoi(ReadLine(UserCartStore_Keranjang, TOTAL_DATA));
+                AvailableReqs = atoi(ReadLine(UserCartStore_Keranjang, AVAILABLE_DATA));
                 strcpy(CurrentCartFile, "New_"UserCartStore_Keranjang);
                 AccessCart = fopen(CurrentCartFile, "w");
                 
@@ -1465,7 +1465,7 @@ void AMMFeature05(void) {
                 } fclose(AccessCart);
 
                 snprintf(FinalWrittenReqs, sizeof(FinalWrittenReqs), "%d", SetNewReqs);
-                OverWriteStringAtLine("New_"UserCartStore_Keranjang, FinalWrittenReqs, 0, TOTAL_DATA);
+                OverWriteStringAtLine("New_"UserCartStore_Keranjang, FinalWrittenReqs, 0, AVAILABLE_DATA);
                 system("del "UserCartStore_Keranjang);
                 rename("New_"UserCartStore_Keranjang, UserCartStore_Keranjang);
 
@@ -1569,7 +1569,7 @@ void AMMFeature06(void) {
     puts("Anda tengah masuk sebagai: Admin :: Kementerian Keuangan.");
     puts("\nMenu: [6] Distribusi Perdagangan Skala Internasional");
 
-    AvailableReqs = atoi(ReadLine(AdminCartStore_Keranjang, TOTAL_DATA));
+    AvailableReqs = atoi(ReadLine(AdminCartStore_Keranjang, AVAILABLE_DATA));
 
     puts("");
     puts("Berikut adalah daftar keranjang barang produksi yang telah SIAP didistribusikan ke skala internasional:");
@@ -1697,7 +1697,7 @@ void AMMFeature06(void) {
             printf("Daftar Pesanan:\n... 1. Nama Pesanan Produk: %s\n... 2. Stok Pesanan Produk: %s\n... 3. Harga Total Pesanan Produk: Rp%'lld.00\n", DisplayProductName, DisplayProductStock, atoll(DisplayProductPrice));
             puts("====================================================================================================");
 
-            AvailableReqs = atoi(ReadLine(AdminCartStore_Keranjang, TOTAL_DATA));
+            AvailableReqs = atoi(ReadLine(AdminCartStore_Keranjang, AVAILABLE_DATA));
             strcpy(CurrentCartFile, "New_"AdminCartStore_Keranjang);
             AccessCart = fopen(CurrentCartFile, "w");
 
@@ -1718,7 +1718,7 @@ void AMMFeature06(void) {
             } fclose(AccessCart);
 
             snprintf(FinalWrittenReqs, sizeof(FinalWrittenReqs), "%d", SetNewReqs);
-            OverWriteStringAtLine("New_"AdminCartStore_Keranjang, FinalWrittenReqs, 0, TOTAL_DATA);
+            OverWriteStringAtLine("New_"AdminCartStore_Keranjang, FinalWrittenReqs, 0, AVAILABLE_DATA);
             system("del "AdminCartStore_Keranjang);
             rename("New_"AdminCartStore_Keranjang, AdminCartStore_Keranjang);
             
@@ -1812,7 +1812,7 @@ void UMMFeature01(void) {
 
     snprintf(CurrentFileKD, sizeof(CurrentFileKD) + 12, "KD - %s.txt", KDFullName);
 
-    strcpy(TotalSavings, ReadLine(CurrentFileKD, TOTAL_DATA));
+    strcpy(TotalSavings, ReadLine(CurrentFileKD, AVAILABLE_DATA));
     TotalSavings[strlen(TotalSavings) - 1] = '\0';
     snprintf(KDSSPositive, sizeof(KDSSPositive) + 9, "%s > [+]", CurrentFileKD);
     snprintf(KDSSNegative, sizeof(KDSSNegative) + 9, "%s > [-]", CurrentFileKD);
@@ -1946,7 +1946,7 @@ void UMMFeature03(void) {
     printf("... Profil Kepala Daerah: %s, %s %s.\n", KDFullName, KDJobTitle, KDHeadRegion);
     puts("\nMenu: [3] Distribusi kepada Kementerian Keuangan");
 
-    AvailableConfirms = atoi(ReadLine(AdminCartStore_Keranjang, TOTAL_DATA));
+    AvailableConfirms = atoi(ReadLine(AdminCartStore_Keranjang, AVAILABLE_DATA));
 
     for (int ACC = 0; ACC < AvailableConfirms; ACC++) {
         if (strstr(ReadLine(AdminCartStore_Keranjang, ((OFFSET_CS + 1) * ACC) + CS_HD_IDENTITY), KDFullName) != NULL && strstr(ReadLine(AdminCartStore_Keranjang, ((OFFSET_CS + 1) * ACC) + CS_HD_IDENTITY), KDJobTitle) != NULL && strstr(ReadLine(AdminCartStore_Keranjang, ((OFFSET_CS + 1) * ACC) + CS_HD_IDENTITY), KDHeadRegion)) {
@@ -1980,7 +1980,7 @@ void UMMFeature03(void) {
         system("pause"); UMMFeature03();
     }
 
-    AvailableReqs = atoi(ReadLine(UserCartStore_Keranjang, TOTAL_DATA));
+    AvailableReqs = atoi(ReadLine(UserCartStore_Keranjang, AVAILABLE_DATA));
 
     puts("");
     puts("Berikut adalah data keranjang pelbagai pesanan Anda yang SIAP didistribusikan kepada Kemenkeu:");
@@ -2238,7 +2238,7 @@ void UMMFeature04(void) {
     } else if (KDRequestStatus == -1) {
         OverWriteStringAtLine(User_KepalaDaerah, "0", 0, ((OFFSET_HD + 1) * KDLoggedIn) + HD_SI_BOUGHT_PRODUCT_STATUS);
 
-        AvailableReqs = atoi(ReadLine(UserCartStore_Keranjang, TOTAL_DATA));
+        AvailableReqs = atoi(ReadLine(UserCartStore_Keranjang, AVAILABLE_DATA));
         strcpy(CurrentCartFile, "New_"UserCartStore_Keranjang);
         AccessCart = fopen(CurrentCartFile, "w");
         
@@ -2259,7 +2259,7 @@ void UMMFeature04(void) {
         } fclose(AccessCart);
 
         snprintf(FinalWrittenReqs, sizeof(FinalWrittenReqs), "%d", SetNewReqs);
-        OverWriteStringAtLine("New_"UserCartStore_Keranjang, FinalWrittenReqs, 0, TOTAL_DATA);
+        OverWriteStringAtLine("New_"UserCartStore_Keranjang, FinalWrittenReqs, 0, AVAILABLE_DATA);
         system("del "UserCartStore_Keranjang);
         rename("New_"UserCartStore_Keranjang, UserCartStore_Keranjang);
 
@@ -2274,7 +2274,7 @@ void UMMFeature04(void) {
     
     puts("Berikut adalah data dari seluruh Sektor Industri yang tersedia...");
     printf("====================================================================================================");
-    for (int SI = 0; SI < atoi(ReadLine(Client_SektorIndustri, TOTAL_DATA)); SI++) {
+    for (int SI = 0; SI < atoi(ReadLine(Client_SektorIndustri, AVAILABLE_DATA)); SI++) {
         strcpy(SIList.FullName, ReadLine(Client_SektorIndustri, ((OFFSET_SI + 1) * SI) + SI_FULLNAME));
         strcpy(SIList.IndustryName, ReadLine(Client_SektorIndustri, ((OFFSET_SI + 1) * SI) + SI_INDUSTRY_NAME));
         SIList.FullName[strlen(SIList.FullName) - 1] = '\0'; SIList.IndustryName[strlen(SIList.IndustryName) - 1] = '\0';
@@ -2455,7 +2455,7 @@ void UMMFeature04(void) {
 
                         } else {
                             snprintf(KDFile, sizeof(KDFile) + 12, "KD - %s.txt", KDFullName);
-                            strcpy(BeforeSavings, ReadLine(KDFile, TOTAL_DATA));
+                            strcpy(BeforeSavings, ReadLine(KDFile, AVAILABLE_DATA));
                             BeforeSavings[strlen(BeforeSavings) - 1] = '\0';
                             snprintf(AfterSavings, sizeof(AfterSavings), "%lld", atoll(BeforeSavings) - (atoll(DisplayProductPrice) * atoll(NewProductStock)));
 
@@ -2680,7 +2680,7 @@ void CMMFeature01(void) {
     snprintf(CurrentFileSI, sizeof(CurrentFileSI) + 12, "SI - %s.txt", SIFullName);
     snprintf(SISSPositive, sizeof(SISSPositive) + 21, "%s > [+]", CurrentFileSI);
 
-    strcpy(TotalSavings, ReadLine(CurrentFileSI, TOTAL_DATA));
+    strcpy(TotalSavings, ReadLine(CurrentFileSI, AVAILABLE_DATA));
     TotalSavings[strlen(TotalSavings) - 1] = '\0';
 
     puts("");
@@ -2980,8 +2980,8 @@ void CMMFeature03(void) {
     printf("... Profil Sektor Industri: %s, %s.\n", SIFullName, SIIndustryName);
     puts("\nMenu: [3] Pengaturan Kerja Sama dengan Kepala Daerah");
 
-    AvailableKDs = atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA));
-    AvailableReqs = atoi(ReadLine(UserCartStore_Keranjang, TOTAL_DATA));
+    AvailableKDs = atoi(ReadLine(User_KepalaDaerah, AVAILABLE_DATA));
+    AvailableReqs = atoi(ReadLine(UserCartStore_Keranjang, AVAILABLE_DATA));
     
     puts("");
     puts("Berikut adalah data pengajuan kerja sama dari pelbagai Kepala Daerah dengan yang bersangkutan...");
@@ -3047,8 +3047,8 @@ void CMMFeature03(void) {
             printf("... Profil Sektor Industri: %s, %s.\n", SIFullName, SIIndustryName);
             puts("\nMenu: [3] Pengaturan Kerja Sama dengan Kepala Daerah");
 
-            AvailableKDs = atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA));
-            AvailableReqs = atoi(ReadLine(UserCartStore_Keranjang, TOTAL_DATA));
+            AvailableKDs = atoi(ReadLine(User_KepalaDaerah, AVAILABLE_DATA));
+            AvailableReqs = atoi(ReadLine(UserCartStore_Keranjang, AVAILABLE_DATA));
 
             puts("");
             puts("Berikut adalah data pengajuan kerja sama dari pelbagai Kepala Daerah dengan yang bersangkutan...");
@@ -3161,16 +3161,16 @@ void CMMFeature03(void) {
                 AccessKDSavings = fopen(CurrentKDFile, "a");
                 fprintf(AccessKDSavings, "[-] Rp%'lld.00: Pembelian produk (%s: %s) item, dari Yth. %s, %s\n", atoll(DisplayProductPrice), DisplayProductName, DisplayProductStock, SIFullName, SIIndustryName);
                 fclose(AccessKDSavings);
-                snprintf(FinalKDSavings, sizeof(FinalKDSavings), "%lld", atoll(ReadLine(CurrentKDFile, TOTAL_DATA)) - atoll(DisplayProductPrice));
-                OverWriteStringAtLine(CurrentKDFile, FinalKDSavings, 0, TOTAL_DATA);
+                snprintf(FinalKDSavings, sizeof(FinalKDSavings), "%lld", atoll(ReadLine(CurrentKDFile, AVAILABLE_DATA)) - atoll(DisplayProductPrice));
+                OverWriteStringAtLine(CurrentKDFile, FinalKDSavings, 0, AVAILABLE_DATA);
                 CurrentKDFile[0] = 0;
 
                 snprintf(CurrentSIFile, sizeof(CurrentSIFile) + 12, "SI - %s.txt", SIFullName);
                 AccessSISavings = fopen(CurrentSIFile, "a");
                 fprintf(AccessSISavings, "[+] Rp%'lld.00: Penjualan produk (%s: %s) item, kepada Yth. %s, %s %s\n", atoll(DisplayProductPrice), DisplayProductName, DisplayProductStock, KDList.FullName, KDList.JobTitle, KDList.HeadRegion);
                 fclose(AccessSISavings);
-                snprintf(FinalSISavings, sizeof(FinalSISavings), "%lld", atoll(ReadLine(CurrentSIFile, TOTAL_DATA)) + atoll(DisplayProductPrice));
-                OverWriteStringAtLine(CurrentSIFile, FinalSISavings, 0, TOTAL_DATA);
+                snprintf(FinalSISavings, sizeof(FinalSISavings), "%lld", atoll(ReadLine(CurrentSIFile, AVAILABLE_DATA)) + atoll(DisplayProductPrice));
+                OverWriteStringAtLine(CurrentSIFile, FinalSISavings, 0, AVAILABLE_DATA);
                 CurrentSIFile[0] = 0;
 
                 char GetCurrentStock[BUFSIZE07] = { 0 }, SetCurrentStock[BUFSIZE07] = { 0 };
@@ -3485,7 +3485,7 @@ void UserLobbyMenu(void) {
             }
 
             if (CountRegists == 3) {
-                RegisteredKDs = atoi(ReadLine(User_KepalaDaerah, TOTAL_DATA));
+                RegisteredKDs = atoi(ReadLine(User_KepalaDaerah, AVAILABLE_DATA));
 
                 for (int KD = 0; KD < RegisteredKDs; KD++) {
                     if (strcmp(KD_SignInNIK, ReadLine(User_KepalaDaerah, (((OFFSET_HD + 1) * KD) + HD_CIN))) == 0 && \
@@ -3692,7 +3692,7 @@ void ClientLobbyMenu(void) {
             }
 
             if (CountRegists == 3) {
-                RegisteredSIs = atoi(ReadLine(Client_SektorIndustri, TOTAL_DATA));
+                RegisteredSIs = atoi(ReadLine(Client_SektorIndustri, AVAILABLE_DATA));
 
                 for (int SI = 0; SI < RegisteredSIs; SI++) {
                     if (strcmp(SI_SignInUsername, ReadLine(Client_SektorIndustri, (((OFFSET_SI + 1) * SI) + SI_USERNAME))) == 0 && \
