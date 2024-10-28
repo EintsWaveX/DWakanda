@@ -79,8 +79,8 @@ Untuk Pengguna Tipe 2, yakni Sektor Industri, terdapat fitur registrasi yang mem
 In collaboration(s) with:
 
 - [NUE - Programmer for D'Wakanda](https://github.com/EintsWaveX)
-- [RAF - Creator of D'Wakanda](https://github.com/fhanyuh)
-- [UZY - Maintainer of D'Wakanda](https://github.com/marzkigun27)
-- [SNI - Maintainer of D'Wakanda](https://github.com/stevanniep)
+- [RAF - Founder of D'Wakanda](https://github.com/fhanyuh)
+- [DAR - Maintainer of D'Wakanda]
+- [SNI - Designer of D'Wakanda](https://github.com/stevanniep)
 
 ⓒ 2024 Daskom Laboratory. All rights reserved.
