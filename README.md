@@ -80,7 +80,7 @@ In collaboration(s) with:
 
 - [NUE - Programmer for D'Wakanda](https://github.com/EintsWaveX)
 - [RAF - Founder of D'Wakanda](https://github.com/fhanyuh)
-- [DAR - Maintainer of D'Wakanda]
+- [DAZ - Maintainer of D'Wakanda]
 - [SNI - Designer of D'Wakanda](https://github.com/stevanniep)
 
 ⓒ 2024 Daskom Laboratory. All rights reserved.
