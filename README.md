@@ -45,17 +45,17 @@ Untuk Pengguna Tipe 2, yakni Sektor Industri, terdapat fitur registrasi yang mem
 
 **Fitur Sektor Industri (Klien):**
 
-> 1) Registrasi: Untuk melakukan registrasi, diperlukan perwakilan seorang diri dari sektor industri yang memiliki EMPAT (4) informasi berikut, yaitu:
+> 1) **Registrasi**: Untuk melakukan registrasi, diperlukan perwakilan seorang diri dari sektor industri yang memiliki EMPAT (4) informasi berikut, yaitu:
 >     - Nama Lengkap
 >     - Nama Pengguna (atau username)
 >     - Nama Sektor Industri
 >     - Kata Sandi (wajib minimal 8 karakter)
-> 2) Login: Untuk melakukan login, diperlukan perwakilan seorang diri dari sektor industri yang memiliki DUA (2) informasi berikut, yaitu:
+> 2) **Login**: Untuk melakukan login, diperlukan perwakilan seorang diri dari sektor industri yang memiliki DUA (2) informasi berikut, yaitu:
 >     - Nama Pengguna (atau username)
 >     - Kata Sandi (wajib minimal 8 karakter)
-> 3) Pendapatan Sektor Industri: Menampilkan pendapatan total dari hasil produksi industri.
-> 4) Pengaturan Produksi: Memampukan perwakilan dari industri untuk mencatat banyak produksi terhadap suatu produk.
-> 5) Pengaturan Kerja Sama dengan Kepala Daerah: Mengatur proses kerja sama dari permintaan kepala daerah tertentu.
+> 3) **Pendapatan Sektor Industri**: Menampilkan pendapatan total dari hasil produksi industri.
+> 4) **Pengaturan Produksi**: Memampukan perwakilan dari industri untuk mencatat banyak produksi terhadap suatu produk.
+> 5) **Pengaturan Kerja Sama dengan Kepala Daerah**: Mengatur proses kerja sama dari permintaan kepala daerah tertentu.
 
 ---
 
